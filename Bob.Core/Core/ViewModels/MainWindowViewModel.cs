@@ -1,4 +1,4 @@
-﻿namespace Bob.ViewModels;
+﻿namespace Bob.Core.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {

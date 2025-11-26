@@ -1,4 +1,4 @@
-$csprojFile = "Bob\Bob.csproj"
+$csprojFile = ".\Bob.Core\Bob.Core.csproj"
 
 if (-Not (Test-Path $csprojFile)) {
     Write-Host "Error: $csprojFile not found!"

@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using System;
-
-namespace Bob;
+using Bob.Core;
 
 sealed class Program
 {

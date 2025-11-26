@@ -1,53 +1,87 @@
--- Solution Configuration
 workspace "BobSolution"
     configurations { "Debug", "Release" }
     platforms { "Any CPU" }
 
-    -- Global settings
+    -- Global configuration filters
     filter "configurations:Debug"
         defines { "DEBUG" }
         symbols "On"
-
     filter "configurations:Release"
         defines { "NDEBUG" }
         optimize "On"
-
     filter {}
 
--- C# Frontend Project
-project "Bob"
-    kind "WindowedApp"
-    language "C#"
-    dotnetframework "net8.0-windows"
-    targetdir "bin/%{cfg.buildcfg}/x64"
-    objdir "bin-int/%{cfg.buildcfg}/x64"
-    location "Bob"
 
-    files { "Bob/**.cs", "Bob/assets/**" }
-    
-    -- Force real folder structure instead of VS filters
-    vpaths {
-        ["*"] = "Bob/**",  -- Ensures all files use real folders
+project "Bob.Core"
+    kind "SharedLib"
+    language "C#"
+    dotnetframework "net9.0"
+    targetdir "bin/%{cfg.buildcfg}/Core"
+    objdir "bin-int/%{cfg.buildcfg}/Core"
+    location "Bob.Core"
+
+    files { "Bob.Core/**.cs", "Bob.Core/assets/**" }
+
+    -- Treat assets and XAML as resources
+    filter { "files:Bob.Core/assets/**" }
+        buildaction "Resource"
+    filter { "files:**.xaml" }
+        buildaction "Page"
+    filter {}
+
+    nuget {
+        "Avalonia:11.3.9",
+        "Avalonia.Themes.Fluent:11.3.9",
+        "Avalonia.Fonts.Inter:11.3.9",
+        "DotNetEnv:3.1.1",
+        "CommunityToolkit.Mvvm:8.2.0"
     }
 
-    -- Avoid generating duplicate AssemblyInfo attributes
+project "Bob.Desktop"
+    kind "WindowedApp"
+    language "C#"
+    dotnetframework "net9.0-windows"
+    targetdir "bin/%{cfg.buildcfg}/x64/Desktop"
+    objdir "bin-int/%{cfg.buildcfg}/x64/Desktop"
+    location "Bob.Desktop"
+
+    files { "Bob.Desktop/**.cs" }
+
+    vpaths { ["*"] = "Bob.Desktop/**" }
+
     clr "Off"
     flags { "ShadowedVariables" }
     linktimeoptimization "On"
     defines { "WINDOWS" }
 
-    -- NuGet Dependencies
     nuget {
-        "Avalonia:11.2.1",
-        "Avalonia.Desktop:11.2.1",
-        "Avalonia.Themes.Fluent:11.2.1",
-        "Avalonia.Fonts.Inter:11.2.1",
-        "Avalonia.Diagnostics:11.2.1",
-        "SteamWebAPI2:4.4.1",
-        "DotNetEnv:3.1.1"
+        "Avalonia.Desktop:11.3.9",
+        "Avalonia.Diagnostics:11.3.9"
     }
 
-    -- Ensure assets are treated as resources
-    filter { "files:Bob/assets/**" }
-        buildaction "Resource"
-    filter {}
+    -- Reference shared Core
+    links { "Bob.Core" }
+
+
+project "Bob.WASM"
+    kind "ConsoleApp"
+    language "C#"
+    dotnetframework "net9.0-browser"
+    targetdir "bin/%{cfg.buildcfg}/x64/WASM"
+    objdir "bin-int/%{cfg.buildcfg}/x64/WASM"
+    location "Bob.WASM"
+
+    files { "Bob.WASM/**.cs" }
+
+    vpaths { ["*"] = "Bob.WASM/**" }
+
+    clr "Off"
+    flags { "ShadowedVariables" }
+    linktimeoptimization "On"
+    defines { "WASM" }
+    nuget {
+        "Avalonia.Browser:11.3.9"
+    }
+
+    -- Reference shared Core
+    links { "Bob.Core" }

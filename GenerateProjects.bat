@@ -16,7 +16,9 @@ if errorlevel 1 (
 REM ------------------------------------------------------------------
 REM Define the path to the C# project file
 REM ------------------------------------------------------------------
-set "CSPROJ_FILE=Bob\Bob.csproj"
+set "CSPROJ_FILE=Bob.Core\Bob.Core.csproj"
+set "CSPROJ_FILE_DESKTOP=Bob.Desktop\Bob.Desktop.csproj"
+set "CSPROJ_FILE_WASM=Bob.WASM\Bob.WASM.csproj"
 
 REM ------------------------------------------------------------------
 REM Restore packages to ensure referenced packages are downloaded
@@ -35,9 +37,8 @@ echo Checking installed packages in %CSPROJ_FILE%...
 dotnet list "%CSPROJ_FILE%" package > packages.txt
 
 REM List of expected packages
-set "expectedPackages=Avalonia Avalonia.Desktop Avalonia.Themes.Fluent Avalonia.Fonts.Inter Avalonia.Diagnostics DotNetEnv CommunityToolkit.Mvvm"
-
-for %%p in (%expectedPackages%) do (
+set "expectedPackagesCore=Avalonia Avalonia.Themes.Fluent Avalonia.Fonts.Inter DotNetEnv CommunityToolkit.Mvvm"
+for %%p in (%expectedPackagesCore%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packages.txt >nul
     if errorlevel 1 (
@@ -48,14 +49,42 @@ for %%p in (%expectedPackages%) do (
     )
 )
 
+dotnet list "%CSPROJ_FILE_DESKTOP%" package >> packagesDesktop.txt
+set "expectedPackagesDesktop=Avalonia.Desktop Avalonia.Diagnostics"
+for %%p in (%expectedPackagesDesktop%) do (
+    REM Look for the package name in the packages.txt file
+    findstr /C:"%%p" packagesDesktop.txt >nul
+    if errorlevel 1 (
+        echo Package %%p not found. Installing...
+        dotnet add "%CSPROJ_FILE_DESKTOP%" package %%p
+    ) else (
+        echo Package %%p is installed.
+    )
+)
+
+dotnet list "%CSPROJ_FILE_WASM%" package >> packagesWASM.txt
+set "expectedPackagesWASM=Avalonia.Browser"
+for %%p in (%expectedPackagesWASM%) do (
+    REM Look for the package name in the packages.txt file
+    findstr /C:"%%p" packagesWASM.txt >nul
+    if errorlevel 1 (
+        echo Package %%p not found. Installing...
+        dotnet add "%CSPROJ_FILE_WASM%" package %%p
+    ) else (
+        echo Package %%p is installed.
+    )
+)
+
 REM Clean up the temporary file
 del packages.txt
+del packagesDesktop.txt
+del packagesWASM.txt
 
 REM ------------------------------------------------------------------
 REM Patch the .csproj file using PowerShell
 REM ------------------------------------------------------------------
 echo Patching Avalonia resources...
-powershell -NoProfile -ExecutionPolicy Bypass -File "Bob\patch_csproj.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "patch_csproj.ps1"
 
 if errorlevel 1 (
     echo Failed to patch Avalonia resources.

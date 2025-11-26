@@ -4,10 +4,10 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using Bob.ViewModels;
-using Bob.Views;
+using Bob.Core.ViewModels;
+using Bob.Core.Views;
 
-namespace Bob;
+namespace Bob.Core;
 
 public partial class App : Application
 {
