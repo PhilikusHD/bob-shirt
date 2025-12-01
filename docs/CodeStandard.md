@@ -1,4 +1,4 @@
-# Bob-Shirt - C# Coding & Architecture Standards (Document #6)
+# Bob-Shirt - C# Coding & Architecture Standards
 
 **Purpose**: define internal, pragmatic style and architecture rules for a small project so all contributors maintain consistent, clear, and maintainable code.
 
