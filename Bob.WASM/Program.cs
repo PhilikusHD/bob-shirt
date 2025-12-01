@@ -1,7 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Browser;
+using Avalonia.Controls.ApplicationLifetimes;
 using Bob.Core;
 using Bob.Core.Logging;
+using System;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 

@@ -16,8 +16,8 @@ project "Bob.Core"
     kind "SharedLib"
     language "C#"
     dotnetframework "net9.0"
-    targetdir "bin/%{cfg.buildcfg}/Core"
-    objdir "bin-int/%{cfg.buildcfg}/Core"
+    targetdir "bin/%{cfg.buildcfg}/x64/Core"
+    objdir "bin-int/%{cfg.buildcfg}/x64/Core"
     location "Bob.Core"
 
     files { "Bob.Core/**.cs", "Bob.Core/assets/**" }
