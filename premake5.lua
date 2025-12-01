@@ -80,7 +80,9 @@ project "Bob.WASM"
     linktimeoptimization "On"
     defines { "WASM" }
     nuget {
-        "Avalonia.Browser:11.3.9"
+        "Avalonia.Browser:11.3.9",
+        "Microsoft.NET.ILLink.Tasks:9.0.11",
+        "Microsoft.NET.Sdk.WebAssembly.Pack:10.0.0"
     }
 
     -- Reference shared Core
