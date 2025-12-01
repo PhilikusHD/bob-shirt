@@ -67,23 +67,22 @@ project "Bob.WASM"
     kind "ConsoleApp"
     language "C#"
     dotnetframework "net9.0-browser"
+    
     targetdir "bin/%{cfg.buildcfg}/x64/WASM"
     objdir "bin-int/%{cfg.buildcfg}/x64/WASM"
     location "Bob.WASM"
 
     files { "Bob.WASM/**.cs" }
-
     vpaths { ["*"] = "Bob.WASM/**" }
 
     clr "Off"
     flags { "ShadowedVariables" }
     linktimeoptimization "On"
     defines { "WASM" }
+
     nuget {
         "Avalonia.Browser:11.3.9",
-        "Microsoft.NET.ILLink.Tasks:9.0.11",
         "Microsoft.NET.Sdk.WebAssembly.Pack:10.0.0"
     }
 
-    -- Reference shared Core
     links { "Bob.Core" }

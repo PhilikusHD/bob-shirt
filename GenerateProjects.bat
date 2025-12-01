@@ -63,7 +63,7 @@ for %%p in (%expectedPackagesDesktop%) do (
 )
 
 dotnet list "%CSPROJ_FILE_WASM%" package >> packagesWASM.txt
-set "expectedPackagesWASM=Avalonia.Browser Microsoft.NET.ILLink.Tasks Microsoft.NET.Sdk.WebAssembly.Pack"
+set "expectedPackagesWASM=Avalonia.Browser Microsoft.NET.Sdk.WebAssembly.Pack"
 for %%p in (%expectedPackagesWASM%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packagesWASM.txt >nul
