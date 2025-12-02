@@ -4,8 +4,10 @@
     {
         public uint Value { get; }
         public AddressId(uint value) => Value = value;
-
         public override string ToString() => Value.ToString();
+
+        public static implicit operator AddressId(uint id) => new AddressId(id);
+        public static implicit operator uint(AddressId id) => id.Value;
     }
 
 

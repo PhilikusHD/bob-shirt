@@ -5,6 +5,10 @@
         public uint Value { get; }
         public CartId(uint value) => Value = value;
         public override string ToString() => Value.ToString();
+
+        public static implicit operator CartId(uint id) => new CartId(id);
+        public static implicit operator uint(CartId id) => id.Value;
+
     }
 
     public sealed class CartLine

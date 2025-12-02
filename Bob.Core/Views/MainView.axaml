@@ -1,41 +1,36 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Bob.Core.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Bob.Core.MainView">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="Bob.Core.MainView">
+	<Grid>
+		<!-- Frosted Glass Background -->
+		<Border>
+			<Border.Background>
+				<!-- Start/End korrekt setzen + zwei Stops -->
+				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+					<GradientStop Color="#889db4" Offset="0" />
+					<GradientStop Color="#10121a" Offset="1" />
+				</LinearGradientBrush>
+			</Border.Background>
 
-	<UserControl.Styles>
-		<Style Selector=".FrostedBackground">
-			<Setter Property="Background" Value="#80FFFFFF"/>
-			<Setter Property="Effect">
-				<Setter.Value>
-					<BlurEffect Radius="20"/>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</UserControl.Styles>
+			<Border.Effect>
+				<!-- Blur reduzieren falls Performance-Probleme -->
+				<BlurEffect Radius="30" />
+			</Border.Effect>
+		</Border>
 
-	<Design.DataContext>
-		<vm:MainWindowViewModel/>
-	</Design.DataContext>
-
-	<Grid Classes="FrostedBackground">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="150"/>
-			<RowDefinition Height="*"/>
-		</Grid.RowDefinitions>
-
-		<!-- Bild oben zentriert -->
-		<Image Source="avares://Bob.Core/Assets/header.png"
-			   Width="120" Height="120"
-			   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-		<!-- Inhalt -->
-		<TextBlock Grid.Row="1" Text="{Binding Greeting}"
-				   HorizontalAlignment="Center" VerticalAlignment="Center"
-				   FontSize="22"/>
+		<!-- Benutze Grid statt abstraktem Panel -->
+		<Grid>
+			<Image
+			Source="/assets/default_banner.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Top"
+			Margin="0,20,0,0"
+			Width="250"
+			Height="150"/>
+		</Grid>
 	</Grid>
-
 </UserControl>

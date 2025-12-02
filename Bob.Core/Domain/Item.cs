@@ -5,6 +5,8 @@
         public uint Value { get; }
         public ItemId(uint value) => Value = value;
         public override string ToString() => Value.ToString();
+        public static implicit operator ItemId(uint id) => new ItemId(id);
+        public static implicit operator uint(ItemId id) => id.Value;
     }
 
     public sealed class Item

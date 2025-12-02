@@ -13,5 +13,6 @@ namespace Bob.Core.Repositories
 
         Task AddAsync(Order order, CancellationToken cancellationToken = default);
         Task UpdateAsync(Order order, CancellationToken cancellationToken = default);
+        Task DeleteAsync(OrderId id, CancellationToken cancellationToken = default);
     }
 }

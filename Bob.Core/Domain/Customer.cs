@@ -7,6 +7,9 @@ namespace Bob.Core.Domain
         public uint Value { get; }
         public CustomerId(uint value) => Value = value;
         public override string ToString() => Value.ToString();
+
+        public static implicit operator CustomerId(uint id) => new CustomerId(id);
+        public static implicit operator uint(CustomerId id) => id.Value;
     }
 
     public sealed class Customer

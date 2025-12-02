@@ -6,16 +6,17 @@ namespace Bob.Core.Domain
     {
         public uint Value { get; }
         public PaymentId(uint value) => Value = value;
-
         public override string ToString() => Value.ToString();
+        public static implicit operator PaymentId(uint id) => new PaymentId(id);
+        public static implicit operator uint(PaymentId id) => id.Value;
     }
 
     public readonly struct ProcessorId
     {
         public uint Value { get; }
         public ProcessorId(uint value) => Value = value;
-
         public override string ToString() => Value.ToString();
+        public static implicit operator ProcessorId(uint value) => new ProcessorId(value);
     }
 
     public sealed class Payment
