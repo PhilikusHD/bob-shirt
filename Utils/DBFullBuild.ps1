@@ -6,7 +6,7 @@ $scripts = @(
     @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\Drop_Database.sql"; description =  "Drop existing Database"},
     @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\Create_Database.sql"; description =  "create New Database"},
     @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\ForeignKeys.sql"; description =  "create Primary Keys"}
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Seed\PrimaryKeys.sql"; description =  "create Foreign Keys"}
+    @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\PrimaryKeys.sql"; description =  "create Foreign Keys"}
     @{path = Join-Path $PSScriptRoot "..\Scripts\Seed\Fill_Customer.sql"; description =  "fill Customer Data"}
 )
 
