@@ -29,6 +29,18 @@
 			Width="500"
 			Height="450"/>
 		</Grid>
+
+
+	<Grid>
+		<Image
+			Source="/assets/textilHinweis.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="-80,-50,0,0"
+			Width="350"
+			Height="500"/>
+	</Grid>
 		
 	</Grid>
 </UserControl>
