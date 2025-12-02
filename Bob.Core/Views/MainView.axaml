@@ -31,7 +31,98 @@
 		</Grid>
 
 
-	
-		
+		<Grid>
+			<Image
+			Source="/assets/textilHinweis.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="-80,-50,0,0"
+			Width="350"
+			Height="500"/>
+		</Grid>
+
+
+
+		<Button Width="90" Height="35" Margin="40,34.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+			<Button.Content>
+				<Image Source="/assets/ueberUns.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="20,32.5,0,0"
+					   Width="350"
+					   Height="500"/>
+			</Button.Content>
+		</Button>
+
+		<Button Width="90" Height="32" Margin="40,4.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+			<Button.Content>
+				<Image Source="/assets/Shop.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="20,3.5,0,0"
+					   Width="350"
+					   Height="500"/>
+			</Button.Content>
+		</Button>
+
+		<Button Width="70" Height="32" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+			<Button.Content>
+				<Image Source="/assets/Kontakt.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="33,-19,0,0"
+					   Width="350"
+					   Height="500"/>
+			</Button.Content>
+		</Button>
+
+
+		<Button Width="150" Height="150" Margin="43,67,30,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+			<Button.Content>
+				<Image Source="/assets/hoodies.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="5,7,0,0"
+					   Width="150"
+					   Height="150"/>
+			</Button.Content>
+		</Button>
+
+
+		<Button Width="150" Height="150" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+			<Button.Content>
+				<Image Source="/assets/tshirt.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="-2,7,0,0"
+					   Width="150"
+					   Height="150"/>
+			</Button.Content>
+		</Button>
+
+		<Button Width="150" Height="150" Margin="10,70,35,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+			<Button.Content>
+				<Image Source="/assets/caps.png"
+					   Stretch="Uniform"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   Margin="1,-18,0,0"
+					   Width="150"
+					   Height="150"/>
+			</Button.Content>
+		</Button>
+
 	</Grid>
 </UserControl>
