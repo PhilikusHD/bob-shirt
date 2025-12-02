@@ -25,7 +25,7 @@
 			Stretch="Uniform"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Top"
-			Margin="0,-80,0,0"
+			Margin="0,-70,0,0"
 			Width="500"
 			Height="450"/>
 		</Grid>
@@ -44,84 +44,66 @@
 
 
 
-		<Button Width="90" Height="35" Margin="40,34.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-
-			<Button.Content>
-				<Image Source="/assets/ueberUns.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="20,32.5,0,0"
-					   Width="350"
-					   Height="500"/>
-			</Button.Content>
+		<Button x:Name ="UeberUnsButton" Width="90" Height="35" Margin="40,34.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Image Source="/assets/ueberUns.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="20,32.5,0,0"
+				   Width="350"
+				   Height="500"/>
 		</Button>
 
-		<Button Width="90" Height="32" Margin="40,4.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-
-			<Button.Content>
-				<Image Source="/assets/Shop.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="20,3.5,0,0"
-					   Width="350"
-					   Height="500"/>
-			</Button.Content>
+		<Button x:Name="ShopButton" Width="90" Height="32" Margin="40,4.2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Image Source="/assets/Shop.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="20,3.5,0,0"
+				   Width="350"
+				   Height="500"/>
 		</Button>
 
-		<Button Width="70" Height="32" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-
-			<Button.Content>
-				<Image Source="/assets/Kontakt.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="33,-19,0,0"
-					   Width="350"
-					   Height="500"/>
-			</Button.Content>
+		<Button x:Name="KontaktButton" Width="70" Height="32" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Image Source="/assets/Kontakt.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="33,-19,0,0"
+				   Width="350"
+				   Height="500"/>
 		</Button>
 
 
-		<Button Width="150" Height="150" Margin="43,67,30,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-			<Button.Content>
-				<Image Source="/assets/hoodies.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="5,7,0,0"
-					   Width="150"
-					   Height="150"/>
-			</Button.Content>
+		<Button x:Name="HoodieButton" Width="150" Height="150" Margin="43,67,30,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Image Source="/assets/hoodies.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="5,7,0,0"
+				   Width="150"
+				   Height="150"/>
 		</Button>
 
 
-		<Button Width="150" Height="150" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
-
-			<Button.Content>
-				<Image Source="/assets/tshirt.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="-2,7,0,0"
-					   Width="150"
-					   Height="150"/>
-			</Button.Content>
+		<Button x:Name="TshirtButton" Width="150" Height="150" Margin="43,67,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+			<Image Source="/assets/tshirt.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="-2,7,0,0"
+				   Width="150"
+				   Height="150"/>
 		</Button>
 
-		<Button Width="150" Height="150" Margin="10,70,35,0" HorizontalAlignment="Right" VerticalAlignment="Center">
-
-			<Button.Content>
-				<Image Source="/assets/caps.png"
-					   Stretch="Uniform"
-					   HorizontalAlignment="Center"
-					   VerticalAlignment="Center"
-					   Margin="1,-18,0,0"
-					   Width="150"
-					   Height="150"/>
-			</Button.Content>
+		<Button x:Name="CapsButton" Width="150" Height="150" Margin="10,70,35,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+			<Image Source="/assets/caps.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="1,-18,0,0"
+				   Width="150"
+				   Height="150"/>
 		</Button>
 
 	</Grid>

@@ -1,13 +1,50 @@
-
 using Avalonia.Controls;
-using System;
+using Avalonia.Markup.Xaml;
+using Avalonia.Interactivity;
 
-namespace Bob.Core;
-
-public partial class MainView : UserControl
+namespace Bob.Core
 {
-    public MainView()
+    public partial class MainView : UserControl
     {
-        InitializeComponent();
+
+        public MainView()
+        {
+
+        }
+
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        private void OnUeberUnsClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnShopClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnKontaktClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnHoodieClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnTshirtClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCapsClick(object? sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
