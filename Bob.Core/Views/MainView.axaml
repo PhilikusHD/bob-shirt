@@ -8,19 +8,17 @@
 		<!-- Frosted Glass Background -->
 		<Border>
 			<Border.Background>
-				<!-- Start/End korrekt setzen + zwei Stops -->
 				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
 					<GradientStop Color="#889db4" Offset="0" />
 				</LinearGradientBrush>
 			</Border.Background>
 
 			<Border.Effect>
-				<!-- Blur reduzieren falls Performance-Probleme -->
 				<BlurEffect Radius="30" />
 			</Border.Effect>
 		</Border>
 
-		<!-- Benutze Grid statt abstraktem Panel -->
+		<!-- Banner -->
 		<Grid>
 			<Image
 			Source="/assets/banner.png"
