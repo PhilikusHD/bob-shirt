@@ -25,9 +25,10 @@
 			Stretch="Uniform"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Top"
-			Margin="0,-30,0,0"
-			Width="350"
+			Margin="0,-80,0,0"
+			Width="500"
 			Height="450"/>
 		</Grid>
+		
 	</Grid>
 </UserControl>
