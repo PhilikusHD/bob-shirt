@@ -23,7 +23,7 @@ project "Bob.Core"
     files { "Bob.Core/**.cs", "Bob.Core/assets/**" }
 
     -- Treat assets and XAML as resources
-    filter { "files:Bob.Core/assets/**" }
+    filter { "files:Bob.Core/Assets/**" }
         buildaction "Resource"
     filter { "files:**.xaml" }
         buildaction "Page"
