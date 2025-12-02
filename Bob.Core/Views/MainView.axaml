@@ -24,7 +24,7 @@
 		<!-- Benutze Grid statt abstraktem Panel -->
 		<Grid>
 			<Image
-			Source="/assets/default_banner.png"
+			Source="/assets/banner.png"
 			Stretch="Uniform"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Top"
