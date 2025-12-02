@@ -1,4 +1,5 @@
 ﻿using Bob.Core.Domain;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +9,9 @@ namespace Bob.Core.Repositories
     public interface ICustomerRepository
     {
         Task<Customer?> GetByIdAsync(CustomerId id, CancellationToken cancellationToken = default);
+
+        Task<IReadOnlyList<Customer>> GetAllAsync(CancellationToken cancellationToken = default);
+
         Task<Customer?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
 
         Task AddAsync(Customer customer, CancellationToken cancellationToken = default);

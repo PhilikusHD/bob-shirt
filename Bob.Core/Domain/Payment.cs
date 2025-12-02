@@ -17,6 +17,7 @@ namespace Bob.Core.Domain
         public ProcessorId(uint value) => Value = value;
         public override string ToString() => Value.ToString();
         public static implicit operator ProcessorId(uint value) => new ProcessorId(value);
+        public static implicit operator uint(ProcessorId id) => id.Value;
     }
 
     public sealed class Payment

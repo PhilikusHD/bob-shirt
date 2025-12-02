@@ -12,14 +12,14 @@ namespace Bob.Core.Services
     public class OrderService
     {
         private readonly IOrderRepository m_OrderRepository;
-        private readonly ICartRepository m_CartRepository;
-        private readonly IItemRepository m_ItemRepository;
+        private readonly CartService m_CartService;
+        private readonly ItemService m_ItemService;
 
-        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository, IItemRepository itemRepository)
+        public OrderService(IOrderRepository orderRepository, CartService cartService, ItemService itemService)
         {
             m_OrderRepository = orderRepository;
-            m_CartRepository = cartRepository;
-            m_ItemRepository = itemRepository;
+            m_CartService = cartService;
+            m_ItemService = itemService;
         }
 
         public async Task<OrderDto> GetOrderByIdAsync(uint orderId)
@@ -51,17 +51,17 @@ namespace Bob.Core.Services
 
         public async Task<uint> CreateOrderAsync(OrderDto orderDto)
         {
-            IReadOnlyList<CartLine> cart = await m_CartRepository.GetCartLinesAsync(orderDto.CartId);
-            if (cart == null)
+            IReadOnlyList<CartDto> carts = await m_CartService.GetCartLinesAsync(orderDto.CartId);
+            if (carts == null)
                 return 0xFFFFFFFF;
 
             decimal totalAmount = 0;
             // Get Items based on the id
-            foreach (CartLine cartLine in cart)
+            foreach (CartDto cart in carts)
             {
                 // Mayhaps we should prefetch all items and then only use the ones needed.
                 // It could reduce DB operations.
-                var item = await m_ItemRepository.GetByIdAsync(cartLine.ItemId);
+                var item = await m_ItemService.GetItemByIdAsync(cart.ItemId);
                 totalAmount += item.Price;
             }
 
