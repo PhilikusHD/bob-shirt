@@ -17,5 +17,10 @@ jobs:
       shell: pwsh
       run: |
         .\GenerateProjects.bat
+
     - name: Build
       run: dotnet build --configuration Release
+
+    - name: Run full DB Build
+      shell: cmd
+      run: powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${{ github.workspace }}\Utils\DBFullBuild.ps1" -ServerInstance "CW-INTEG\MSSQLSERVER01"
