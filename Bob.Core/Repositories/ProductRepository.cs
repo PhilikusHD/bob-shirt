@@ -25,7 +25,7 @@ namespace Bob.Core.Repositories
             return await db.GetTable<Product>().ToListAsync(cancellationToken);
         }
 
-        public async Task AddAsync(int product, CancellationToken cancellationToken = default)
+        public async Task AddAsync(Product product, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             var identity = await db.InsertWithIdentityAsync(product);
@@ -44,7 +44,7 @@ namespace Bob.Core.Repositories
         public async Task UpdateAsync(int product, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.UpdateAsync(Product);
+            await db.UpdateAsync(product);
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)

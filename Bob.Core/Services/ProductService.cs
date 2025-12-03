@@ -25,7 +25,7 @@ namespace Bob.Core.Services
             return await m_ProductRepository.GetAllAsync();
         }
 
-        public async Task AddProductAsync(int product)
+        public async Task AddProductAsync(Product product)
         {
             await m_ProductRepository.AddAsync(product);
         }

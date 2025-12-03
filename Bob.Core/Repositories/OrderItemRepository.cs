@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Bob.Core.Repositories
 {
-    public sealed class CartRepository
+    public sealed class OrderItemRepository
     {
         public async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            return await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId).ToListAsync(cancellationToken) ;
+            return await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId).ToListAsync(cancellationToken);
         }
 
         public async Task AddLineAsync(OrderItemLine line, CancellationToken cancellationToken = default)
@@ -26,7 +26,8 @@ namespace Bob.Core.Repositories
         public async Task RemoveLineAsync(int productId, int orderId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.ProductId == productId).DeleteAsync(cancellationToken);        }
+            await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.ProductId == productId).DeleteAsync(cancellationToken);
+        }
 
         public async Task AssignToOrderAsync(int orderId, int productId, CancellationToken cancellationToken = default)
         {
