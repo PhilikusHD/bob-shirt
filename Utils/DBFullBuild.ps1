@@ -7,7 +7,7 @@ $scripts = @(
     @{path = "Scripts\Schema\Create_Database.sql"; description = "Create New Database"; database = "master"},
     @{path = "Scripts\Schema\Primary_Keys.sql"; description = "Create Primary Keys"; database = "bobshirt"},
     @{path = "Scripts\Schema\Foreign_Keys.sql"; description = "Create Foreign Keys"; database = "bobshirt"},
-    @{path = "Scripts\Seed\Fill_Customer.sql"; description = "Fill Customer Data"; database = "bobshirt"}
+    @{path = "Scripts\Seed\Fill_Database.sql"; description = "Fill Customer Data"; database = "bobshirt"}
 )
 
 function Invoke-SqlScript ($path, $description, $database){
@@ -18,7 +18,7 @@ function Invoke-SqlScript ($path, $description, $database){
             -Query $sqlScript `
             -ServerInstance $ServerInstance `
             -Database $database `
-            -TrustServerCertificate `        
+            -TrustServerCertificate `
     }
     catch {
         Write-Error "$description failed: $_"
