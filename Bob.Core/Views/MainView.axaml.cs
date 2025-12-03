@@ -1,7 +1,8 @@
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using Bob.Core.Views;
+using System;
 
 namespace Bob.Core
 {
@@ -12,41 +13,13 @@ namespace Bob.Core
         public MainView()
         {
             InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        private void OnUeberUnsClick(object? sender, RoutedEventArgs e)
-        {
+            CurrentContent.Content = new MainPage(this);
 
         }
 
-        private void OnShopClick(object? sender, RoutedEventArgs e)
+        public void NavigateTo(UserControl newView)
         {
-
-        }
-
-        private void OnKontaktClick(object? sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnHoodieClick(object? sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnTshirtClick(object? sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnCapsClick(object? sender, RoutedEventArgs e)
-        {
-
+            CurrentContent.Content = newView;
         }
     }
 }

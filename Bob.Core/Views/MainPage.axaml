@@ -2,9 +2,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d" MaxHeight="1080" MaxWidth="1920" Width="1920" Height="1080"
-			 x:Class="Bob.Core.HoodieWindow">
-
+			 mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+			 MaxHeight="1080" MaxWidth="1920"
+			 x:Class="Bob.Core.MainPage">
 	<Grid>
 		<!-- Frosted Glass Background -->
 		<Border>
@@ -31,16 +31,6 @@
 			Height="950"/>
 		</Grid>
 
-		<Grid>
-			<Image
-			Source="/assets/Hoodies_name.png"
-			Stretch="Uniform"
-			HorizontalAlignment="Right"
-			VerticalAlignment="Top"
-			Margin="0,280,379,0"
-			Width="350"
-			Height="550"/>
-		</Grid>
 
 		<Grid>
 			<Image
@@ -64,7 +54,7 @@
 			Height="800"/>
 		</Grid>
 
-		<Button x:Name ="UeberUnsButton" Width="130" Height="50" Margin="153,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name ="UeberUnsButton" Width="130" Height="50" Margin="153,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnUeberUnsClick">
 			<Image Source="/assets/ueberUns.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -84,7 +74,7 @@
 				   Height="700"/>
 		</Button>
 
-		<Button x:Name="KontaktButton" Width="130" Height="50" Margin="153,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name="KontaktButton" Width="130" Height="50" Margin="153,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnKontaktClick">
 			<Image Source="/assets/Kontakt.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -95,6 +85,36 @@
 		</Button>
 
 
+		<Button x:Name="HoodieButton" Width="500" Height="500" Margin="43,250,30,0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0" Click="OnHoodieClick">
+			<Image Source="/assets/hoodies.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="5,7,0,0"
+				   Width="450"
+				   Height="550"/>
+		</Button>
+
+
+		<Button x:Name="TshirtButton" Width="500" Height="500" Margin="43,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0" Click="OnTshirtClick">
+			<Image Source="/assets/tshirt.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="-18,7,0,0"
+				   Width="550"
+				   Height="650"/>
+		</Button>
+
+		<Button x:Name="CapsButton" Width="500" Height="500" Margin="10,250,35,0" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0" Click="OnCapsClick">
+			<Image Source="/assets/caps.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="-45,-80,0,0"
+				   Width="550"
+				   Height="6500"/>
+		</Button>
 
 	</Grid>
 </UserControl>
