@@ -2,7 +2,6 @@
 using Bob.Core.Logging;
 using Bob.Core.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
@@ -35,8 +34,8 @@ namespace Bob.Core.Services
             await m_OrderItemRepository.AddLineAsync(line);
         }
 
-        public async Task RemoveLineAsync(int cartId, int itemId) => await m_OrderItemRepository.RemoveLineAsync(cartId, itemId);
+        public async Task RemoveLineAsync(int orderId, int itemId) => await m_OrderItemRepository.RemoveLineAsync(orderId, itemId);
 
-        public async Task AssignToOrderAsync(int cartId, int orderId) => await m_OrderItemRepository.AssignToOrderAsync(cartId, orderId);
+        public async Task AssignToOrderAsync(int orderId, int productId) => await m_OrderItemRepository.AssignToOrderAsync(orderId, productId);
     }
 }

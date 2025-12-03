@@ -28,5 +28,7 @@ namespace Bob.Core.Services
         {
             await m_PaymentRepository.AddAsync(payment);
         }
+
+        public async Task DeletePaymentAsync(int id) => await m_PaymentRepository.DeleteAsync(id);
     }
 }

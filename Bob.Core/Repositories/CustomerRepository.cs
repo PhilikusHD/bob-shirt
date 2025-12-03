@@ -50,5 +50,11 @@ namespace Bob.Core.Repositories
             await using var db = new AppDataConnection();
             await db.UpdateAsync(customer);
         }
+
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await using var db = new AppDataConnection();
+            await db.GetTable<Customer>().Where(i => i.Id == id).DeleteAsync(cancellationToken);
+        }
     }
 }

@@ -2,7 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Bob.Core.Database;
 using Bob.Core.Utils;
+using System.Threading.Tasks;
 
 namespace Bob.Core
 {
@@ -46,6 +48,12 @@ namespace Bob.Core
         private void OnCapsClick(object? sender, RoutedEventArgs e)
         {
             ViewManager.TransitionTo(nameof(CapsWindow));
+        }
+
+        private void TestDatabase_Click(object? sender, RoutedEventArgs e)
+        {
+            TestDB testDatabase = new TestDB();
+            testDatabase.RunAsync();
         }
     }
 }

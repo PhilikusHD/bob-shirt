@@ -9,9 +9,9 @@ namespace Bob.Core.Services
     {
         private readonly CustomerRepository m_CustomerRepository;
 
-        public CustomerService()
+        public CustomerService(CustomerRepository customerRepository)
         {
-            m_CustomerRepository = new CustomerRepository();
+            m_CustomerRepository = customerRepository;
         }
 
 #nullable enable
@@ -34,5 +34,7 @@ namespace Bob.Core.Services
         {
             await m_CustomerRepository.UpdateAsync(customer);
         }
+
+        public async Task DeleteCustomerAsync(int id) => await m_CustomerRepository.DeleteAsync(id);
     }
 }

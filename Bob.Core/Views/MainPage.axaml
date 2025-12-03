@@ -54,6 +54,17 @@
 			Height="800"/>
 		</Grid>
 
+		<Button x:Name="TestDatabase" Width="100" Height="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="TestDatabase_Click">
+			<Image Source="/assets/default_icon.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="0,0,0,0"
+				   Width="100"
+				   Height="50"/>
+
+		</Button>
+
 		<Button x:Name ="UeberUnsButton" Width="130" Height="50" Margin="153,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnUeberUnsClick">
 			<Image Source="/assets/ueberUns.png"
 				   Stretch="Uniform"

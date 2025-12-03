@@ -23,7 +23,7 @@ namespace Bob.Core.Repositories
             await db.InsertAsync(line);
         }
 
-        public async Task RemoveLineAsync(int productId, int orderId, CancellationToken cancellationToken = default)
+        public async Task RemoveLineAsync(int orderId, int productId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.ProductId == productId).DeleteAsync(cancellationToken);

@@ -1,7 +1,8 @@
-﻿using Bob.Core.Domain;
-using Bob.Core.Database;
+﻿using Bob.Core.Database;
+using Bob.Core.Domain;
 using LinqToDB;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

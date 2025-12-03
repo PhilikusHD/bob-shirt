@@ -33,5 +33,7 @@ namespace Bob.Core.Services
         {
             await m_AddressRepository.UpdateAsync(address);
         }
+
+        public async Task DeleteAddressAsync(int id) => await m_AddressRepository.DeleteAsync(id);
     }
 }

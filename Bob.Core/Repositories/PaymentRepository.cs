@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Bob.Core.Database;
 using Bob.Core.Domain;
-using Bob.Core.Database;
 using LinqToDB;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +34,12 @@ namespace Bob.Core.Repositories
                 }
                 catch { }
             }
+        }
+
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await using var db = new AppDataConnection();
+            await db.GetTable<Payment>().Where(i => i.Id == id).DeleteAsync(cancellationToken);
         }
     }
 }

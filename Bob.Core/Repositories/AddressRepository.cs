@@ -22,7 +22,7 @@ namespace Bob.Core.Repositories
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Address>()
-                .Join(db.GetTable<Bob.Core.Domain.Customer>(),
+                .Join(db.GetTable<Customer>(),
                       a => a.Id,
                       c => c.AddressId,
                       (a, c) => a)
@@ -47,6 +47,12 @@ namespace Bob.Core.Repositories
         {
             await using var db = new AppDataConnection();
             await db.UpdateAsync(address);
+        }
+
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await using var db = new AppDataConnection();
+            await db.GetTable<Address>().Where(i => i.Id == id).DeleteAsync(cancellationToken);
         }
     }
 }
