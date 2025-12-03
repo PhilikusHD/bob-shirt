@@ -1,14 +1,7 @@
 ﻿using Avalonia;
 using Bob.Core;
-using Bob.Core.Database;
-using Bob.Core.Domain;
 using Bob.Core.Logging;
-using Bob.Core.Services;
-using LinqToDB;
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 

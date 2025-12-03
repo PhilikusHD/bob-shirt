@@ -12,13 +12,13 @@ namespace Bob.Core.Repositories
 #nullable enable
     public sealed class OrderRepository
     {
-        public async Task<Order?> GetByIdAsync(OrderId id, CancellationToken cancellationToken = default)
+        public async Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Order>().FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
 
-        public async Task<IReadOnlyList<Order>> GetByCustomerAsync(CustomerId customerId, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<Order>> GetByCustomerAsync(int customerId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Order>().Where(o => o.CustomerId == customerId).ToListAsync(cancellationToken);
@@ -32,7 +32,7 @@ namespace Bob.Core.Repositories
             {
                 try
                 {
-                    order.Id = (OrderId)Convert.ToInt32(identity);
+                    order.Id = (int)Convert.ToInt32(identity);
                 }
                 catch { }
             }
@@ -44,7 +44,7 @@ namespace Bob.Core.Repositories
             await db.UpdateAsync(order);
         }
 
-        public async Task DeleteAsync(OrderId id, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<Order>().Where(o => o.Id == id).DeleteAsync(cancellationToken);

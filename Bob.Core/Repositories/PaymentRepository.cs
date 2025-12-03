@@ -10,12 +10,12 @@ namespace Bob.Core.Repositories
 #nullable enable
     public sealed class PaymentRepository
     {
-        public async Task<Payment?> GetByIdAsync(PaymentId id, CancellationToken cancellationToken = default)
+        public async Task<Payment?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Payment>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
-        public async Task<Payment?> GetByOrderIdAsync(OrderId orderId, CancellationToken cancellationToken = default)
+        public async Task<Payment?> GetByOrderIdAsync(int orderId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Payment>().FirstOrDefaultAsync(p => p.OrderId == orderId, cancellationToken);
@@ -29,7 +29,7 @@ namespace Bob.Core.Repositories
             {
                 try
                 {
-                    payment.Id = (PaymentId)Convert.ToInt32(identity);
+                    payment.Id = (int)Convert.ToInt32(identity);
                 }
                 catch { }
             }

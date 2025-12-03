@@ -10,7 +10,7 @@ namespace Bob.Core.Repositories
 #nullable enable
     public sealed class PaymentProcessorRepository
     {
-        public async Task<PaymentProcessor?> GetByIdAsync(ProcessorId id, CancellationToken cancellationToken = default)
+        public async Task<PaymentProcessor?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<PaymentProcessor>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);

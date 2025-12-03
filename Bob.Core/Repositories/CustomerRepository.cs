@@ -13,7 +13,7 @@ namespace Bob.Core.Repositories
 #nullable enable
     public sealed class CustomerRepository
     {
-        public async Task<Customer?> GetByIdAsync(CustomerId id, CancellationToken cancellationToken = default)
+        public async Task<Customer?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Customer>().FirstOrDefaultAsync(c => c.Id == id, cancellationToken);

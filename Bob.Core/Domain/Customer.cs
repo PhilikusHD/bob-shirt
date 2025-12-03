@@ -3,15 +3,6 @@ using LinqToDB.Mapping;
 
 namespace Bob.Core.Domain
 {
-    public readonly struct CustomerId
-    {
-        public int Value { get; }
-        public CustomerId(int value) => Value = value;
-        public override string ToString() => Value.ToString();
-
-        public static implicit operator CustomerId(int id) => new CustomerId(id);
-        public static implicit operator int(CustomerId id) => id.Value;
-    }
 
     [Table("CUSTOMER")]
     public sealed class Customer

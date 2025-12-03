@@ -14,12 +14,12 @@ namespace Bob.Core.Services
         }
 
 #nullable enable
-        public async Task<Payment?> GetPaymentByIdAsync(PaymentId paymentId)
+        public async Task<Payment?> GetPaymentByIdAsync(int paymentId)
         {
             return await m_PaymentRepository.GetByIdAsync(paymentId);
         }
 
-        public async Task<Payment?> GetPaymentsForOrderAsync(OrderId orderId)
+        public async Task<Payment?> GetPaymentsForOrderAsync(int orderId)
         {
             return await m_PaymentRepository.GetByOrderIdAsync(orderId);
         }

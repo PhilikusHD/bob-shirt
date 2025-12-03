@@ -12,36 +12,36 @@ namespace Bob.Core.Services
     public class OrderService
     {
         private readonly OrderRepository m_OrderRepository;
-        private readonly CartService m_CartService;
-        private readonly ItemService m_ItemService;
+        private readonly OrderItemService m_OrderItemService;
+        private readonly ProductService m_ProductService;
 
-        public OrderService(OrderRepository orderRepository, CartService cartService, ItemService itemService)
+        public OrderService(OrderRepository orderRepository, OrderItemService cartService, ProductService productService)
         {
             m_OrderRepository = orderRepository;
-            m_CartService = cartService;
-            m_ItemService = itemService;
+            m_OrderItemService = cartService;
+            m_ProductService = productService;
         }
 
-        public async Task<Order?> GetOrderByIdAsync(OrderId orderId)
+        public async Task<Order?> GetOrderByIdAsync(int orderId)
         {
             return await m_OrderRepository.GetByIdAsync(orderId);
         }
 
-        public async Task<IReadOnlyList<Order>> GetOrderForCustomerAsync(CustomerId customerId)
+        public async Task<IReadOnlyList<Order>> GetOrderForCustomerAsync(int customerId)
         {
             return await m_OrderRepository.GetByCustomerAsync(customerId);
         }
 
-        public async Task<OrderId> CreateOrderAsync(Order order)
+        public async Task<int> CreateOrderAsync(Order order)
         {
-            var carts = await m_CartService.GetCartLinesAsync(order.CartId);
+            var carts = await m_OrderItemService.GetOrderItemLinesAsync(order.Id);
             if (carts == null)
-                return (OrderId)(-1);
+                return -1;
 
             decimal totalAmount = 0;
             foreach (var cart in carts)
             {
-                var item = await m_ItemService.GetItemByIdAsync(cart.ItemId);
+                var item = await m_ProductService.GetProductByIdAsync(cart.ProductId);
                 if (item != null)
                     totalAmount += item.Price;
             }
@@ -53,7 +53,7 @@ namespace Bob.Core.Services
             return order.Id;
         }
 
-        public async Task CancelOrderAsync(OrderId orderId)
+        public async Task CancelOrderAsync(int orderId)
         {
             var order = await m_OrderRepository.GetByIdAsync(orderId);
             if (order == null)

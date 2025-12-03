@@ -1,0 +1,42 @@
+﻿using Bob.Core.Domain;
+using Bob.Core.Logging;
+using Bob.Core.Repositories;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Bob.Core.Services
+{
+    public class OrderItemService
+    {
+        private readonly OrderItemRepository m_OrderItemRepository;
+        private readonly ProductService m_ProductService;
+
+        public OrderItemService(OrderItemRepository orderItemRepository, ProductService productService)
+        {
+            m_OrderItemRepository = orderItemRepository;
+            m_ProductService = productService;
+        }
+
+        public async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderItemId)
+        {
+            return await m_OrderItemRepository.GetOrderItemLinesAsync(orderItemId);
+        }
+
+        public async Task AddLineAsync(OrderItemLine line)
+        {
+            var item = await m_ProductService.GetProductByIdAsync(line.ProductId);
+            if (item == null)
+            {
+                Logger.Error("Item does not exist.");
+                return;
+            }
+
+            await m_OrderItemRepository.AddLineAsync(line);
+        }
+
+        public async Task RemoveLineAsync(int cartId, int itemId) => await m_OrderItemRepository.RemoveLineAsync(cartId, itemId);
+
+        public async Task AssignToOrderAsync(int cartId, int orderId) => await m_OrderItemRepository.AssignToOrderAsync(cartId, orderId);
+    }
+}

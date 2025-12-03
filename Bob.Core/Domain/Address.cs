@@ -3,7 +3,6 @@
 namespace Bob.Core.Domain
 {
 
-
     [Table("ADDRESS")]
     public sealed class Address
     {

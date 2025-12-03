@@ -3,23 +3,6 @@ using LinqToDB.Mapping;
 
 namespace Bob.Core.Domain
 {
-    public readonly struct PaymentId
-    {
-        public int Value { get; }
-        public PaymentId(int value) => Value = value;
-        public override string ToString() => Value.ToString();
-        public static implicit operator PaymentId(int id) => new PaymentId(id);
-        public static implicit operator int(PaymentId id) => id.Value;
-    }
-
-    public readonly struct ProcessorId
-    {
-        public int Value { get; }
-        public ProcessorId(int value) => Value = value;
-        public override string ToString() => Value.ToString();
-        public static implicit operator ProcessorId(int value) => new ProcessorId(value);
-        public static implicit operator int(ProcessorId id) => id.Value;
-    }
 
     [Table("PAYMENT")]
     public sealed class Payment
@@ -28,18 +11,18 @@ namespace Bob.Core.Domain
 
         [PrimaryKey]
         [Column("PAYMENTID")]
-        public PaymentId Id { get; set; }
+        public int Id { get; set; }
 
         [Column("ORDERID")]
-        public OrderId OrderId { get; set; }
+        public int OrderId { get; set; }
 
         [Column("PAYMENTDATE")]
         public DateTime PaymentDate { get; set; }
 
         [Column("PROCESSORID")]
-        public ProcessorId ProcessorId { get; set; }
+        public int ProcessorId { get; set; }
 
-        public Payment(PaymentId id, OrderId orderId, DateTime paymentDate, ProcessorId processorId)
+        public Payment(int id, int orderId, DateTime paymentDate, int processorId)
         {
             Id = id;
             OrderId = orderId;
@@ -55,12 +38,12 @@ namespace Bob.Core.Domain
 
         [PrimaryKey, Identity]
         [Column("PROCESSORID")]
-        public ProcessorId Id { get; set; }
+        public int Id { get; set; }
 
         [Column("METHOD")]
         public string Method { get; set; }
 
-        public PaymentProcessor(ProcessorId id, string method)
+        public PaymentProcessor(int id, string method)
         {
             Id = id;
             Method = method;

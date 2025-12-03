@@ -15,7 +15,7 @@ namespace Bob.Core.Services
         }
 
 #nullable enable
-        public async Task<PaymentProcessor?> GetProcessorByIdAsync(ProcessorId processorId)
+        public async Task<PaymentProcessor?> GetProcessorByIdAsync(int processorId)
         {
             return await m_ProcessorRepository.GetByIdAsync(processorId);
         }

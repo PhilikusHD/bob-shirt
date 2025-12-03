@@ -15,7 +15,7 @@ namespace Bob.Core.Services
         }
 
 #nullable enable
-        public async Task<Customer?> GetCustomerByIdAsync(CustomerId customerId)
+        public async Task<Customer?> GetCustomerByIdAsync(int customerId)
         {
             return await m_CustomerRepository.GetByIdAsync(customerId);
         }
