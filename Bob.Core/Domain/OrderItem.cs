@@ -8,12 +8,12 @@ namespace Bob.Core.Domain
         public OrderItemLine() { }
 
         [PrimaryKey]
-        [Column("PRODUCTID")]
-        public int ProductId { get; set; }
-        
+        [Column("VARIANTID")]
+        public int VariantId { get; set; }
+
         [Column("AMOUNT")]
         public string Amount { get; set; }
-        
+
         [PrimaryKey]
         [Column("ORDERID")]
         public int OrderId { get; set; } // null until checkout
@@ -21,7 +21,7 @@ namespace Bob.Core.Domain
         public OrderItemLine(int orderid, int productid, string amount)
         {
             OrderId = orderid;
-            ProductId = productid;
+            VariantId = productid;
             Amount = amount;
         }
     }

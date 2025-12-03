@@ -34,16 +34,24 @@ namespace Bob.Core.Services
 
         public async Task<int> CreateOrderAsync(Order order)
         {
-            var carts = await m_OrderItemService.GetOrderItemLinesAsync(order.Id);
-            if (carts == null)
+            var lines = await m_OrderItemService.GetOrderItemLinesAsync(order.Id);
+            if (lines == null)
                 return -1;
 
             decimal totalAmount = 0;
-            foreach (var cart in carts)
+            foreach (var line in lines)
             {
-                var item = await m_ProductService.GetProductByIdAsync(cart.ProductId);
+                var variant = await m_ProductService.GetVariantAsync(line.VariantId);
+                if (variant == null)
+                {
+                    Logger.Warning($"Variant with ID {line.VariantId} does not exist. Skipping...");
+                    continue;
+                }
+
+                var item = await m_ProductService.GetProductByIdAsync(variant.ProductId);
+
                 if (item != null)
-                    totalAmount += item.Price;
+                    totalAmount += await m_ProductService.GetPriceAdjustedForSize(variant.SizeId, item.Price);
             }
 
             order.TotalAmount = totalAmount;

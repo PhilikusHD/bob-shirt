@@ -1,8 +1,7 @@
 ﻿using LinqToDB.Mapping;
+
 namespace Bob.Core.Domain
 {
-
-
     [Table("PRODUCT")]
     public sealed class Product
     {
@@ -15,21 +14,17 @@ namespace Bob.Core.Domain
         [Column("PRODUCTNAME")]
         public string Name { get; set; }
 
-        [Column("[SIZE]")]
-        public string Size { get; set; }
+        [Column("TYPEID")]
+        public int TypeId { get; set; }
 
-        [Column("COLOR")]
-        public string Color { get; set; }
-
-        [Column("PRIZE")]
+        [Column("PRICE")]
         public decimal Price { get; set; }
 
-        public Product(int id, string name, string size, string color, decimal price)
+        public Product(int id, string name, int typeId, string color, decimal price)
         {
             Id = id;
             Name = name;
-            Size = size;
-            Color = color;
+            TypeId = typeId;
             Price = price;
         }
     }

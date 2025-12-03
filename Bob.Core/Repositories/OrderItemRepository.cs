@@ -23,16 +23,16 @@ namespace Bob.Core.Repositories
             await db.InsertAsync(line);
         }
 
-        public async Task RemoveLineAsync(int orderId, int productId, CancellationToken cancellationToken = default)
+        public async Task RemoveLineAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.ProductId == productId).DeleteAsync(cancellationToken);
+            await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.VariantId == variantId).DeleteAsync(cancellationToken);
         }
 
-        public async Task AssignToOrderAsync(int orderId, int productId, CancellationToken cancellationToken = default)
+        public async Task AssignToOrderAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.GetTable<OrderItemLine>().Where(cl => cl.ProductId == productId).Set(cl => cl.OrderId, orderId).UpdateAsync(cancellationToken);
+            await db.GetTable<OrderItemLine>().Where(cl => cl.VariantId == variantId).Set(cl => cl.OrderId, orderId).UpdateAsync(cancellationToken);
         }
     }
 }

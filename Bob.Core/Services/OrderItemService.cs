@@ -24,10 +24,10 @@ namespace Bob.Core.Services
 
         public async Task AddLineAsync(OrderItemLine line)
         {
-            var item = await m_ProductService.GetProductByIdAsync(line.ProductId);
-            if (item == null)
+            var variant = await m_ProductService.GetVariantAsync(line.VariantId);
+            if (variant == null)
             {
-                Logger.Error("Item does not exist.");
+                Logger.Error("Variant does not exist.");
                 return;
             }
 

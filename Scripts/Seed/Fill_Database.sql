@@ -110,7 +110,7 @@ INSERT INTO [ORDER] (ORDERID, CUSTOMERID, ORDERDATE, TOTALAMOUNT) VALUES
 (3, 3, '2024-03-10', 89.97);
 
 -- ORDER_ITEM --------------------------------------------------------
-INSERT INTO ORDER_ITEM (ORDERID, PRODUCTID, AMOUNT) VALUES
+INSERT INTO ORDER_ITEM (ORDERID, VARIANTID, AMOUNT) VALUES
 (1, 10, 1),  -- Order 1: 1x Shirt - Gus
 (1, 30, 1),  -- Order 1: 1x Cap - Gus
 (2, 20, 1),  -- Order 2: 1x Hoodie - Gus

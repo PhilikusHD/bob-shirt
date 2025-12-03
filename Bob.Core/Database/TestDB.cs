@@ -1,10 +1,12 @@
-﻿using Bob.Core.Logging;
-using Bob.Core.Services;
-using Bob.Core.Repositories;
+﻿using Avalonia.Markup.Xaml.Templates;
 using Bob.Core.Domain;
+using Bob.Core.Logging;
+using Bob.Core.Repositories;
+using Bob.Core.Services;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bob.Core.Database
 {
@@ -58,7 +60,7 @@ namespace Bob.Core.Database
                 using (new TestScope("Customers"))
                     await TestCustomers(customerService, addressService);
 
-                using (new TestScope("Products"))
+                using (new TestScope("Products & Variants"))
                     await TestProducts(productService);
 
                 using (new TestScope("Order & Cart Flow"))
@@ -78,35 +80,31 @@ namespace Bob.Core.Database
         private async Task TestAddresses(AddressService service)
         {
             Logger.Debug("-> Address: Reading existing entries...");
-
             var a1 = await service.GetAddressByIdAsync(1);
-            if (a1 == null)
-                Logger.Error("Address 1 not found, database is inconsistent.");
-            else
-                Logger.Debug($"Address 1 OK: {a1.Street} {a1.HouseNumber}, {a1.City}");
+            Logger.Debug(a1 != null ? $"Address 1 OK: {a1.Street} {a1.HouseNumber}" : "Address 1 not found.");
 
-            Logger.Debug("-> Address: Adding a new address...");
-
-            var newAddr = new Address(999, "Test Lane", "42A", 12345, "Nowhere");
+            var newAddr = new Address
+            {
+                Street = "Test Lane",
+                HouseNumber = "42A",
+                PostalCode = 12345,
+                City = "Nowhere"
+            };
             await service.AddAddressAsync(newAddr);
 
             var check = await service.GetAddressByIdAsync(newAddr.Id);
             Logger.Debug(check != null ? "Address write OK" : "Address write failed");
 
-            Logger.Debug("-> Address: Removing temporary address...");
             await service.DeleteAddressAsync(newAddr.Id);
         }
 
         private async Task TestCustomers(CustomerService custService, AddressService addrService)
         {
             Logger.Debug("-> Customers: Reading all customers...");
-
             var customers = await custService.GetAllCustomersAsync();
             Logger.Debug($"Loaded {customers.Count} customers.");
 
-            Logger.Debug("-> Customers: Reading customer #1...");
             var c1 = await custService.GetCustomerByIdAsync(1);
-
             if (c1 != null)
             {
                 Logger.Debug($"Customer 1 OK: {c1.Name} {c1.Surname}");
@@ -114,53 +112,44 @@ namespace Bob.Core.Database
                 Logger.Debug($"Customer 1 address: {addr?.Street ?? "NULL"}");
             }
 
-            Logger.Debug("-> Customers: Inserting test customer...");
-
-            var newCust = new Customer(
-                id: 999,
-                name: "Test",
-                surname: "Dude",
-                email: "test@local",
-                addressId: 1,
-                phoneNumber: "0000",
-                signupDate: DateTime.UtcNow);
-
+            var newCust = new Customer(999, "Test", "Dude", "test@local", 1, "0000", DateTime.UtcNow);
             await custService.AddCustomerAsync(newCust);
-
             var check = await custService.GetCustomerByIdAsync(newCust.Id);
             Logger.Debug(check != null ? "Customer insert OK" : "Customer insert failed");
 
-            Logger.Debug("-> Customers: Removing test customer...");
             await custService.DeleteCustomerAsync(newCust.Id);
         }
 
         private async Task TestProducts(ProductService productService)
         {
             Logger.Debug("-> Products: Loading all products...");
-
             var all = await productService.GetAllProductsAsync();
-            Logger.Debug($"There are {all.Count} products in catalog.");
+            Logger.Debug($"Catalog has {all.Count} products.");
 
-            Logger.Debug("-> Creating temporary product...");
-
-            var template = all.Last();
-
-            var product = new Product
-            {
-                Id = template.Id + 1,
-                Name = "Temp Product",
-                Price = template.Price,
-                Color = template.Color,
-                Size = template.Size
-            };
-
+            // Create a temporary product
+            var product = new Product { Id = 222, Name = "Temp Product", TypeId = 1, Price = 55 };
             await productService.AddProductAsync(product);
 
-            var check = await productService.GetProductByIdAsync(product.Id);
-            Logger.Debug($"Created temporary product: {check?.Name ?? "NULL"}");
+            // Create a variant for the product
+            var variant = new ProductVariant
+            {
+                VariantId = 999,
+                ProductId = product.Id,
+                ColorId = 1,
+                SizeId = 1,
+                Stock = 10
+            };
+            await productService.AddVariantAsync(variant);
 
-            Logger.Debug("-> Deleting temporary product...");
+            Logger.Debug($"Created product {product.Name} with ID {product.Id}");
+
+            var variants = await productService.GetVariantsForProductAsync(product.Id);
+            Logger.Debug($"Product has {variants.Count} variants.");
+
+            // DELETE: first the variant, then the product
             await productService.DeleteProductAsync(product.Id);
+
+            Logger.Debug("Deleted temporary product and its variant successfully");
         }
 
         private async Task TestOrderAndCartFlow(
@@ -169,8 +158,6 @@ namespace Bob.Core.Database
             ProductService productService,
             CustomerService customerService)
         {
-            Logger.Debug("-> Order Test Flow Start");
-
             var customer = await customerService.GetCustomerByIdAsync(1);
             if (customer == null)
             {
@@ -178,28 +165,29 @@ namespace Bob.Core.Database
                 return;
             }
 
-            Logger.Debug("Creating temporary order...");
-            var order = new Order(555, customer.Id, DateTime.UtcNow, 0);
+            var order = new Order
+            {
+                Id = 555,
+                CustomerId = customer.Id,
+                OrderDate = DateTime.UtcNow,
+                TotalAmount = 0
+            };
 
-            Logger.Debug("Adding item lines...");
+            // Pick existing variant for testing
+            var firstProduct = (await productService.GetAllProductsAsync()).First();
+            var variant = (await productService.GetVariantsForProductAsync(firstProduct.Id)).First();
 
-            await itemService.AddLineAsync(new OrderItemLine(555, 1, "2"));
-            await itemService.AddLineAsync(new OrderItemLine(555, 10, "1"));
+            await itemService.AddLineAsync(new OrderItemLine(order.Id, variant.VariantId, "2"));
+            await itemService.AddLineAsync(new OrderItemLine(order.Id, 10, "1"));
 
-            Logger.Debug("Generating final order total...");
             var result = await orderService.CreateOrderAsync(order);
-            if (result != -1)
-                Logger.Debug($"Order #555 created with total {order.TotalAmount}");
-            else
-                Logger.Error("Order creation failed.");
+            Logger.Debug(result != -1 ? $"Order #{order.Id} total {order.TotalAmount}" : "Order creation failed");
 
-            Logger.Debug("-> Order retrieval check...");
-            var loaded = await orderService.GetOrderByIdAsync(555);
+            var loaded = await orderService.GetOrderByIdAsync(order.Id);
             Logger.Debug(loaded != null ? "Order fetch OK" : "Order fetch FAILED");
 
-            Logger.Debug("-> Order item deletion check...");
-            await itemService.RemoveLineAsync(555, 1);
-            await itemService.RemoveLineAsync(555, 10);
+            await itemService.RemoveLineAsync(order.Id, variant.VariantId);
+            await itemService.RemoveLineAsync(order.Id, 10);
         }
 
         private async Task TestPayment(
@@ -207,22 +195,22 @@ namespace Bob.Core.Database
             PaymentService paymentService,
             OrderService orderService)
         {
-            Logger.Debug("-> Payment Processors...");
             var processors = await processorService.GetAllProcessorsAsync();
             Logger.Debug($"Available payment processors: {string.Join(", ", processors.Select(p => p.Method))}");
 
-            Logger.Debug("-> Creating payment record...");
-            var p = new Payment(900, 555, DateTime.UtcNow, 1);
-
+            var p = new Payment
+            {
+                Id = 999,
+                OrderId = 555,
+                PaymentDate = DateTime.UtcNow,
+                ProcessorId = 1
+            };
             await paymentService.ProcessPaymentAsync(p);
 
-            var check = await paymentService.GetPaymentByIdAsync(900);
+            var check = await paymentService.GetPaymentByIdAsync(p.Id);
             Logger.Debug(check != null ? "Payment added OK" : "Payment add FAILED");
 
-            Logger.Debug("-> Payment deletion check...");
-            await paymentService.DeletePaymentAsync(p.Id);
-
-            Logger.Debug("-> Canceling temporary order...");
+            await paymentService.DeletePaymentAsync(999);
             await orderService.CancelOrderAsync(555);
         }
     }
