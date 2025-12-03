@@ -37,7 +37,7 @@ echo Checking installed packages in %CSPROJ_FILE%...
 dotnet list "%CSPROJ_FILE%" package > packages.txt
 
 REM List of expected packages
-set "expectedPackagesCore=Avalonia Avalonia.Themes.Fluent Avalonia.Fonts.Inter DotNetEnv CommunityToolkit.Mvvm"
+set "expectedPackagesCore=Avalonia Avalonia.Themes.Fluent Avalonia.Fonts.Inter DotNetEnv CommunityToolkit.Mvvm linq2db Microsoft.Data.SqlClient"
 for %%p in (%expectedPackagesCore%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packages.txt >nul
@@ -50,7 +50,7 @@ for %%p in (%expectedPackagesCore%) do (
 )
 
 dotnet list "%CSPROJ_FILE_DESKTOP%" package >> packagesDesktop.txt
-set "expectedPackagesDesktop=Avalonia.Desktop Avalonia.Diagnostics"
+set "expectedPackagesDesktop=Avalonia.Desktop Avalonia.Diagnostics Microsoft.Data.SqlClient"
 for %%p in (%expectedPackagesDesktop%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packagesDesktop.txt >nul
@@ -63,7 +63,7 @@ for %%p in (%expectedPackagesDesktop%) do (
 )
 
 dotnet list "%CSPROJ_FILE_WASM%" package >> packagesWASM.txt
-set "expectedPackagesWASM=Avalonia.Browser Microsoft.NET.Sdk.WebAssembly.Pack"
+set "expectedPackagesWASM=Avalonia.Browser Microsoft.NET.Sdk.WebAssembly.Pack Microsoft.Data.SqlClient"
 for %%p in (%expectedPackagesWASM%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packagesWASM.txt >nul
@@ -91,5 +91,19 @@ if errorlevel 1 (
     exit /b 1
 )
 
+REM ------------------------------------------------------------------
+REM Filling Database with full build script
+REM ------------------------------------------------------------------
+echo Setting up the database...
+powershell -NoProfile -ExecutionPolicy Bypass -File "Utils\DBFullBuild.ps1
+
+if errorlevel 1 (
+    echo Database setup failed.
+    exit /b 1
+)
+
+REM ------------------------------------------------------------------
+REM Final message
+REM ------------------------------------------------------------------
 echo Setup complete! You can now build the project.
 pause

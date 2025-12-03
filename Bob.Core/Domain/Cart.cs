@@ -1,21 +1,32 @@
-﻿namespace Bob.Core.Domain
+﻿using LinqToDB.Mapping;
+
+namespace Bob.Core.Domain
 {
     public readonly struct CartId
     {
-        public uint Value { get; }
-        public CartId(uint value) => Value = value;
+        public int Value { get; }
+        public CartId(int value) => Value = value;
         public override string ToString() => Value.ToString();
 
-        public static implicit operator CartId(uint id) => new CartId(id);
-        public static implicit operator uint(CartId id) => id.Value;
+        public static implicit operator CartId(int id) => new CartId(id);
+        public static implicit operator int(CartId id) => id.Value;
 
     }
 
+    [Table("CART")]
     public sealed class CartLine
     {
-        public CartId CartId { get; }
-        public ItemId ItemId { get; }
-        public OrderId? OrderId { get; } // null until checkout
+        public CartLine() { }
+
+        [PrimaryKey]
+        [Column("CARTID")]
+        public CartId CartId { get; set; }
+
+        [Column("ITEMID")]
+        public ItemId ItemId { get; set; }
+
+        [Column("ORDERID")]
+        public OrderId? OrderId { get; set; } // null until checkout
 
         public CartLine(CartId cartId, ItemId itemId, OrderId? orderId)
         {

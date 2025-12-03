@@ -1,25 +1,31 @@
-﻿namespace Bob.Core.Domain
+﻿using LinqToDB.Mapping;
+
+namespace Bob.Core.Domain
 {
-    public readonly struct AddressId
-    {
-        public uint Value { get; }
-        public AddressId(uint value) => Value = value;
-        public override string ToString() => Value.ToString();
-
-        public static implicit operator AddressId(uint id) => new AddressId(id);
-        public static implicit operator uint(AddressId id) => id.Value;
-    }
 
 
+    [Table("ADDRESS")]
     public sealed class Address
     {
-        public AddressId Id { get; }
-        public string Street { get; }
-        public string HouseNumber { get; }
-        public string PostalCode { get; }
-        public string City { get; }
+        public Address() { }
 
-        public Address(AddressId id, string street, string houseNumber, string postalCode, string city)
+        [PrimaryKey]
+        [Column("ADDRESSID")]
+        public int Id { get; set; }
+
+        [Column("STREET")]
+        public string Street { get; set; }
+
+        [Column("HOUSENUMBER")]
+        public string HouseNumber { get; set; }
+
+        [Column("POSTALCODE")]
+        public int PostalCode { get; set; } // matches SQL INTEGER
+
+        [Column("CITY")]
+        public string City { get; set; }
+
+        public Address(int id, string street, string houseNumber, int postalCode, string city)
         {
             Id = id;
             Street = street;
@@ -28,4 +34,5 @@
             City = city;
         }
     }
+
 }

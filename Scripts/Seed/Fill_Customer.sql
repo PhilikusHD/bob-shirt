@@ -6,7 +6,8 @@ INSERT INTO ADDRESS (ADDRESSID, STREET, HOUSENUMBER, POSTALCODE, CITY) VALUES
 INSERT INTO CUSTOMER (CUSTOMERID, NAME, SURNAME, EMAIL, ADDRESSID, PHONENR, SIGNUPDATE) VALUES
 (1, 'John', 'Smith', 'john.smith@email.com', 1, '555-0101', '2024-01-15'),
 (2, 'Emma', 'Johnson', 'emma.j@email.com', 2, '555-0102', '2024-02-20'),
-(3, 'Michael', 'Brown', 'michael.b@email.com', 3, '555-0103', '2024-03-10');
+(3, 'Michael', 'Brown', 'michael.b@email.com', 3, '555-0103', '2024-03-10'),
+(4, 'Michael', 'Hund', 'michael.h@email.com', 3, '555-2312312', '2024-03-11');
 
 INSERT INTO PAYMENTPROCESSOR (PROCESSORID, METHOD) VALUES
 (1, 'Credit Card'),

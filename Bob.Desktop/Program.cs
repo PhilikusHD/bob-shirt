@@ -1,9 +1,15 @@
 ﻿using Avalonia;
 using Bob.Core;
 using Bob.Core.Logging;
+using Bob.Core.Database;
+using Bob.Core.Domain;
+using LinqToDB;
 using System;
 using System.Runtime.InteropServices;
-
+using System.IO;
+using System.Linq;
+using Bob.Core.Services;
+using System.Threading.Tasks;
 
 sealed class Program
 {
@@ -23,7 +29,7 @@ sealed class Program
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         OpenConsole();
         Logger.InitLog();
@@ -33,6 +39,40 @@ sealed class Program
         Logger.Warning("Warning Test");
         Logger.Error("Error Test");
         Logger.Critical("Critical Test");
+
+        // Quick DB connection test: fetch all customers and print them to the console.
+        try
+        {
+            // using var db = new AppDataConnection();
+            CustomerService customerService = new CustomerService();
+
+            // Logger.Info("Created DB Connection.");
+            var customers = await customerService.GetAllCustomersAsync();
+
+            Logger.Info($"DB Connection OK — fetched {customers.Count} customers.");
+            foreach (var c in customers)
+            {
+                Logger.Debug($"Customer: {c.Id} - {c.Name} {c.Surname} <{c.Email}>");
+            }
+
+
+
+            Customer newCustomer = new Customer(customers.Last().Id + 1, "Bob", "Bobby", "bobbybobob@email.com", 3, "000-0000", DateTime.Now);
+            Logger.Info("Adding new Customer...");
+            await customerService.AddCustomerAsync(newCustomer);
+
+            customers = await customerService.GetAllCustomersAsync();
+            Logger.Info($"DB Connection OK — fetched {customers.Count} customers.");
+            foreach (var c in customers)
+            {
+                Logger.Debug($"Customer: {c.Id} - {c.Name} {c.Surname} <{c.Email}>");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"DB connection test failed: {ex.InnerException?.Message ?? ex.Message}");
+            // Console.WriteLine($"DB connection test failed: {ex.Message}");
+        }
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 

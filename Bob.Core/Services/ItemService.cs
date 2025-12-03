@@ -1,65 +1,40 @@
 ﻿using Bob.Core.Domain;
-using Bob.Core.DTO;
 using Bob.Core.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
+#nullable enable
     public class ItemService
     {
-        private readonly IItemRepository m_ItemRepository;
+        private readonly ItemRepository m_ItemRepository;
 
-        public ItemService(IItemRepository repository)
+        public ItemService(ItemRepository repository)
         {
             m_ItemRepository = repository;
         }
 
-        public async Task<ItemDto> GetItemByIdAsync(uint itemId)
+        public async Task<Item?> GetItemByIdAsync(ItemId itemId)
         {
-            Item item = await m_ItemRepository.GetByIdAsync(itemId);
-            if (item == null)
-            {
-                return null;
-            }
-
-            return new ItemDto(item.Id, item.Name, item.Size, item.Color, item.Price);
+            return await m_ItemRepository.GetByIdAsync(itemId);
         }
 
-        public async Task<IReadOnlyList<ItemDto>> GetAllItemsAsync()
+        public async Task<IReadOnlyList<Item>> GetAllItemsAsync()
         {
-            var items = await m_ItemRepository.GetAllAsync();
-            return items.Select(i => new ItemDto(i.Id, i.Name, i.Size, i.Color, i.Price)).ToList();
+            return await m_ItemRepository.GetAllAsync();
         }
 
-        public async Task AddItemAsync(ItemDto dto)
+        public async Task AddItemAsync(Item item)
         {
-            var entity = new Item(
-                dto.ItemId,
-                dto.Name,
-                dto.Size,
-                dto.Color,
-                dto.Price
-            );
-            await m_ItemRepository.AddAsync(entity);
+            await m_ItemRepository.AddAsync(item);
         }
 
-        public async Task UpdateItemAsync(ItemDto dto)
+        public async Task UpdateItemAsync(Item item)
         {
-            var entity = new Item(
-                dto.ItemId,
-                dto.Name,
-                dto.Size,
-                dto.Color,
-                dto.Price
-            );
-
-            await m_ItemRepository.UpdateAsync(entity);
+            await m_ItemRepository.UpdateAsync(item);
         }
 
-        public async Task DeleteItemAsync(uint itemId) => await m_ItemRepository.DeleteAsync(itemId);
+        public async Task DeleteItemAsync(ItemId itemId) => await m_ItemRepository.DeleteAsync(itemId);
     }
 }

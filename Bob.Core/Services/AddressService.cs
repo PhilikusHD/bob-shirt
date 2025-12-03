@@ -1,61 +1,37 @@
 ﻿using Bob.Core.Domain;
-using Bob.Core.DTO;
 using Bob.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
     public class AddressService
     {
-        private readonly IAddressRepository m_AddressRepository;
+        private readonly AddressRepository m_AddressRepository;
 
-        public AddressService(IAddressRepository addressRepository)
+        public AddressService(AddressRepository addressRepository)
         {
             m_AddressRepository = addressRepository;
         }
 
 #nullable enable
-        public async Task<AddressDto?> GetAddressByIdAsync(uint addressId)
+        public async Task<Address?> GetAddressByIdAsync(int addressId)
         {
-            var address = await m_AddressRepository.GetByIdAsync(addressId);
-            if (address == null) return null;
-            return new AddressDto(address.Id, address.Street, address.HouseNumber, address.PostalCode, address.City);
+            return await m_AddressRepository.GetByIdAsync(addressId);
         }
 
-        public async Task<AddressDto?> GetAddressForCustomerAsync(uint customerId)
+        public async Task<Address?> GetAddressForCustomerAsync(uint customerId)
         {
-            var address = await m_AddressRepository.GetByCustomerIdAsync(customerId);
-            if (address == null) return null;
-            return new AddressDto(address.Id, address.Street, address.HouseNumber, address.PostalCode, address.City);
+            return await m_AddressRepository.GetByCustomerIdAsync(customerId);
         }
 
-        public async Task AddAddressAsync(AddressDto address)
+        public async Task AddAddressAsync(Address address)
         {
-            var entity = new Address(
-                address.AddressId != 0 ? address.AddressId : 0,
-                address.Street,
-                address.HouseNumber,
-                address.PostalCode,
-                address.City
-            );
-            await m_AddressRepository.AddAsync(entity);
+            await m_AddressRepository.AddAsync(address);
         }
 
-        public async Task UpdateAddressAsync(AddressDto address)
+        public async Task UpdateAddressAsync(Address address)
         {
-            var entity = new Address
-            (
-                address.AddressId,
-                address.Street,
-                address.HouseNumber,
-                address.PostalCode,
-                address.City
-            );
-            await m_AddressRepository.UpdateAsync(entity);
+            await m_AddressRepository.UpdateAsync(address);
         }
     }
 }

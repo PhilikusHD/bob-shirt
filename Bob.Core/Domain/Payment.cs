@@ -1,31 +1,43 @@
 ﻿using System;
+using LinqToDB.Mapping;
 
 namespace Bob.Core.Domain
 {
     public readonly struct PaymentId
     {
-        public uint Value { get; }
-        public PaymentId(uint value) => Value = value;
+        public int Value { get; }
+        public PaymentId(int value) => Value = value;
         public override string ToString() => Value.ToString();
-        public static implicit operator PaymentId(uint id) => new PaymentId(id);
-        public static implicit operator uint(PaymentId id) => id.Value;
+        public static implicit operator PaymentId(int id) => new PaymentId(id);
+        public static implicit operator int(PaymentId id) => id.Value;
     }
 
     public readonly struct ProcessorId
     {
-        public uint Value { get; }
-        public ProcessorId(uint value) => Value = value;
+        public int Value { get; }
+        public ProcessorId(int value) => Value = value;
         public override string ToString() => Value.ToString();
-        public static implicit operator ProcessorId(uint value) => new ProcessorId(value);
-        public static implicit operator uint(ProcessorId id) => id.Value;
+        public static implicit operator ProcessorId(int value) => new ProcessorId(value);
+        public static implicit operator int(ProcessorId id) => id.Value;
     }
 
+    [Table("PAYMENT")]
     public sealed class Payment
     {
-        public PaymentId Id { get; }
-        public OrderId OrderId { get; }
-        public DateTime PaymentDate { get; }
-        public ProcessorId ProcessorId { get; }
+        public Payment() { }
+
+        [PrimaryKey]
+        [Column("PAYMENTID")]
+        public PaymentId Id { get; set; }
+
+        [Column("ORDERID")]
+        public OrderId OrderId { get; set; }
+
+        [Column("PAYMENTDATE")]
+        public DateTime PaymentDate { get; set; }
+
+        [Column("PROCESSORID")]
+        public ProcessorId ProcessorId { get; set; }
 
         public Payment(PaymentId id, OrderId orderId, DateTime paymentDate, ProcessorId processorId)
         {
@@ -36,10 +48,17 @@ namespace Bob.Core.Domain
         }
     }
 
+    [Table("PAYMENTPROCESSOR")]
     public sealed class PaymentProcessor
     {
-        public ProcessorId Id { get; }
-        public string Method { get; }
+        public PaymentProcessor() { }
+
+        [PrimaryKey, Identity]
+        [Column("PROCESSORID")]
+        public ProcessorId Id { get; set; }
+
+        [Column("METHOD")]
+        public string Method { get; set; }
 
         public PaymentProcessor(ProcessorId id, string method)
         {

@@ -1,5 +1,5 @@
 param(
-    [string]$ServerInstance = "CW-INTEG\MSSQLSERVER01"
+    [string]$ServerInstance
 )
 
 $scripts = @(
@@ -12,7 +12,6 @@ $scripts = @(
 
 function Invoke-SqlScript ($path, $description, $database){
     Write-Host "`n=== Running: $description ==="
-
      try {
         $sqlScript = Get-Content -Path $path -Raw
         Invoke-Sqlcmd `
@@ -26,6 +25,27 @@ function Invoke-SqlScript ($path, $description, $database){
         exit 1
     }
 }
+
+
+if (-not $ServerInstance) {
+    $services = Get-Service | Where-Object { $_.Name -like "MSSQL$*" -or $_.Name -eq "MSSQLSERVER" }
+    if ($services.Count -eq 0) {
+        Write-Error "No SQL Server instance found."
+        exit 1
+    }
+
+    # pick the first running service
+    $service = $services | Where-Object { $_.Status -eq "Running" } | Select-Object -First 1
+    if ($service.Name -eq "MSSQLSERVER") {
+        $ServerInstance = "localhost"
+    } else {
+        $instanceName = $service.Name -replace "^MSSQL\$", ""
+        $ServerInstance = "localhost\$instanceName"
+    }
+    Write-Host "Using detected SQL Server instance: $ServerInstance"
+}
+
+
 foreach ($script in $scripts) {
     Invoke-SqlScript @script
 }

@@ -1,71 +1,38 @@
 ﻿using Bob.Core.Domain;
-using Bob.Core.DTO;
 using Bob.Core.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
     public class CustomerService
     {
-        private readonly ICustomerRepository m_CustomerRepository;
+        private readonly CustomerRepository m_CustomerRepository;
 
-        public CustomerService(ICustomerRepository customerRepository)
+        public CustomerService()
         {
-            m_CustomerRepository = customerRepository;
+            m_CustomerRepository = new CustomerRepository();
         }
 
 #nullable enable
-        public async Task<CustomerDto?> GetCustomerByIdAsync(uint customerId)
+        public async Task<Customer?> GetCustomerByIdAsync(CustomerId customerId)
         {
-            var customer = await m_CustomerRepository.GetByIdAsync(customerId);
-            if (customer == null) return null;
-            return new CustomerDto(
-                customer.Id,
-                customer.Name,
-                customer.Surname,
-                customer.Email,
-                customer.AddressId,
-                customer.PhoneNumber,
-                customer.SignupDate
-            );
+            return await m_CustomerRepository.GetByIdAsync(customerId);
         }
 
-        public async Task<IReadOnlyList<CustomerDto>> GetAllCustomersAsync()
+        public async Task<IReadOnlyList<Customer>> GetAllCustomersAsync()
         {
-            var customers = await m_CustomerRepository.GetAllAsync();
-            return customers.Select(c => new CustomerDto(
-                c.Id, c.Name, c.Surname, c.Email, c.AddressId, c.PhoneNumber, c.SignupDate
-            )).ToList();
+            return await m_CustomerRepository.GetAllAsync();
         }
 
-        public async Task AddCustomerAsync(CustomerDto customer)
+        public async Task AddCustomerAsync(Customer customer)
         {
-            var entity = new Customer(
-                customer.CustomerId != 0 ? customer.CustomerId : 0,
-                customer.Name,
-                customer.Surname,
-                customer.Email,
-                customer.AddressId,
-                customer.PhoneNumber,
-                customer.SignupDate
-            );
-            await m_CustomerRepository.AddAsync(entity);
+            await m_CustomerRepository.AddAsync(customer);
         }
 
-        public async Task UpdateCustomerAsync(CustomerDto customer)
+        public async Task UpdateCustomerAsync(Customer customer)
         {
-            var entity = new Customer(
-                customer.CustomerId,
-                customer.Name,
-                customer.Surname,
-                customer.Email,
-                customer.AddressId,
-                customer.PhoneNumber,
-                customer.SignupDate
-            );
-            await m_CustomerRepository.UpdateAsync(entity);
+            await m_CustomerRepository.UpdateAsync(customer);
         }
     }
 }

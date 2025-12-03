@@ -1,21 +1,35 @@
-﻿namespace Bob.Core.Domain
+﻿using LinqToDB.Mapping;
+namespace Bob.Core.Domain
 {
     public readonly struct ItemId
     {
-        public uint Value { get; }
-        public ItemId(uint value) => Value = value;
+        public int Value { get; }
+        public ItemId(int value) => Value = value;
         public override string ToString() => Value.ToString();
-        public static implicit operator ItemId(uint id) => new ItemId(id);
-        public static implicit operator uint(ItemId id) => id.Value;
+        public static implicit operator ItemId(int id) => new ItemId(id);
+        public static implicit operator int(ItemId id) => id.Value;
     }
 
+    [Table("ITEM")]
     public sealed class Item
     {
-        public ItemId Id { get; }
-        public string Name { get; }
-        public string Size { get; }
-        public string Color { get; }
-        public decimal Price { get; }
+        public Item() { }
+
+        [PrimaryKey]
+        [Column("ITEMID")]
+        public ItemId Id { get; set; }
+
+        [Column("ITEMNAME")]
+        public string Name { get; set; }
+
+        [Column("SIZE")]
+        public string Size { get; set; }
+
+        [Column("COLOR")]
+        public string Color { get; set; }
+
+        [Column("PRIZE")]
+        public decimal Price { get; set; }
 
         public Item(ItemId id, string name, string size, string color, decimal price)
         {

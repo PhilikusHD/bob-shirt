@@ -1,34 +1,28 @@
-﻿using Bob.Core.DTO;
-using Bob.Core.Repositories;
-using System;
+﻿using Bob.Core.Repositories;
+using Bob.Core.Domain;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
     public class PaymentProcessorService
     {
-        private readonly IPaymentProcessorRepository m_ProcessorRepository;
+        private readonly PaymentProcessorRepository m_ProcessorRepository;
 
-        public PaymentProcessorService(IPaymentProcessorRepository processorRepository)
+        public PaymentProcessorService(PaymentProcessorRepository processorRepository)
         {
             m_ProcessorRepository = processorRepository;
         }
 
 #nullable enable
-        public async Task<PaymentProcessorDto?> GetProcessorByIdAsync(uint processorId)
+        public async Task<PaymentProcessor?> GetProcessorByIdAsync(ProcessorId processorId)
         {
-            var processor = await m_ProcessorRepository.GetByIdAsync(processorId);
-            if (processor == null) return null;
-            return new PaymentProcessorDto(processor.Id, processor.Method);
+            return await m_ProcessorRepository.GetByIdAsync(processorId);
         }
 
-        public async Task<IReadOnlyList<PaymentProcessorDto>> GetAllProcessorsAsync()
+        public async Task<IReadOnlyList<PaymentProcessor>> GetAllProcessorsAsync()
         {
-            var processors = await m_ProcessorRepository.GetAllAsync();
-            return processors.Select(p => new PaymentProcessorDto(p.Id, p.Method)).ToList();
+            return await m_ProcessorRepository.GetAllAsync();
         }
     }
 }

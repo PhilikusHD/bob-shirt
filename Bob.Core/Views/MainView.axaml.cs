@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 
 namespace Bob.Core
 {
+#nullable enable
     public partial class MainView : UserControl
     {
 
