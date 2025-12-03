@@ -3,14 +3,14 @@ param(
 )
 
 $scripts = @(
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\Drop_Database.sql"; description =  "Drop existing Database"},
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\Create_Database.sql"; description =  "create New Database"},
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\ForeignKeys.sql"; description =  "create Primary Keys"}
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Schema\PrimaryKeys.sql"; description =  "create Foreign Keys"}
-    @{path = Join-Path $PSScriptRoot "..\Scripts\Seed\Fill_Customer.sql"; description =  "fill Customer Data"}
+    @{path = "..\Scripts\Schema\Drop_Database.sql"; description = "Drop existing Database"; database = "master"},
+    @{path = "..\Scripts\Schema\Create_Database.sql"; description = "Create New Database"; database = "master"},
+    @{path = "..\Scripts\Schema\PrimaryKeys.sql"; description = "Create Primary Keys"; database = "bobshirt"},
+    @{path = "..\Scripts\Schema\ForeignKeys.sql"; description = "Create Foreign Keys"; database = "bobshirt"},
+    @{path = "..\Scripts\Seed\Fill_Customer.sql"; description = "Fill Customer Data"; database = "bobshirt"}
 )
 
-function Invoke-SqlScript ($path, $description){
+function Invoke-SqlScript ($path, $description, $database){
     Write-Host "`n=== Running: $description ==="
 
      try {
@@ -18,14 +18,14 @@ function Invoke-SqlScript ($path, $description){
         Invoke-Sqlcmd `
             -Query $sqlScript `
             -ServerInstance $ServerInstance `
-            -Database "bobshirt" `
+            -Database $database `
             -TrustServerCertificate `
 }
 catch {
         Write-Error "$description failed: $_"
         exit 1
     }
-
+}
 foreach ($script in $scripts) {
     Invoke-SqlScript @script
 }
