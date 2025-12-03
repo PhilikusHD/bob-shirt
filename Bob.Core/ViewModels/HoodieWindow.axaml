@@ -1,0 +1,100 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" MaxHeight="1080" MaxWidth="1920" Width="1920" Height="1080"
+			 x:Class="Bob.Core.HoodieWindow">
+
+	<Grid>
+		<!-- Frosted Glass Background -->
+		<Border>
+			<Border.Background>
+				<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+					<GradientStop Color="#889db4" Offset="0" />
+				</LinearGradientBrush>
+			</Border.Background>
+
+			<Border.Effect>
+				<BlurEffect Radius="30" />
+			</Border.Effect>
+		</Border>
+
+		<!-- Banner -->
+		<Grid>
+			<Image
+			Source="/assets/banner.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Top"
+			Margin="0,-180,0,0"
+			Width="1250"
+			Height="950"/>
+		</Grid>
+
+		<Grid>
+			<Image
+			Source="/assets/Hoodies_name.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Top"
+			Margin="0,280,379,0"
+			Width="350"
+			Height="550"/>
+		</Grid>
+
+		<Grid>
+			<Image
+			Source="/assets/textilHinweis.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="-280,-80,0,0"
+			Width="1000"
+			Height="3500"/>
+		</Grid>
+
+		<Grid>
+			<Image
+			Source="/assets/smiley.png"
+			Stretch="Uniform"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="-115,-118,0,0"
+			Width="700"
+			Height="800"/>
+		</Grid>
+
+		<Button x:Name ="UeberUnsButton" Width="130" Height="50" Margin="153,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0">
+			<Image Source="/assets/ueberUns.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="35,58,0,0"
+				   Width="590"
+				   Height="500"/>
+		</Button>
+
+		<Button x:Name="ShopButton" Width="130" Height="50" Margin="153,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0">
+			<Image Source="/assets/Shop.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="60,128,0,0"
+				   Width="750"
+				   Height="700"/>
+		</Button>
+
+		<Button x:Name="KontaktButton" Width="130" Height="50" Margin="153,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0">
+			<Image Source="/assets/Kontakt.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="45.5,-35,0,0"
+				   Width="650"
+				   Height="500"/>
+		</Button>
+
+
+
+	</Grid>
+</UserControl>
