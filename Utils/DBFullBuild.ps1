@@ -5,8 +5,8 @@ param(
 $scripts = @(
     @{path = "Scripts\Schema\Drop_Database.sql"; description = "Drop existing Database"; database = "master"},
     @{path = "Scripts\Schema\Create_Database.sql"; description = "Create New Database"; database = "master"},
-    @{path = "Scripts\Schema\PrimaryKeys.sql"; description = "Create Primary Keys"; database = "bobshirt"},
-    @{path = "Scripts\Schema\ForeignKeys.sql"; description = "Create Foreign Keys"; database = "bobshirt"},
+    @{path = "Scripts\Schema\Primary_Keys.sql"; description = "Create Primary Keys"; database = "bobshirt"},
+    @{path = "Scripts\Schema\Foreign_Keys.sql"; description = "Create Foreign Keys"; database = "bobshirt"},
     @{path = "Scripts\Seed\Fill_Customer.sql"; description = "Fill Customer Data"; database = "bobshirt"}
 )
 
