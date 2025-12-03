@@ -9,7 +9,7 @@ namespace Bob.Core
 
         public MainView()
         {
-
+            InitializeComponent();
         }
 
         private void InitializeComponent()
