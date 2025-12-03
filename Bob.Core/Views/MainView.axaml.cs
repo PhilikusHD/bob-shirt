@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Bob.Core.Utils;
 using Bob.Core.Views;
 using System;
 
@@ -9,12 +10,17 @@ namespace Bob.Core
 #nullable enable
     public partial class MainView : UserControl
     {
-
         public MainView()
         {
             InitializeComponent();
-            CurrentContent.Content = new MainPage(this);
 
+            ViewManager.Host = this;
+            ViewManager.AddToLookup(nameof(MainPage), new MainPage());
+            ViewManager.AddToLookup(nameof(CapsWindow), new CapsWindow());
+            ViewManager.AddToLookup(nameof(TShirtWindow), new TShirtWindow());
+            ViewManager.AddToLookup(nameof(HoodieWindow), new HoodieWindow());
+
+            ViewManager.TransitionTo(nameof(MainPage));
         }
 
         public void NavigateTo(UserControl newView)

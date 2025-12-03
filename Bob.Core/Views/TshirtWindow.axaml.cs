@@ -2,28 +2,20 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Bob.Core.Utils;
 
 namespace Bob.Core;
 
 #nullable enable
-public partial class TshirtWindow : UserControl
+public partial class TShirtWindow : UserControl
 {
-    private readonly MainView m_Host;
-
-    public TshirtWindow(MainView host)
+    public TShirtWindow()
     {
         InitializeComponent();
-        m_Host = host;
-    }
-
-    public TshirtWindow()
-    {
-        InitializeComponent();
-        m_Host = new MainView();
     }
 
     private void OnShopClick(object? sender, RoutedEventArgs e)
     {
-        m_Host.NavigateTo(new MainPage(m_Host));
+        ViewManager.TransitionTo(nameof(MainPage));
     }
 }

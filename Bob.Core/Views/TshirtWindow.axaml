@@ -3,7 +3,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d" MaxHeight="1080" MaxWidth="1920" Width="1920" Height="1080"
-			 x:Class="Bob.Core.TshirtWindow">
+			 x:Class="Bob.Core.TShirtWindow">
 
 	<Grid>
 		<!-- Frosted Glass Background -->

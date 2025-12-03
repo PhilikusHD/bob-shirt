@@ -1,14 +1,15 @@
 ﻿using Avalonia;
 using Bob.Core;
-using Bob.Core.Logging;
 using Bob.Core.Database;
 using Bob.Core.Domain;
+using Bob.Core.Logging;
+using Bob.Core.Services;
 using LinqToDB;
 using System;
-using System.Runtime.InteropServices;
 using System.IO;
 using System.Linq;
-using Bob.Core.Services;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 sealed class Program
@@ -41,6 +42,7 @@ sealed class Program
         Logger.Critical("Critical Test");
 
         // Quick DB connection test: fetch all customers and print them to the console.
+        /*
         try
         {
             // using var db = new AppDataConnection();
@@ -73,6 +75,7 @@ sealed class Program
             Logger.Error($"DB connection test failed: {ex.InnerException?.Message ?? ex.Message}");
             // Console.WriteLine($"DB connection test failed: {ex.Message}");
         }
+        */
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
