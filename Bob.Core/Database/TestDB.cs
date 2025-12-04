@@ -146,6 +146,13 @@ namespace Bob.Core.Database
             var variants = await productService.GetVariantsForProductAsync(product.Id);
             Logger.Debug($"Product has {variants.Count} variants.");
 
+            var productType = await productService.GetProductTypeAsync(product.Id);
+            Logger.Debug($"Product with ID {product.Id} has TypeID {productType.TypeId}");
+
+            var productType2 = await productService.GetProductTypeByIdAsync(productType.TypeId);
+            Logger.Debug($"ProductType with ID {product.TypeId} is of name: '{productType.TypeName}'");
+
+
             // DELETE: first the variant, then the product
             await productService.DeleteProductAsync(product.Id);
 

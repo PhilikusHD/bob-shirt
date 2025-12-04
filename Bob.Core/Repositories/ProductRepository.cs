@@ -89,6 +89,24 @@ namespace Bob.Core.Repositories
             }
         }
 
+        public async Task<ProductType?> GetProductTypeAsync(int productId, CancellationToken cancellationToken = default)
+        {
+            await using var db = new AppDataConnection();
+            var product = await db.GetTable<Product>().FirstOrDefaultAsync(p => p.Id == productId);
+            if (product == null)
+            {
+                Logger.Warning($"Product with ID {productId} does not exist.");
+                return new ProductType();
+            }
+
+            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == product.TypeId);
+        }
+
+        public async Task<ProductType?> GetProductTypeByIDAsync(int typeId, CancellationToken cancellationToken = default)
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == typeId);
+        }
 
         public async Task<decimal> GetSizeMultiplier(int sizeId)
         {

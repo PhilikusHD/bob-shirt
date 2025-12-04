@@ -1,6 +1,7 @@
 ﻿using Bob.Core.Domain;
 using Bob.Core.Repositories;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
@@ -46,6 +47,11 @@ namespace Bob.Core.Services
         {
             return price * await m_ProductRepository.GetSizeMultiplier(sizeId);
         }
+
+
+        public async Task<ProductType?> GetProductTypeAsync(int productId) => await m_ProductRepository.GetProductTypeAsync(productId);
+
+        public async Task<ProductType?> GetProductTypeByIdAsync(int typeId) => await m_ProductRepository.GetProductTypeByIDAsync(typeId);
 
 
         // ProductVariant convenience
