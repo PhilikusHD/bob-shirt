@@ -19,7 +19,7 @@ namespace Bob.Core.Repositories
         public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            return await db.GetTable<Product>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            return await db.GetTable<Product>().FirstOrDefaultAsync(p => p.ProductId == id, cancellationToken);
         }
 
         public async Task<IReadOnlyList<Product>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -35,14 +35,12 @@ namespace Bob.Core.Repositories
 
             try
             {
-                var identity = await db.InsertAsync(product, token: cancellationToken);
-                var id = Convert.ToInt32(identity);
-                product.Id = (int)id;
+                await db.InsertAsync(product, token: cancellationToken);
 
 
                 if (variant != null)
                 {
-                    variant.ProductId = product.Id;
+                    variant.ProductId = product.ProductId;
                     await db.InsertAsync(variant, token: cancellationToken);
                 }
 
@@ -76,7 +74,7 @@ namespace Bob.Core.Repositories
                     Logger.Debug($"Deleted {variantsDeleted} variants");
 
                 var productDeleted = await db.GetTable<Product>()
-                                             .Where(p => p.Id == productId)
+                                             .Where(p => p.ProductId == productId)
                                              .DeleteAsync(cancellationToken);
 
                 Logger.Debug(productDeleted > 0 ? "Deleted product" : "Product not found");
@@ -95,7 +93,7 @@ namespace Bob.Core.Repositories
         public async Task<ProductType?> GetProductTypeByProductAsync(int productId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var product = await db.GetTable<Product>().FirstOrDefaultAsync(p => p.Id == productId, token: cancellationToken);
+            var product = await db.GetTable<Product>().FirstOrDefaultAsync(p => p.ProductId == productId, token: cancellationToken);
             if (product == null)
             {
                 Logger.Warning($"Product with ID {productId} does not exist.");

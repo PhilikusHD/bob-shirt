@@ -9,7 +9,7 @@ namespace Bob.Core.Domain
 
         [PrimaryKey]
         [Column("PRODUCTID")]
-        public int Id { get; set; }
+        public int ProductId { get; set; }
 
         [Column("PRODUCTNAME")]
         public string Name { get; set; }
@@ -20,9 +20,9 @@ namespace Bob.Core.Domain
         [Column("PRICE")]
         public decimal Price { get; set; }
 
-        public Product(int id, string name, int typeId, string color, decimal price)
+        public Product(int id, string name, int typeId, decimal price)
         {
-            Id = id;
+            ProductId = id;
             Name = name;
             TypeId = typeId;
             Price = price;

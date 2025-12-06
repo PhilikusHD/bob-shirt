@@ -127,34 +127,32 @@ namespace Bob.Core.Database
             Logger.Debug($"Catalog has {all.Count} products.");
 
             // Create a temporary product
-            var product = new Product { Id = 222, Name = "Temp Product", TypeId = 1, Price = 55 };
+            var product = new Product { ProductId = 222, Name = "Temp Product", TypeId = 1, Price = 55 };
             await productService.AddProductAsync(product);
 
             // Create a variant for the product
             var variant = new ProductVariant
             {
                 VariantId = 999,
-                ProductId = product.Id,
+                ProductId = product.ProductId,
                 ColorId = 1,
                 SizeId = 1,
                 Stock = 10
             };
             await productService.AddVariantAsync(variant);
 
-            Logger.Debug($"Created product {product.Name} with ID {product.Id}");
+            Logger.Debug($"Created product {product.Name} with ID {product.ProductId}");
 
-            var variants = await productService.GetVariantsForProductAsync(product.Id);
+            var variants = await productService.GetVariantsForProductAsync(product.ProductId);
             Logger.Debug($"Product has {variants.Count} variants.");
 
-            var productType = await productService.GetProductTypeAsync(product.Id);
-            Logger.Debug($"Product with ID {product.Id} has TypeID {productType.TypeId}");
+            var productType = await productService.GetProductTypeAsync(product.ProductId);
+            Logger.Debug($"Product with ID {product.ProductId} has TypeID {productType.TypeId}");
 
             var productType2 = await productService.GetProductTypeByIdAsync(productType.TypeId);
             Logger.Debug($"ProductType with ID {product.TypeId} is of name: '{productType.TypeName}'");
 
-
-            // DELETE: first the variant, then the product
-            await productService.DeleteProductAsync(product.Id);
+            await productService.DeleteProductAsync(product.ProductId);
 
             Logger.Debug("Deleted temporary product and its variant successfully");
         }
@@ -182,7 +180,7 @@ namespace Bob.Core.Database
 
             // Pick existing variant for testing
             var firstProduct = (await productService.GetAllProductsAsync()).First();
-            var variant = (await productService.GetVariantsForProductAsync(firstProduct.Id)).First();
+            var variant = (await productService.GetVariantsForProductAsync(firstProduct.ProductId)).First();
 
             await itemService.AddLineAsync(new OrderItemLine(order.Id, variant.VariantId, "2"));
             await itemService.AddLineAsync(new OrderItemLine(order.Id, 10, "1"));
