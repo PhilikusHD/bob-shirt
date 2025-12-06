@@ -63,6 +63,9 @@ namespace Bob.Core.Database
                 using (new TestScope("Products & Variants"))
                     await TestProducts(productService);
 
+                using (new TestScope("ProductTypes / Colors / Sizes"))
+                    await TestSupportingTables(productService);
+
                 using (new TestScope("Order & Cart Flow"))
                     await TestOrderAndCartFlow(orderService, orderItemService, productService, customerService);
 
@@ -120,6 +123,35 @@ namespace Bob.Core.Database
             await custService.DeleteCustomerAsync(newCust.Id);
         }
 
+        private async Task TestSupportingTables(ProductService productService)
+        {
+            Logger.Debug("-> Testing ProductTypes, Colors, Sizes...");
+
+            // ProductType
+            var newType = new ProductType { TypeId = 999, TypeName = "TestType" };
+            await productService.AddProductTypeAsync(newType);
+
+            var typeLoaded = await productService.GetProductTypeByIdAsync(newType.TypeId);
+            Logger.Debug(typeLoaded != null ? $"ProductType loaded: {typeLoaded.TypeName}" : "ProductType load FAILED");
+
+            await productService.DeleteProductTypeAsync(newType.TypeId);
+            Logger.Debug("Deleted temporary ProductType");
+
+            // Color
+            var colors = await productService.GetAllColorsAsync();
+            Logger.Debug($"Loaded {colors.Count} colors");
+
+            var color = await productService.GetColorAsync(1);
+            Logger.Debug(color != null ? $"Color 1: {color.ColorName}" : "Color 1 missing");
+
+            // Size
+            var sizes = await productService.GetAllSizesAsync();
+            Logger.Debug($"Loaded {sizes.Count} sizes");
+
+            var multiplier = await productService.GetPriceAdjustedForSize(3, 50);
+            Logger.Debug($"Price adjusted for size: {multiplier}");
+        }
+
         private async Task TestProducts(ProductService productService)
         {
             Logger.Debug("-> Products: Loading all products...");
@@ -150,10 +182,9 @@ namespace Bob.Core.Database
             Logger.Debug($"Product with ID {product.ProductId} has TypeID {productType.TypeId}");
 
             var productType2 = await productService.GetProductTypeByIdAsync(productType.TypeId);
-            Logger.Debug($"ProductType with ID {product.TypeId} is of name: '{productType.TypeName}'");
+            Logger.Debug($"ProductType with ID {productType.TypeId} is of name: '{productType2.TypeName}'");
 
             await productService.DeleteProductAsync(product.ProductId);
-
             Logger.Debug("Deleted temporary product and its variant successfully");
         }
 

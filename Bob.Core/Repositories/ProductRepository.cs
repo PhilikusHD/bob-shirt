@@ -120,9 +120,7 @@ namespace Bob.Core.Repositories
             await using var db = new AppDataConnection();
             try
             {
-                var identity = await db.InsertAsync(productType);
-                var id = Convert.ToInt32(identity);
-                productType.TypeId = (int)id;
+                await db.InsertAsync(productType);
             }
             catch (Exception ex)
             {
@@ -141,7 +139,6 @@ namespace Bob.Core.Repositories
             await using var db = new AppDataConnection();
             await db.GetTable<ProductType>().Where(t => t.TypeId == typeId).DeleteAsync();
         }
-
 
         // Size
         public async Task<Size?> GetSizeByIdAsync(int sizeId)

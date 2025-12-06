@@ -16,10 +16,10 @@ INSERT INTO COLOR (COLORID, COLORNAME) VALUES
 
 -- SIZE --------------------------------------------------------------
 INSERT INTO [SIZE] (SIZEID, SIZENAME, PRICEMULTIPLIER) VALUES
-(1, 'S', 1.0),
+(1, 'S', 0.9),
 (2, 'M', 1.0),
-(3, 'L', 1.0),
-(4, 'XL', 1.1),
+(3, 'L', 1.1),
+(4, 'XL', 1.2),
 (5, 'One Size', 1.0);
 
 -- ADDRESS -----------------------------------------------------------
