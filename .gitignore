@@ -56,3 +56,4 @@ nunit-*.xml
 *.csproj
 *.sln
 .vs/
+*.slnx

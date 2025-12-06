@@ -1,8 +1,35 @@
 @echo off
+setlocal enabledelayedexpansion
+title Bob Shirt Setup
 REM ------------------------------------------------------------------
 REM Run Premake to generate the VS2022 solution/project files
 REM ------------------------------------------------------------------
-call vendor\bin\premake\premake5.exe vs2022
+set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+set "VS_VERSION=vs2022"
+set "VERSION="
+set "VS_MAJOR="
+
+echo Checking for Visual Studio installation...
+if exist "%VSWHERE%" (
+    for /f "usebackq delims=" %%v in (`"%VSWHERE%" -latest -property installationVersion`) do (
+        set "VERSION=%%v"
+    )
+    echo Detected version: !VERSION!
+
+    for /f "tokens=1 delims=." %%a in ("!VERSION!") do set "VS_MAJOR=%%a"
+
+    if !VS_MAJOR! GEQ 18 (
+        set "VS_VERSION=vs2026"
+    ) else if !VS_MAJOR! GEQ 17 (
+        set "VS_VERSION=vs2022"
+    )
+
+    echo Using generator: !VS_VERSION!
+) else (
+    echo vswhere not found.
+    echo Defaulting to Visual Studio 2022.
+)
+call vendor\bin\premake\premake5.exe %VS_VERSION%
 
 REM ------------------------------------------------------------------
 REM Check if dotnet CLI is available
