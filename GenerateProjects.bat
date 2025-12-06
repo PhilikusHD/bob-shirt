@@ -41,6 +41,21 @@ if errorlevel 1 (
 )
 
 REM ------------------------------------------------------------------
+REM Check if wasm-tools-net9 workload is installed
+REM ------------------------------------------------------------------
+dotnet workload list | findstr /C:"wasm-tools-net9" >nul
+if errorlevel 1 (
+    echo wasm-tools-net9 workload not found. Installing...
+    dotnet workload install wasm-tools-net9
+    if errorlevel 1 (
+        echo Failed to install wasm-tools-net9 workload. Please ensure you have .NET SDK 10+ installed.
+        exit /b 1
+    )
+) else (
+    echo wasm-tools-net9 workload is already installed.
+)
+
+REM ------------------------------------------------------------------
 REM Define the path to the C# project file
 REM ------------------------------------------------------------------
 set "CSPROJ_FILE=Bob.Core\Bob.Core.csproj"
