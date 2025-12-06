@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using Bob.Core.Domain;
 using Bob.Core.Database;
 using LinqToDB;
@@ -11,7 +13,6 @@ using Bob.Core.Logging;
 
 namespace Bob.Core.Repositories
 {
-#nullable enable
     public sealed class ProductRepository
     {
         // PRODUCT Table
@@ -34,7 +35,7 @@ namespace Bob.Core.Repositories
 
             try
             {
-                var identity = await db.InsertAsync(product);
+                var identity = await db.InsertAsync(product, token: cancellationToken);
                 var id = Convert.ToInt32(identity);
                 product.Id = (int)id;
 
@@ -42,7 +43,7 @@ namespace Bob.Core.Repositories
                 if (variant != null)
                 {
                     variant.ProductId = product.Id;
-                    await db.InsertAsync(variant);
+                    await db.InsertAsync(variant, token: cancellationToken);
                 }
 
                 await tran.CommitAsync(cancellationToken);
@@ -57,7 +58,7 @@ namespace Bob.Core.Repositories
         public async Task UpdateAsync(Product product, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.UpdateAsync(product);
+            await db.UpdateAsync(product, token: cancellationToken);
         }
 
         public async Task DeleteAsync(int productId, CancellationToken cancellationToken = default)
@@ -89,23 +90,72 @@ namespace Bob.Core.Repositories
             }
         }
 
-        public async Task<ProductType?> GetProductTypeAsync(int productId, CancellationToken cancellationToken = default)
+        // ProductType
+
+        public async Task<ProductType?> GetProductTypeByProductAsync(int productId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var product = await db.GetTable<Product>().FirstOrDefaultAsync(p => p.Id == productId);
+            var product = await db.GetTable<Product>().FirstOrDefaultAsync(p => p.Id == productId, token: cancellationToken);
             if (product == null)
             {
                 Logger.Warning($"Product with ID {productId} does not exist.");
                 return new ProductType();
             }
 
-            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == product.TypeId);
+            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == product.TypeId, token: cancellationToken);
         }
 
         public async Task<ProductType?> GetProductTypeByIDAsync(int typeId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == typeId);
+            return await db.GetTable<ProductType>().FirstOrDefaultAsync(pt => pt.TypeId == typeId, token: cancellationToken);
+        }
+
+        public async Task<IReadOnlyList<ProductType>> GetAllProductTypesAsync()
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<ProductType>().ToListAsync();
+        }
+
+        public async Task AddProductTypeAsync(ProductType productType)
+        {
+            await using var db = new AppDataConnection();
+            try
+            {
+                var identity = await db.InsertAsync(productType);
+                var id = Convert.ToInt32(identity);
+                productType.TypeId = (int)id;
+            }
+            catch (Exception ex)
+            {
+                Logger.Warning($"Could not add productType to database. Reason: {ex.Message}");
+            }
+        }
+
+        public async Task UpdateProductTypeAsync(ProductType productType)
+        {
+            await using var db = new AppDataConnection();
+            await db.UpdateAsync(productType);
+        }
+
+        public async Task DeleteProductTypeAsync(int typeId)
+        {
+            await using var db = new AppDataConnection();
+            await db.GetTable<ProductType>().Where(t => t.TypeId == typeId).DeleteAsync();
+        }
+
+
+        // Size
+        public async Task<Size?> GetSizeByIdAsync(int sizeId)
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<Size>().FirstOrDefaultAsync(s => s.SizeId == sizeId);
+        }
+
+        public async Task<IReadOnlyList<Size>> GetAllSizesAsync()
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<Size>().ToListAsync();
         }
 
         public async Task<decimal> GetSizeMultiplier(int sizeId)
@@ -114,6 +164,20 @@ namespace Bob.Core.Repositories
             var size = await db.GetTable<Size>().FirstOrDefaultAsync(s => s.SizeId == sizeId);
 
             return size != null ? size.PriceMultiplier : 1;
+        }
+
+
+        // Color
+        public async Task<Color?> GetColorByIdAsync(int colorId)
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<Color>().FirstOrDefaultAsync(s => s.Id == colorId);
+        }
+
+        public async Task<IReadOnlyList<Color>> GetAllColorsAsync()
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<Color>().ToListAsync();
         }
 
         // ProductVariant specific
@@ -133,13 +197,13 @@ namespace Bob.Core.Repositories
         public async Task AddVariantAsync(ProductVariant variant, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.InsertAsync(variant);
+            await db.InsertAsync(variant, token: cancellationToken);
         }
 
         public async Task UpdateVariantAsync(ProductVariant variant, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            await db.UpdateAsync(variant);
+            await db.UpdateAsync(variant, token: cancellationToken);
         }
 
         public async Task DeleteVariantAsync(ProductVariant variant, CancellationToken cancellationToken = default)

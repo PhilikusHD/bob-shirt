@@ -16,7 +16,7 @@ namespace Bob.Core.Services
             m_ProductRepository = repository;
         }
 
-        // Product
+        #region Product
         public async Task<Product?> GetProductByIdAsync(int productId)
         {
             return await m_ProductRepository.GetByIdAsync(productId);
@@ -41,21 +41,42 @@ namespace Bob.Core.Services
         {
             await m_ProductRepository.DeleteAsync(productId);
         }
+        #endregion
 
+        #region Size
+        public async Task<Size?> GetSizeAsync(int sizeId) => await m_ProductRepository.GetSizeByIdAsync(sizeId);
+
+        public async Task<IReadOnlyList<Size>> GetAllSizesAsync() => await m_ProductRepository.GetAllSizesAsync();
 
         public async Task<decimal> GetPriceAdjustedForSize(int sizeId, decimal price)
         {
             return price * await m_ProductRepository.GetSizeMultiplier(sizeId);
         }
+        #endregion
 
-
-        public async Task<ProductType?> GetProductTypeAsync(int productId) => await m_ProductRepository.GetProductTypeAsync(productId);
+        #region ProductType
+        public async Task<ProductType?> GetProductTypeAsync(int productId) => await m_ProductRepository.GetProductTypeByProductAsync(productId);
 
         public async Task<ProductType?> GetProductTypeByIdAsync(int typeId) => await m_ProductRepository.GetProductTypeByIDAsync(typeId);
 
+        public async Task<IReadOnlyList<ProductType>> GetAllProductTypesAsync() => await m_ProductRepository.GetAllProductTypesAsync();
 
-        // ProductVariant convenience
+        public async Task AddProductTypeAsync(ProductType productType) => await m_ProductRepository.AddProductTypeAsync(productType);
 
+        public async Task UpdateProductTypeAsync(ProductType productType) => await m_ProductRepository.UpdateProductTypeAsync(productType);
+
+        public async Task DeleteProductTypeAsync(int typeId) => await m_ProductRepository.DeleteProductTypeAsync(typeId);
+        #endregion
+
+        #region Colors
+        // Define Interfaces for the Color Table
+
+        public async Task<Color?> GetColorAsync(int colorId) => await m_ProductRepository.GetColorByIdAsync(colorId);
+
+        public async Task<IReadOnlyList<Color>> GetAllColorsAsync() => await m_ProductRepository.GetAllColorsAsync();
+        #endregion
+
+        #region ProductVariant
         public async Task<ProductVariant?> GetVariantAsync(int variantId)
         {
             return await m_ProductRepository.GetVariantByIdAsync(variantId);
@@ -80,5 +101,6 @@ namespace Bob.Core.Services
         {
             await m_ProductRepository.DeleteVariantAsync(variant);
         }
+        #endregion
     }
 }
