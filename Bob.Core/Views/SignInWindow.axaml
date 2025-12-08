@@ -94,6 +94,16 @@
 				   Height="500"/>
 		</Button>
 
+		<Button x:Name="SignInButton" Width="150" Height="70" Margin="1,0,15,190" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="White" BorderThickness="0" Padding="0">
+			<Image Source="/assets/sign_in.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="4.5,-1,0,0"
+				   Width="150"
+				   Height="250"/>
+		</Button>
+
 
 
 	</Grid>
