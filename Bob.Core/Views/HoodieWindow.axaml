@@ -94,6 +94,19 @@
 				   Height="500"/>
 		</Button>
 
+		<TextBox
+		Width="400"
+		Height="40"
+		Margin="50,450,0,0"
+		HorizontalAlignment="Left"
+		VerticalAlignment="Top"
+		Watermark="Search Hoodies..."
+		Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+		Background="#66000000"
+		Foreground="White"
+		BorderThickness="0"
+		Padding="6"/>
+
 		<!-- ListBox for Hoodie product names -->
 		<ListBox ItemsSource="{Binding HoodieNames}"
 				 HorizontalAlignment="Left"

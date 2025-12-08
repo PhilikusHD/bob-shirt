@@ -12,8 +12,13 @@ namespace Bob.Core.ViewModels
     public partial class CapWindowViewModel : ViewModelBase
     {
 
+        private List<string> m_AllCaps = new();
+
         [ObservableProperty]
-        private ObservableCollection<string> capNames = [];
+        private ObservableCollection<string> m_CapNames = new();
+
+        [ObservableProperty]
+        private string m_SearchText = "";
 
         public CapWindowViewModel()
         {
@@ -28,17 +33,35 @@ namespace Bob.Core.ViewModels
             {
                 var allProducts = await ProductService.GetAllProductsAsync();
 
-                var caps = allProducts
+                m_AllCaps = allProducts
                     .Where(p => p.TypeId == 3) // Filter Caps
-                    .Select(p => p.Name);
+                    .Select(p => p.Name)
+                    .ToList();
 
-                CapNames = new ObservableCollection<string>(caps);
+                UpdateFilteredCaps();
             }
             catch (Exception ex)
             {
                 Logger.Error("Failed to load Caps", ex);
                 Console.WriteLine($"Exception caught: {ex.Message}");
             }
+        }
+
+        partial void OnSearchTextChanged(string value)
+        {
+            UpdateFilteredCaps();
+        }
+
+        private void UpdateFilteredCaps()
+        {
+            if (m_AllCaps == null || m_AllCaps.Count == 0)
+                return;
+
+            var filtered = string.IsNullOrWhiteSpace(SearchText)
+                ? m_AllCaps
+                : m_AllCaps.Where(c => c.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+
+            CapNames = new ObservableCollection<string>(filtered);
         }
     }
 }

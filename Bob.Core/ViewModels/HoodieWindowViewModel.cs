@@ -11,9 +11,13 @@ namespace Bob.Core.ViewModels
 {
     public partial class HoodieWindowViewModel : ViewModelBase
     {
+        private List<string> m_AllHoodies = new();
 
         [ObservableProperty]
-        private ObservableCollection<string> hoodieNames = [];
+        private ObservableCollection<string> m_HoodieNames = [];
+
+        [ObservableProperty]
+        private string m_SearchText = "";
 
         public HoodieWindowViewModel()
         {
@@ -28,17 +32,35 @@ namespace Bob.Core.ViewModels
             {
                 var allProducts = await ProductService.GetAllProductsAsync();
 
-                var hoodies = allProducts
+                m_AllHoodies = allProducts
                     .Where(p => p.TypeId == 2) // Filter Hoodies
-                    .Select(p => p.Name);
+                    .Select(p => p.Name).ToList();
 
-                HoodieNames = new ObservableCollection<string>(hoodies);
+                UpdateFilteredHoodies();
             }
             catch (Exception ex)
             {
                 Logger.Error("Failed to load Hoodies", ex);
                 Console.WriteLine($"Exception caught: {ex.Message}");
             }
+        }
+
+        partial void OnSearchTextChanged(string value)
+        {
+            UpdateFilteredHoodies();
+        }
+
+        private void UpdateFilteredHoodies()
+        {
+            if (m_AllHoodies == null || m_AllHoodies.Count == 0)
+                return;
+
+            var filtered = string.IsNullOrWhiteSpace(SearchText)
+                ? m_AllHoodies
+                : m_AllHoodies.Where(c => c.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+
+
+            HoodieNames = new ObservableCollection<string>(filtered);
         }
     }
 }
