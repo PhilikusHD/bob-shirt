@@ -16,11 +16,9 @@ namespace Bob.Core
 #nullable enable
     public partial class MainPage : UserControl
     {
-        private readonly ProductService _productService;
         public MainPage()
         {
             InitializeComponent();
-            _productService = new ProductService(new ProductRepository());
         }
 
         private void OnUeberUnsClick(object? sender, RoutedEventArgs e)
@@ -52,8 +50,7 @@ namespace Bob.Core
 
         private void OnCapsClick(object? sender, RoutedEventArgs e)
         {
-            var tshirtWindow = new TShirtWindow(_productService);
-            ViewManager.TransitionTo(nameof(tshirtWindow));
+            ViewManager.TransitionTo(nameof(CapsWindow));
         }
 
         private void TestDatabase_Click(object? sender, RoutedEventArgs e)

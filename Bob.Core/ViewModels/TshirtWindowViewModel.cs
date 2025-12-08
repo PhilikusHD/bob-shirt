@@ -9,16 +9,16 @@ using Bob.Core.Logging;
 
 namespace Bob.Core.ViewModels;
 
-public partial class TshirtWindowViewModel : ViewModelBase
+public partial class TShirtWindowViewModel : ViewModelBase
 {
-    private readonly ProductService _productService;
+    private readonly ProductService m_ProductService;
 
     [ObservableProperty]
     private ObservableCollection<string> tshirtNames = new();
 
-    public TshirtWindowViewModel(ProductService productService)
+    public TShirtWindowViewModel(ProductService productService)
     {
-        _productService = productService;
+        m_ProductService = productService;
 
         // Load T-shirts asynchronously
         _ = LoadTshirtsAsync();
@@ -28,10 +28,10 @@ public partial class TshirtWindowViewModel : ViewModelBase
     {
         try
         {
-            var allProducts = await _productService.GetAllProductsAsync();
+            var allProducts = await m_ProductService.GetAllProductsAsync();
 
             var tshirts = allProducts
-                .Where(p => p.TypeId.ToString().StartsWith("1")) // Filter T-shirts
+                .Where(p => p.TypeId == 1) // Filter T-shirts
                 .Select(p => p.Name);
 
             TshirtNames = new ObservableCollection<string>(tshirts);

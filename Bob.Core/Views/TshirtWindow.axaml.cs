@@ -9,16 +9,10 @@ namespace Bob.Core;
 #nullable enable
 public partial class TShirtWindow : UserControl
 {
-    public TShirtWindow(ProductService productService)
-    {
-        InitializeComponent();
-
-        // Set DataContext to the ViewModel
-        DataContext = new TshirtWindowViewModel(productService);
-    }
     public TShirtWindow()
     {
         InitializeComponent();
+        DataContext = new TShirtWindowViewModel(new ProductService(new Repositories.ProductRepository()));
     }
 
     private void OnShopClick(object? sender, RoutedEventArgs e)
