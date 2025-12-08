@@ -14,7 +14,7 @@ namespace Bob.Core.CartSytem
 
     public sealed class CartSystem
     {
-        private List<ProductVariant> m_ProductVariants = new List<ProductVariant>();
+        private readonly List<ProductVariant> m_ProductVariants = [];
 
         private decimal m_TotalPrice;
 
@@ -50,14 +50,19 @@ namespace Bob.Core.CartSytem
             };
         }
 
+        public int GetItemCount()
+        {
+            return m_ProductVariants.Count;
+        }
+
         public async Task CalculateTotalPrice()
         {
             m_TotalPrice = 0.0M;
             IReadOnlyList<Product> products = await ProductService.GetAllProductsAsync();
             IReadOnlyList<Size> allSizes = await ProductService.GetAllSizesAsync();
 
-            Dictionary<int, decimal> sizeMultipliers = new();
-            Dictionary<int, decimal> productPrices = new();
+            Dictionary<int, decimal> sizeMultipliers = [];
+            Dictionary<int, decimal> productPrices = [];
 
             foreach (Size size in allSizes)
                 sizeMultipliers.TryAdd(size.SizeId, size.PriceMultiplier);
@@ -72,19 +77,17 @@ namespace Bob.Core.CartSytem
         public async Task CreateOrderDraft(Order order)
         {
 
-            Dictionary<int, int> variantQuantityMap = new();
+            Dictionary<int, int> variantQuantityMap = [];
             for (int i = 0; i < m_ProductVariants.Count; i++)
             {
                 int id = m_ProductVariants[i].VariantId;
-                if (variantQuantityMap.ContainsKey(id))
+                if (!variantQuantityMap.TryAdd(id, 1))
                     variantQuantityMap[id] += 1;
-                else
-                    variantQuantityMap.Add(id, 1);
             }
 
             foreach (var variant in variantQuantityMap)
             {
-                OrderItemLine orderItemLine = new OrderItemLine
+                OrderItemLine orderItemLine = new()
                 {
                     VariantId = variant.Key,
                     Amount = variant.Value,

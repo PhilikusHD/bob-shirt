@@ -13,7 +13,7 @@ public partial class TShirtWindowViewModel : ViewModelBase
 {
 
     [ObservableProperty]
-    private ObservableCollection<string> tshirtNames = new();
+    private ObservableCollection<string> tshirtNames = [];
 
     public TShirtWindowViewModel()
     {
