@@ -94,7 +94,7 @@
 				   Height="500"/>
 		</Button>
 
-		<Button x:Name="SignUpButton" Width="150" Height="70" Margin="1,0,15,190" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="White" BorderThickness="0" Padding="0">
+		<Button x:Name="SignUpButton" Width="150" Height="70" Margin="10,15,15,130" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="White" BorderThickness="0" Padding="0" Click="SignUpButtonClick">
 			<Image Source="/assets/sign_up.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -103,6 +103,16 @@
 				   Width="150"
 				   Height="250"/>
 		</Button>
+
+		<TextBox Name="VornameTextbox" Width="550" Height="50"  Margin="-600,0,0,0" HorizontalAlignment="Center" Watermark="Vorname" />
+		<TextBox Name="NameTextbox" Width="550" Height="50" Margin="-600,150,0,0" HorizontalAlignment="Center" Watermark="Name" />
+		<TextBox Name="EmailTextbox" Width="550" Height="50" Margin="-600,300,0,0" HorizontalAlignment="Center" Watermark="Emailadresse" />
+		<TextBox Name="TelefonTextbox" Width="550" Height="50" Margin="-600,450,0,0" HorizontalAlignment="Center" Watermark="Telefonnummer" />
+		<TextBox Name="StrasseTextbox" Width="550" Height="50" Margin="600,0,0,0" HorizontalAlignment="Center" Watermark="Straße" />
+		<TextBox Name="HausnrTextbox" Width="550" Height="50" Margin="600,150,0,0" HorizontalAlignment="Center" Watermark="Hausnummer" />
+		<TextBox Name="PlzTextbox" Width="550" Height="50" Margin="600,300,0,0" HorizontalAlignment="Center" Watermark="PLZ" />
+		<TextBox Name="StadtTextbox" Width="550" Height="50" Margin="600,450,0,0" HorizontalAlignment="Center" Watermark="Stadt" />
+		<TextBox Name="PasswortTextbox" Width="550" Height="50" Margin="0,600,0,0" HorizontalAlignment="Center" Watermark="Passwort" />
 
 	</Grid>
 </UserControl>
