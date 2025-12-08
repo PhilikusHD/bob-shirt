@@ -41,7 +41,7 @@ namespace Bob.Core.Domain
             string surname,
             string email,
             int addressId,
-            string phoneNumber, DateTime signupDate, string password, bool isAdmin)
+            string phoneNumber, DateTime signupDate, string passwordHash, bool isAdmin)
         {
             Id = id;
             Name = name;
@@ -50,7 +50,7 @@ namespace Bob.Core.Domain
             AddressId = addressId;
             PhoneNumber = phoneNumber;
             SignupDate = signupDate;
-            PasswordHash = password;
+            PasswordHash = passwordHash;
             IsAdmin = isAdmin;
         }
     }

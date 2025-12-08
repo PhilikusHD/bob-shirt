@@ -35,7 +35,7 @@ namespace Bob.Core.Sytems
             if (existingCustomer != null)
                 return false;
 
-            var passWordHash = HashPassword(password);
+            var passHash = HashPassword(password);
 
             int highestId = await CustomerRepository.GetHighestId();
 
@@ -47,7 +47,7 @@ namespace Bob.Core.Sytems
                 signupDate: DateTime.UtcNow,
                 addressId: addressId,
                 phoneNumber: phoneNumber,
-                password: passWordHash,
+                passwordHash: passHash,
                 isAdmin: isAdmin
             );
 

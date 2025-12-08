@@ -25,7 +25,6 @@ public partial class SignUpWindow : UserControl
 
     private async void SignUpButtonClick(object? sender, RoutedEventArgs e)
     {
-        // Basic empty-field validation
         if (string.IsNullOrWhiteSpace(VornameTextbox.Text) ||
             string.IsNullOrWhiteSpace(NameTextbox.Text) ||
             string.IsNullOrWhiteSpace(EmailTextbox.Text) ||
@@ -40,7 +39,7 @@ public partial class SignUpWindow : UserControl
             return;
         }
 
-        ErrorTextBlock.Text = ""; // clear old errors
+        ErrorTextBlock.Text = "";
 
         Address address = new Address
         {
@@ -56,7 +55,7 @@ public partial class SignUpWindow : UserControl
         if (!newAddress.Item1)
             await AddressService.AddAddressAsync(address);
 
-        await LoginSystem.RegisterCustomerAsync(
+        bool exists = await LoginSystem.RegisterCustomerAsync(
             VornameTextbox.Text,
             NameTextbox.Text,
             EmailTextbox.Text,
@@ -64,6 +63,12 @@ public partial class SignUpWindow : UserControl
             TelefonTextbox.Text,
             PasswortTextbox.Text
         );
+
+        if (exists)
+        {
+            ErrorTextBlock.Text = "Ein Konto mit dieser E-Mail-Adresse existiert bereits.";
+            return;
+        }
 
         VornameTextbox.Text = "";
         NameTextbox.Text = "";
@@ -77,5 +82,4 @@ public partial class SignUpWindow : UserControl
 
         ViewManager.TransitionTo(nameof(MainPage));
     }
-
 }

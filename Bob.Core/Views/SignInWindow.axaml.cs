@@ -2,8 +2,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Bob.Core.Sytems;
 using Bob.Core.Utils;
 using Bob.Core.Views;
+using System.Threading.Tasks;
 
 namespace Bob.Core;
 
@@ -20,4 +22,26 @@ public partial class SignInWindow : UserControl
         ViewManager.TransitionTo(nameof(MainPage));
     }
 
+    private async void SignInButtonClick(object? sender, RoutedEventArgs e)
+    {
+        if (
+            string.IsNullOrWhiteSpace(EmailTextbox.Text) ||
+            string.IsNullOrWhiteSpace(PasswortTextbox.Text))
+        {
+            ErrorTextBlock.Text = "Bitte alle Felder ausfüllen.";
+            return;
+        }
+
+        ErrorTextBlock.Text = "";
+
+
+        bool loggedIn = await LoginSystem.ValidateLoginAsync(EmailTextbox.Text, PasswortTextbox.Text);
+        if (!loggedIn)
+        {
+            ErrorTextBlock.Text = "Ungültige E-Mail oder Passwort.";
+            return;
+        }
+
+        ViewManager.TransitionTo(nameof(MainPage));
+    }
 }
