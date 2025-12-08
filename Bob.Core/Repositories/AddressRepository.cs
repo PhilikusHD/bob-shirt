@@ -11,15 +11,15 @@ using LinqToDB.Data;
 namespace Bob.Core.Repositories
 {
 #nullable enable
-    public sealed class AddressRepository
+    public static class AddressRepository
     {
-        public async Task<Address?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public static async Task<Address?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Address>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
         }
 
-        public async Task<Address?> GetByCustomerIdAsync(uint customerId, CancellationToken cancellationToken = default)
+        public static async Task<Address?> GetByCustomerIdAsync(uint customerId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Address>()
@@ -30,7 +30,7 @@ namespace Bob.Core.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task AddAsync(Address address, CancellationToken cancellationToken = default)
+        public static async Task AddAsync(Address address, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             var identity = await db.InsertWithIdentityAsync(address);
@@ -44,13 +44,13 @@ namespace Bob.Core.Repositories
             }
         }
 
-        public async Task UpdateAsync(Address address, CancellationToken cancellationToken = default)
+        public static async Task UpdateAsync(Address address, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.UpdateAsync(address);
         }
 
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public static async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<Address>().Where(i => i.Id == id).DeleteAsync(cancellationToken);

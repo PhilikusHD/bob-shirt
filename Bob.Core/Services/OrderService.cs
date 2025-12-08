@@ -9,68 +9,57 @@ using System.Threading.Tasks;
 namespace Bob.Core.Services
 {
 #nullable enable
-    public class OrderService
+    public static class OrderService
     {
-        private readonly OrderRepository m_OrderRepository;
-        private readonly OrderItemService m_OrderItemService;
-        private readonly ProductService m_ProductService;
-
-        public OrderService(OrderRepository orderRepository, OrderItemService cartService, ProductService productService)
+        public static async Task<Order?> GetOrderByIdAsync(int orderId)
         {
-            m_OrderRepository = orderRepository;
-            m_OrderItemService = cartService;
-            m_ProductService = productService;
+            return await OrderRepository.GetByIdAsync(orderId);
         }
 
-        public async Task<Order?> GetOrderByIdAsync(int orderId)
+        public static async Task<IReadOnlyList<Order>> GetOrderForCustomerAsync(int customerId)
         {
-            return await m_OrderRepository.GetByIdAsync(orderId);
+            return await OrderRepository.GetByCustomerAsync(customerId);
         }
 
-        public async Task<IReadOnlyList<Order>> GetOrderForCustomerAsync(int customerId)
+        public static async Task<int> CreateOrderAsync(Order order)
         {
-            return await m_OrderRepository.GetByCustomerAsync(customerId);
-        }
-
-        public async Task<int> CreateOrderAsync(Order order)
-        {
-            var lines = await m_OrderItemService.GetOrderItemLinesAsync(order.Id);
+            var lines = await OrderItemService.GetOrderItemLinesAsync(order.Id);
             if (lines == null)
                 return -1;
 
             decimal totalAmount = 0;
             foreach (var line in lines)
             {
-                var variant = await m_ProductService.GetVariantAsync(line.VariantId);
+                var variant = await ProductService.GetVariantAsync(line.VariantId);
                 if (variant == null)
                 {
                     Logger.Warning($"Variant with ID {line.VariantId} does not exist. Skipping...");
                     continue;
                 }
 
-                var item = await m_ProductService.GetProductByIdAsync(variant.ProductId);
+                var item = await ProductService.GetProductByIdAsync(variant.ProductId);
 
                 if (item != null)
-                    totalAmount += await m_ProductService.GetPriceAdjustedForSize(variant.SizeId, item.Price);
+                    totalAmount += await ProductService.GetPriceAdjustedForSize(variant.SizeId, item.Price);
             }
 
             order.TotalAmount = totalAmount;
             order.OrderDate = DateTime.UtcNow;
 
-            await m_OrderRepository.AddAsync(order);
+            await OrderRepository.AddAsync(order);
             return order.Id;
         }
 
-        public async Task CancelOrderAsync(int orderId)
+        public static async Task CancelOrderAsync(int orderId)
         {
-            var order = await m_OrderRepository.GetByIdAsync(orderId);
+            var order = await OrderRepository.GetByIdAsync(orderId);
             if (order == null)
             {
                 Logger.Error("Order not found");
                 return;
             }
 
-            await m_OrderRepository.DeleteAsync(orderId);
+            await OrderRepository.DeleteAsync(orderId);
         }
     }
 }

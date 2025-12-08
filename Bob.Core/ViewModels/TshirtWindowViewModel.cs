@@ -11,14 +11,12 @@ namespace Bob.Core.ViewModels;
 
 public partial class TShirtWindowViewModel : ViewModelBase
 {
-    private readonly ProductService m_ProductService;
 
     [ObservableProperty]
     private ObservableCollection<string> tshirtNames = new();
 
-    public TShirtWindowViewModel(ProductService productService)
+    public TShirtWindowViewModel()
     {
-        m_ProductService = productService;
 
         // Load T-shirts asynchronously
         _ = LoadTshirtsAsync();
@@ -28,7 +26,7 @@ public partial class TShirtWindowViewModel : ViewModelBase
     {
         try
         {
-            var allProducts = await m_ProductService.GetAllProductsAsync();
+            var allProducts = await ProductService.GetAllProductsAsync();
 
             var tshirts = allProducts
                 .Where(p => p.TypeId == 1) // Filter T-shirts

@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 namespace Bob.Core.Repositories
 {
 #nullable enable
-    public sealed class PaymentRepository
+    public static class PaymentRepository
     {
-        public async Task<Payment?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public static async Task<Payment?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Payment>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
-        public async Task<Payment?> GetByOrderIdAsync(int orderId, CancellationToken cancellationToken = default)
+        public static async Task<Payment?> GetByOrderIdAsync(int orderId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Payment>().FirstOrDefaultAsync(p => p.OrderId == orderId, cancellationToken);
         }
 
-        public async Task AddAsync(Payment payment, CancellationToken cancellationToken = default)
+        public static async Task AddAsync(Payment payment, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             var identity = await db.InsertWithIdentityAsync(payment);
@@ -36,7 +36,7 @@ namespace Bob.Core.Repositories
             }
         }
 
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public static async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<Payment>().Where(i => i.Id == id).DeleteAsync(cancellationToken);

@@ -9,27 +9,27 @@ using System.Threading.Tasks;
 
 namespace Bob.Core.Repositories
 {
-    public sealed class OrderItemRepository
+    public static class OrderItemRepository
     {
-        public async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderId, CancellationToken cancellationToken = default)
+        public static async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId).ToListAsync(cancellationToken);
         }
 
-        public async Task AddLineAsync(OrderItemLine line, CancellationToken cancellationToken = default)
+        public static async Task AddLineAsync(OrderItemLine line, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.InsertAsync(line);
         }
 
-        public async Task RemoveLineAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
+        public static async Task RemoveLineAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<OrderItemLine>().Where(cl => cl.OrderId == orderId && cl.VariantId == variantId).DeleteAsync(cancellationToken);
         }
 
-        public async Task AssignToOrderAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
+        public static async Task AssignToOrderAsync(int orderId, int variantId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             await db.GetTable<OrderItemLine>().Where(cl => cl.VariantId == variantId).Set(cl => cl.OrderId, orderId).UpdateAsync(cancellationToken);

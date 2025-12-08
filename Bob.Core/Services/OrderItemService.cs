@@ -6,36 +6,27 @@ using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
-    public class OrderItemService
+    public static class OrderItemService
     {
-        private readonly OrderItemRepository m_OrderItemRepository;
-        private readonly ProductService m_ProductService;
-
-        public OrderItemService(OrderItemRepository orderItemRepository, ProductService productService)
+        public static async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderItemId)
         {
-            m_OrderItemRepository = orderItemRepository;
-            m_ProductService = productService;
+            return await OrderItemRepository.GetOrderItemLinesAsync(orderItemId);
         }
 
-        public async Task<IReadOnlyList<OrderItemLine>> GetOrderItemLinesAsync(int orderItemId)
+        public static async Task AddLineAsync(OrderItemLine line)
         {
-            return await m_OrderItemRepository.GetOrderItemLinesAsync(orderItemId);
-        }
-
-        public async Task AddLineAsync(OrderItemLine line)
-        {
-            var variant = await m_ProductService.GetVariantAsync(line.VariantId);
+            var variant = await ProductService.GetVariantAsync(line.VariantId);
             if (variant == null)
             {
                 Logger.Error("Variant does not exist.");
                 return;
             }
 
-            await m_OrderItemRepository.AddLineAsync(line);
+            await OrderItemRepository.AddLineAsync(line);
         }
 
-        public async Task RemoveLineAsync(int orderId, int itemId) => await m_OrderItemRepository.RemoveLineAsync(orderId, itemId);
+        public static async Task RemoveLineAsync(int orderId, int itemId) => await OrderItemRepository.RemoveLineAsync(orderId, itemId);
 
-        public async Task AssignToOrderAsync(int orderId, int productId) => await m_OrderItemRepository.AssignToOrderAsync(orderId, productId);
+        public static async Task AssignToOrderAsync(int orderId, int productId) => await OrderItemRepository.AssignToOrderAsync(orderId, productId);
     }
 }

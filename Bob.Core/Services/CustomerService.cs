@@ -1,40 +1,33 @@
-﻿using Bob.Core.Domain;
+﻿#nullable enable
+using Bob.Core.Domain;
 using Bob.Core.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
-    public class CustomerService
+    public static class CustomerService
     {
-        private readonly CustomerRepository m_CustomerRepository;
-
-        public CustomerService(CustomerRepository customerRepository)
+        public static async Task<Customer?> GetCustomerByIdAsync(int customerId)
         {
-            m_CustomerRepository = customerRepository;
+            return await CustomerRepository.GetByIdAsync(customerId);
         }
 
-#nullable enable
-        public async Task<Customer?> GetCustomerByIdAsync(int customerId)
+        public static async Task<IReadOnlyList<Customer>> GetAllCustomersAsync()
         {
-            return await m_CustomerRepository.GetByIdAsync(customerId);
+            return await CustomerRepository.GetAllAsync();
         }
 
-        public async Task<IReadOnlyList<Customer>> GetAllCustomersAsync()
+        public static async Task AddCustomerAsync(Customer customer)
         {
-            return await m_CustomerRepository.GetAllAsync();
+            await CustomerRepository.AddAsync(customer);
         }
 
-        public async Task AddCustomerAsync(Customer customer)
+        public static async Task UpdateCustomerAsync(Customer customer)
         {
-            await m_CustomerRepository.AddAsync(customer);
+            await CustomerRepository.UpdateAsync(customer);
         }
 
-        public async Task UpdateCustomerAsync(Customer customer)
-        {
-            await m_CustomerRepository.UpdateAsync(customer);
-        }
-
-        public async Task DeleteCustomerAsync(int id) => await m_CustomerRepository.DeleteAsync(id);
+        public static async Task DeleteCustomerAsync(int id) => await CustomerRepository.DeleteAsync(id);
     }
 }

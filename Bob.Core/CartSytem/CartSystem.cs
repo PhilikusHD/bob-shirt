@@ -14,17 +14,13 @@ namespace Bob.Core.CartSytem
 
     public sealed class CartSystem
     {
-        private readonly ProductService m_ProductService;
-        private readonly OrderItemService m_ItemService;
-
         private List<ProductVariant> m_ProductVariants = new List<ProductVariant>();
 
         private decimal m_TotalPrice;
 
-        public CartSystem(ProductService productService, OrderItemService itemService)
+        public CartSystem()
         {
-            m_ProductService = productService;
-            m_ItemService = itemService;
+
         }
 
         public async Task AddToCart(ProductVariant productVariant)
@@ -57,8 +53,8 @@ namespace Bob.Core.CartSytem
         public async Task CalculateTotalPrice()
         {
             m_TotalPrice = 0.0M;
-            IReadOnlyList<Product> products = await m_ProductService.GetAllProductsAsync();
-            IReadOnlyList<Size> allSizes = await m_ProductService.GetAllSizesAsync();
+            IReadOnlyList<Product> products = await ProductService.GetAllProductsAsync();
+            IReadOnlyList<Size> allSizes = await ProductService.GetAllSizesAsync();
 
             Dictionary<int, decimal> sizeMultipliers = new();
             Dictionary<int, decimal> productPrices = new();
@@ -95,7 +91,7 @@ namespace Bob.Core.CartSytem
                     OrderId = order.Id
                 };
 
-                await m_ItemService.AddLineAsync(orderItemLine);
+                await OrderItemService.AddLineAsync(orderItemLine);
             }
         }
     }

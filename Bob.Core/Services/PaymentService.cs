@@ -1,34 +1,27 @@
-﻿using Bob.Core.Domain;
+﻿#nullable enable
+using Bob.Core.Domain;
 using Bob.Core.Repositories;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
-    public class PaymentService
+    public static class PaymentService
     {
-        private readonly PaymentRepository m_PaymentRepository;
-
-        public PaymentService(PaymentRepository paymentRepository)
+        public static async Task<Payment?> GetPaymentByIdAsync(int paymentId)
         {
-            m_PaymentRepository = paymentRepository;
+            return await PaymentRepository.GetByIdAsync(paymentId);
         }
 
-#nullable enable
-        public async Task<Payment?> GetPaymentByIdAsync(int paymentId)
+        public static async Task<Payment?> GetPaymentsForOrderAsync(int orderId)
         {
-            return await m_PaymentRepository.GetByIdAsync(paymentId);
+            return await PaymentRepository.GetByOrderIdAsync(orderId);
         }
 
-        public async Task<Payment?> GetPaymentsForOrderAsync(int orderId)
+        public static async Task ProcessPaymentAsync(Payment payment)
         {
-            return await m_PaymentRepository.GetByOrderIdAsync(orderId);
+            await PaymentRepository.AddAsync(payment);
         }
 
-        public async Task ProcessPaymentAsync(Payment payment)
-        {
-            await m_PaymentRepository.AddAsync(payment);
-        }
-
-        public async Task DeletePaymentAsync(int id) => await m_PaymentRepository.DeleteAsync(id);
+        public static async Task DeletePaymentAsync(int id) => await PaymentRepository.DeleteAsync(id);
     }
 }

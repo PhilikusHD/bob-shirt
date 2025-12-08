@@ -12,7 +12,7 @@ public partial class TShirtWindow : UserControl
     public TShirtWindow()
     {
         InitializeComponent();
-        DataContext = new TShirtWindowViewModel(new ProductService(new Repositories.ProductRepository()));
+        DataContext = new TShirtWindowViewModel();
     }
 
     private void OnShopClick(object? sender, RoutedEventArgs e)

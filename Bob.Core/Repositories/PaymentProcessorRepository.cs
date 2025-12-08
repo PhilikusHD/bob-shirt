@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace Bob.Core.Repositories
 {
 #nullable enable
-    public sealed class PaymentProcessorRepository
+    public static class PaymentProcessorRepository
     {
-        public async Task<PaymentProcessor?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public static async Task<PaymentProcessor?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<PaymentProcessor>().FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
-        public async Task<IReadOnlyList<PaymentProcessor>> GetAllAsync(CancellationToken cancellationToken = default)
+        public static async Task<IReadOnlyList<PaymentProcessor>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<PaymentProcessor>().ToListAsync(cancellationToken);

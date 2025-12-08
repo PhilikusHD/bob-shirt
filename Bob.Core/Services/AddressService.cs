@@ -1,39 +1,33 @@
-﻿using Bob.Core.Domain;
+﻿#nullable enable
+using Bob.Core.Domain;
 using Bob.Core.Repositories;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
-    public class AddressService
+    public static class AddressService
     {
-        private readonly AddressRepository m_AddressRepository;
 
-        public AddressService(AddressRepository addressRepository)
+        public static async Task<Address?> GetAddressByIdAsync(int addressId)
         {
-            m_AddressRepository = addressRepository;
+            return await AddressRepository.GetByIdAsync(addressId);
         }
 
-#nullable enable
-        public async Task<Address?> GetAddressByIdAsync(int addressId)
+        public static async Task<Address?> GetAddressForCustomerAsync(uint customerId)
         {
-            return await m_AddressRepository.GetByIdAsync(addressId);
+            return await AddressRepository.GetByCustomerIdAsync(customerId);
         }
 
-        public async Task<Address?> GetAddressForCustomerAsync(uint customerId)
+        public static async Task AddAddressAsync(Address address)
         {
-            return await m_AddressRepository.GetByCustomerIdAsync(customerId);
+            await AddressRepository.AddAsync(address);
         }
 
-        public async Task AddAddressAsync(Address address)
+        public static async Task UpdateAddressAsync(Address address)
         {
-            await m_AddressRepository.AddAsync(address);
+            await AddressRepository.UpdateAsync(address);
         }
 
-        public async Task UpdateAddressAsync(Address address)
-        {
-            await m_AddressRepository.UpdateAsync(address);
-        }
-
-        public async Task DeleteAddressAsync(int id) => await m_AddressRepository.DeleteAsync(id);
+        public static async Task DeleteAddressAsync(int id) => await AddressRepository.DeleteAsync(id);
     }
 }

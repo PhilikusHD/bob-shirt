@@ -7,99 +7,93 @@ using System.Threading.Tasks;
 namespace Bob.Core.Services
 {
 #nullable enable
-    public class ProductService
+    public static class ProductService
     {
-        private readonly ProductRepository m_ProductRepository;
 
-        public ProductService(ProductRepository repository)
-        {
-            m_ProductRepository = repository;
-        }
 
         #region Product
-        public async Task<Product?> GetProductByIdAsync(int productId)
+        public static async Task<Product?> GetProductByIdAsync(int productId)
         {
-            return await m_ProductRepository.GetByIdAsync(productId);
+            return await ProductRepository.GetByIdAsync(productId);
         }
 
-        public async Task<IReadOnlyList<Product>> GetAllProductsAsync()
+        public static async Task<IReadOnlyList<Product>> GetAllProductsAsync()
         {
-            return await m_ProductRepository.GetAllAsync();
+            return await ProductRepository.GetAllAsync();
         }
 
-        public async Task AddProductAsync(Product product, ProductVariant? variants = null)
+        public static async Task AddProductAsync(Product product, ProductVariant? variants = null)
         {
-            await m_ProductRepository.AddAsync(product, variants);
+            await ProductRepository.AddAsync(product, variants);
         }
 
-        public async Task UpdateProductAsync(Product product)
+        public static async Task UpdateProductAsync(Product product)
         {
-            await m_ProductRepository.UpdateAsync(product);
+            await ProductRepository.UpdateAsync(product);
         }
 
-        public async Task DeleteProductAsync(int productId)
+        public static async Task DeleteProductAsync(int productId)
         {
-            await m_ProductRepository.DeleteAsync(productId);
+            await ProductRepository.DeleteAsync(productId);
         }
         #endregion
 
         #region Size
-        public async Task<Size?> GetSizeAsync(int sizeId) => await m_ProductRepository.GetSizeByIdAsync(sizeId);
+        public static async Task<Size?> GetSizeAsync(int sizeId) => await ProductRepository.GetSizeByIdAsync(sizeId);
 
-        public async Task<IReadOnlyList<Size>> GetAllSizesAsync() => await m_ProductRepository.GetAllSizesAsync();
+        public static async Task<IReadOnlyList<Size>> GetAllSizesAsync() => await ProductRepository.GetAllSizesAsync();
 
-        public async Task<decimal> GetPriceAdjustedForSize(int sizeId, decimal price)
+        public static async Task<decimal> GetPriceAdjustedForSize(int sizeId, decimal price)
         {
-            return price * await m_ProductRepository.GetSizeMultiplier(sizeId);
+            return price * await ProductRepository.GetSizeMultiplier(sizeId);
         }
         #endregion
 
         #region ProductType
-        public async Task<ProductType?> GetProductTypeAsync(int productId) => await m_ProductRepository.GetProductTypeByProductAsync(productId);
+        public static async Task<ProductType?> GetProductTypeAsync(int productId) => await ProductRepository.GetProductTypeByProductAsync(productId);
 
-        public async Task<ProductType?> GetProductTypeByIdAsync(int typeId) => await m_ProductRepository.GetProductTypeByIDAsync(typeId);
+        public static async Task<ProductType?> GetProductTypeByIdAsync(int typeId) => await ProductRepository.GetProductTypeByIDAsync(typeId);
 
-        public async Task<IReadOnlyList<ProductType>> GetAllProductTypesAsync() => await m_ProductRepository.GetAllProductTypesAsync();
+        public static async Task<IReadOnlyList<ProductType>> GetAllProductTypesAsync() => await ProductRepository.GetAllProductTypesAsync();
 
-        public async Task AddProductTypeAsync(ProductType productType) => await m_ProductRepository.AddProductTypeAsync(productType);
+        public static async Task AddProductTypeAsync(ProductType productType) => await ProductRepository.AddProductTypeAsync(productType);
 
-        public async Task UpdateProductTypeAsync(ProductType productType) => await m_ProductRepository.UpdateProductTypeAsync(productType);
+        public static async Task UpdateProductTypeAsync(ProductType productType) => await ProductRepository.UpdateProductTypeAsync(productType);
 
-        public async Task DeleteProductTypeAsync(int typeId) => await m_ProductRepository.DeleteProductTypeAsync(typeId);
+        public static async Task DeleteProductTypeAsync(int typeId) => await ProductRepository.DeleteProductTypeAsync(typeId);
         #endregion
 
         #region Colors
         // Define Interfaces for the Color Table
+        public static async Task<Color?> GetColorAsync(int colorId) => await ProductRepository.GetColorByIdAsync(colorId);
 
-        public async Task<Color?> GetColorAsync(int colorId) => await m_ProductRepository.GetColorByIdAsync(colorId);
-
-        public async Task<IReadOnlyList<Color>> GetAllColorsAsync() => await m_ProductRepository.GetAllColorsAsync();
+        public static async Task<IReadOnlyList<Color>> GetAllColorsAsync() => await ProductRepository.GetAllColorsAsync();
         #endregion
 
         #region ProductVariant
-        public async Task<ProductVariant?> GetVariantAsync(int variantId)
+        public static async Task<ProductVariant?> GetVariantAsync(int variantId)
         {
-            return await m_ProductRepository.GetVariantByIdAsync(variantId);
+            return await ProductRepository.GetVariantByIdAsync(variantId);
         }
 
-        public async Task<IReadOnlyList<ProductVariant>> GetVariantsForProductAsync(int productId)
+        public static async Task<IReadOnlyList<ProductVariant>> GetVariantsForProductAsync(int productId)
         {
-            return await m_ProductRepository.GetVariantsForProductAsync(productId);
+            return await ProductRepository.GetVariantsForProductAsync(productId);
         }
 
-        public async Task AddVariantAsync(ProductVariant variant)
+        public static async Task AddVariantAsync(ProductVariant variant)
         {
-            await m_ProductRepository.AddVariantAsync(variant);
+            await ProductRepository.AddVariantAsync(variant);
         }
 
-        public async Task UpdateVariantAsync(ProductVariant variant)
+        public static async Task UpdateVariantAsync(ProductVariant variant)
         {
-            await m_ProductRepository.UpdateVariantAsync(variant);
+            await ProductRepository.UpdateVariantAsync(variant);
         }
 
-        public async Task DeleteVariantAsync(ProductVariant variant)
+        public static async Task DeleteVariantAsync(ProductVariant variant)
         {
-            await m_ProductRepository.DeleteVariantAsync(variant);
+            await ProductRepository.DeleteVariantAsync(variant);
         }
         #endregion
     }
