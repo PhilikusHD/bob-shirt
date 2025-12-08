@@ -213,8 +213,8 @@ namespace Bob.Core.Database
             var firstProduct = (await productService.GetAllProductsAsync()).First();
             var variant = (await productService.GetVariantsForProductAsync(firstProduct.ProductId)).First();
 
-            await itemService.AddLineAsync(new OrderItemLine(order.Id, variant.VariantId, "2"));
-            await itemService.AddLineAsync(new OrderItemLine(order.Id, 10, "1"));
+            await itemService.AddLineAsync(new OrderItemLine(order.Id, variant.VariantId, 2));
+            await itemService.AddLineAsync(new OrderItemLine(order.Id, 10, 1));
 
             var result = await orderService.CreateOrderAsync(order);
             Logger.Debug(result != -1 ? $"Order #{order.Id} total {order.TotalAmount}" : "Order creation failed");

@@ -12,13 +12,13 @@ namespace Bob.Core.Domain
         public int VariantId { get; set; }
 
         [Column("AMOUNT")]
-        public string Amount { get; set; }
+        public int Amount { get; set; }
 
         [PrimaryKey]
         [Column("ORDERID")]
         public int OrderId { get; set; } // null until checkout
 
-        public OrderItemLine(int orderid, int productid, string amount)
+        public OrderItemLine(int orderid, int productid, int amount)
         {
             OrderId = orderid;
             VariantId = productid;
