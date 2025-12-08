@@ -1,11 +1,13 @@
+
 <Window x:Class="Bob.Core.Views.MainWindow"
 		xmlns="https://github.com/avaloniaui"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:local="using:Bob.Core"
 		Icon="/assets/avalonia-logo.ico"
-		Title="Bob" MaxHeight="1080" MaxWidth="1920" CanResize="False" Width="1920" Height="1080">
+		Title="Bob"       CanResize="True"
+        WindowState="Normal"
+        Padding="0" Margin="0">
 
 	<local:MainView />
 
 </Window>
-
