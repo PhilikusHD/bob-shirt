@@ -21,14 +21,29 @@ namespace Bob.Core.Repositories
             return await db.GetTable<Address>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
         }
 
-        public static async Task<bool> AddressExists(Address address)
+        public static async Task<int?> GetHighestId(CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            return await db.GetTable<Address>()
-                .AnyAsync(a => a.Street == address.Street &&
-                               a.HouseNumber == address.HouseNumber &&
-                               a.PostalCode == address.PostalCode &&
-                               a.City == address.City);
+            var highestId = await db.GetTable<Address>().MaxAsync(c => (int?)c.Id);
+            return highestId;
+        }
+
+        public static async Task<int> AddressExists(Address address)
+        {
+            await using var db = new AppDataConnection();
+
+            var existingAddress = await db.GetTable<Address>()
+                .FirstOrDefaultAsync(a =>
+                    a.Street == address.Street &&
+                    a.HouseNumber == address.HouseNumber &&
+                    a.PostalCode == address.PostalCode &&
+                    a.City == address.City);
+
+            if (existingAddress != null)
+                return existingAddress.Id;
+
+            int? highestId = await GetHighestId();
+            return highestId.HasValue ? highestId.Value + 1 : 1;
         }
 
         public static async Task<Address?> GetByCustomerIdAsync(uint customerId, CancellationToken cancellationToken = default)
