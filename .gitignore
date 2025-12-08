@@ -57,3 +57,4 @@ nunit-*.xml
 *.sln
 .vs/
 *.slnx
+*.log

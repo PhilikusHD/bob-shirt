@@ -94,7 +94,7 @@
 				   Height="500"/>
 		</Button>
 
-		<Button x:Name="SignUpButton" Width="150" Height="70" Margin="10,15,15,130" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="White" BorderThickness="0" Padding="0" Click="SignUpButtonClick">
+		<Button x:Name="SignUpButton" Width="150" Height="70" Margin="10,15,15,130" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="White" BorderThickness="0" Padding="0" Click="SignUpButtonClick" ClickMode="Release">
 			<Image Source="/assets/sign_up.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"

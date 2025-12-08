@@ -55,7 +55,7 @@ public partial class SignUpWindow : UserControl
         if (!newAddress.Item1)
             await AddressService.AddAddressAsync(address);
 
-        bool exists = await LoginSystem.RegisterCustomerAsync(
+        bool success = await LoginSystem.RegisterCustomerAsync(
             VornameTextbox.Text,
             NameTextbox.Text,
             EmailTextbox.Text,
@@ -64,7 +64,7 @@ public partial class SignUpWindow : UserControl
             PasswortTextbox.Text
         );
 
-        if (exists)
+        if (!success)
         {
             ErrorTextBlock.Text = "Ein Konto mit dieser E-Mail-Adresse existiert bereits.";
             return;

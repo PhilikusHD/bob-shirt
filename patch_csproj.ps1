@@ -15,6 +15,26 @@ $patchedContent | Set-Content $csprojFile -Encoding UTF8
 
 Write-Host "Successfully patched Avalonia resources in $csprojFile!"
 
+$csprojContent = Get-Content $csprojFile
+
+# Inject the auto-copy Content block if it doesn't exist
+if ($csprojContent -notmatch '<Content Include="assets\\\*\*\\\*.\*">') {
+    $injection = @"
+<ItemGroup>
+  <Content Include="assets\**\*.*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
+"@
+
+    # Just before the closing Project tag
+    $csprojContent = $csprojContent -replace '</Project>', "$injection`n</Project>"
+    $csprojContent | Set-Content $csprojFile -Encoding UTF8
+
+    Write-Host "Added auto-copy for Assets to $csprojFile"
+} else {
+    Write-Host "Assets auto-copy already exists in $csprojFile"
+}
 
 Write-Host "Patching WebAssembly SDK in Bob.WASM..."
 

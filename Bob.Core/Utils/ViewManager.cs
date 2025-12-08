@@ -44,6 +44,11 @@ namespace Bob.Core.Utils
                 }
             }
             Host.NavigateTo(control);
+
+            if (control is MainPage mainPage)
+            {
+                mainPage.UpdateLoginDisplay();
+            }
         }
     }
 }

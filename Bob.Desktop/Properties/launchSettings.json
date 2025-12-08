@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Bob.Desktop": {
+      "commandName": "Project"
+    }
+  }
+}

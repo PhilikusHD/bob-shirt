@@ -1,11 +1,16 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Bob.Core.Logging;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Bob.Core.Database;
 using Bob.Core.Repositories;
 using Bob.Core.Services;
+using Bob.Core.Sytems;
 using Bob.Core.Utils;
+using System;
 using System.Threading.Tasks;
 
 
@@ -72,5 +77,37 @@ namespace Bob.Core
         {
             ViewManager.TransitionTo(nameof(SignUpWindow));
         }
+
+        public void UpdateLoginDisplay()
+        {
+            if (LoginSystem.CurrentUserIsLoggedIn())
+            {
+                var customer = LoginSystem.GetCurrentCustomer();
+                string email = customer?.Email ?? "Benutzer";
+
+                SignInButton.Content = new TextBlock
+                {
+                    Text = email,
+                    Foreground = Brushes.Black,
+                    VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                    TextTrimming = TextTrimming.CharacterEllipsis,
+                    TextAlignment = TextAlignment.Center,
+                    Margin = new Thickness(8, 4), // gives some padding inside the button
+                };
+
+                SignUpButton.IsVisible = false;
+            }
+            else
+            {
+                SignInButton.Content = new Image
+                {
+                    Source = new Bitmap("assets/sign_in.png"),
+                    Stretch = Stretch.Uniform
+                };
+                SignUpButton.IsVisible = true;
+            }
+        }
+
     }
 }
