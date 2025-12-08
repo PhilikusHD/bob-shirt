@@ -2,13 +2,25 @@ workspace "BobSolution"
     configurations { "Debug", "Release" }
     platforms { "Any CPU" }
 
-    -- Global configuration filters
     filter "configurations:Debug"
         defines { "DEBUG" }
         symbols "On"
+
     filter "configurations:Release"
         defines { "NDEBUG" }
-        optimize "On"
+        optimize "Full"
+        warnings "High"
+
+        buildoptions {
+            "/p:Deterministic=true",
+            "/p:OptimizeCode=true",
+            "/p:TieredPGO=true",
+            "/p:TieredCompilation=true",
+            "/p:ConcurrentGarbageCollection=true",
+            "/p:CheckForOverflowUnderflow=false",
+            "/p:DebugType=none"
+        }
+
     filter {}
 
 
@@ -22,11 +34,12 @@ project "Bob.Core"
 
     files { "Bob.Core/**.cs", "Bob.Core/assets/**" }
 
-    -- Treat assets and XAML as resources
     filter { "files:Bob.Core/Assets/**" }
         buildaction "Resource"
+
     filter { "files:**.xaml" }
         buildaction "Page"
+
     filter {}
 
     nuget {
@@ -37,6 +50,14 @@ project "Bob.Core"
         "CommunityToolkit.Mvvm:8.2.0",
         "linq2db:5.4.1.9",
         "Microsoft.Data.SqlClient:5.1.3"
+    }
+
+    buildoptions {
+        "/p:PublishReadyToRun=true",
+        "/p:PublishSingleFile=true",
+        "/p:PublishTrimmed=true",
+        "/p:TrimMode=link",
+        "/p:IsTrimmable=true"
     }
 
 project "Bob.Desktop"
@@ -61,15 +82,20 @@ project "Bob.Desktop"
         "Avalonia.Diagnostics:11.3.9"
     }
 
-    -- Reference shared Core
     links { "Bob.Core" }
-
+    buildoptions {
+        "/p:PublishReadyToRun=true",
+        "/p:PublishSingleFile=true",
+        "/p:PublishTrimmed=true",
+        "/p:TrimMode=link",
+        "/p:IsTrimmable=true"
+    }
 
 project "Bob.WASM"
     kind "ConsoleApp"
     language "C#"
     dotnetframework "net9.0-browser"
-    
+
     targetdir "bin/%{cfg.buildcfg}/x64/WASM"
     objdir "bin-int/%{cfg.buildcfg}/x64/WASM"
     location "Bob.WASM"
@@ -88,3 +114,13 @@ project "Bob.WASM"
     }
 
     links { "Bob.Core" }
+
+    buildoptions {
+        "/p:WasmBuildNative=true",
+        "/p:WasmEnableSIMD=true",
+        "/p:WasmEnableThreads=true",
+        "/p:WasmStripIL=true",
+        "/p:PublishTrimmed=true",
+        "/p:TrimMode=link",
+        "/p:IsTrimmable=true"
+    }

@@ -60,15 +60,7 @@ namespace Bob.Core.Repositories
         public static async Task AddAsync(Address address, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var identity = await db.InsertWithIdentityAsync(address);
-            if (identity != null)
-            {
-                try
-                {
-                    address.Id = Convert.ToInt32(identity);
-                }
-                catch { }
-            }
+            var identity = await db.InsertAsync(address);
         }
 
         public static async Task UpdateAsync(Address address, CancellationToken cancellationToken = default)

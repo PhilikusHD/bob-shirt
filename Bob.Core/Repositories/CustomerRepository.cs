@@ -2,6 +2,7 @@
 using Bob.Core.Domain;
 using LinqToDB;
 using LinqToDB.Data;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,15 +42,7 @@ namespace Bob.Core.Repositories
         public static async Task AddAsync(Customer customer, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var identity = await db.InsertWithIdentityAsync(customer);
-            if (identity != null)
-            {
-                try
-                {
-                    customer.Id = Convert.ToInt32(identity);
-                }
-                catch { }
-            }
+            await db.InsertAsync(customer);
         }
 
         public static async Task UpdateAsync(Customer customer, CancellationToken cancellationToken = default)

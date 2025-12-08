@@ -25,15 +25,7 @@ namespace Bob.Core.Repositories
         public static async Task AddAsync(Payment payment, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var identity = await db.InsertWithIdentityAsync(payment);
-            if (identity != null)
-            {
-                try
-                {
-                    payment.Id = (int)Convert.ToInt32(identity);
-                }
-                catch { }
-            }
+            await db.InsertAsync(payment);
         }
 
         public static async Task DeleteAsync(int id, CancellationToken cancellationToken = default)

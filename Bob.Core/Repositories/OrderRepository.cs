@@ -27,15 +27,7 @@ namespace Bob.Core.Repositories
         public static async Task AddAsync(Order order, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();
-            var identity = await db.InsertWithIdentityAsync(order);
-            if (identity != null)
-            {
-                try
-                {
-                    order.Id = (int)Convert.ToInt32(identity);
-                }
-                catch { }
-            }
+            await db.InsertAsync(order);
         }
 
         public static async Task UpdateAsync(Order order, CancellationToken cancellationToken = default)
