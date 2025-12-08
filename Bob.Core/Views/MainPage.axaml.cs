@@ -53,10 +53,10 @@ namespace Bob.Core
             ViewManager.TransitionTo(nameof(CapsWindow));
         }
 
-        private void TestDatabase_Click(object? sender, RoutedEventArgs e)
+        private async void TestDatabase_Click(object? sender, RoutedEventArgs e)
         {
             TestDB testDatabase = new TestDB();
-            testDatabase.RunAsync();
+            await testDatabase.RunAsync();
         }
 
         private void OnCartClick(object? sender, RoutedEventArgs e)

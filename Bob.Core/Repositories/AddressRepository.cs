@@ -28,7 +28,7 @@ namespace Bob.Core.Repositories
             return highestId;
         }
 
-        public static async Task<int> AddressExists(Address address)
+        public static async Task<Tuple<bool, int>> AddressExists(Address address)
         {
             await using var db = new AppDataConnection();
 
@@ -40,10 +40,11 @@ namespace Bob.Core.Repositories
                     a.City == address.City);
 
             if (existingAddress != null)
-                return existingAddress.Id;
+                return new Tuple<bool, int>(true, existingAddress.Id);
 
             int? highestId = await GetHighestId();
-            return highestId.HasValue ? highestId.Value + 1 : 1;
+            int newId = (highestId ?? 0) + 1;
+            return new Tuple<bool, int>(false, newId);
         }
 
         public static async Task<Address?> GetByCustomerIdAsync(uint customerId, CancellationToken cancellationToken = default)

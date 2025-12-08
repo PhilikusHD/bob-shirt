@@ -25,13 +25,57 @@ public partial class SignUpWindow : UserControl
 
     private async void SignUpButtonClick(object? sender, RoutedEventArgs e)
     {
-        Address address = new Address();
-        address.Street = StrasseTextbox.Text;
-        address.HouseNumber = HausnrTextbox.Text;
-        address.City = StadtTextbox.Text;
-        address.PostalCode = PlzTextbox.Text;
+        // Basic empty-field validation
+        if (string.IsNullOrWhiteSpace(VornameTextbox.Text) ||
+            string.IsNullOrWhiteSpace(NameTextbox.Text) ||
+            string.IsNullOrWhiteSpace(EmailTextbox.Text) ||
+            string.IsNullOrWhiteSpace(StrasseTextbox.Text) ||
+            string.IsNullOrWhiteSpace(HausnrTextbox.Text) ||
+            string.IsNullOrWhiteSpace(StadtTextbox.Text) ||
+            string.IsNullOrWhiteSpace(PlzTextbox.Text) ||
+            string.IsNullOrWhiteSpace(TelefonTextbox.Text) ||
+            string.IsNullOrWhiteSpace(PasswortTextbox.Text))
+        {
+            ErrorTextBlock.Text = "Bitte alle Felder ausfüllen.";
+            return;
+        }
 
-        int addressId = await AddressService.AddressExists(address);
-        await LoginSystem.RegisterCustomerAsync(VornameTextbox.Text, NameTextbox.Text, EmailTextbox.Text, addressId, TelefonTextbox.Text, PasswortTextbox.Text);
+        ErrorTextBlock.Text = ""; // clear old errors
+
+        Address address = new Address
+        {
+            Street = StrasseTextbox.Text,
+            HouseNumber = HausnrTextbox.Text,
+            City = StadtTextbox.Text,
+            PostalCode = PlzTextbox.Text
+        };
+
+        var newAddress = await AddressService.AddressExists(address);
+        address.Id = newAddress.Item2;
+
+        if (!newAddress.Item1)
+            await AddressService.AddAddressAsync(address);
+
+        await LoginSystem.RegisterCustomerAsync(
+            VornameTextbox.Text,
+            NameTextbox.Text,
+            EmailTextbox.Text,
+            address.Id,
+            TelefonTextbox.Text,
+            PasswortTextbox.Text
+        );
+
+        VornameTextbox.Text = "";
+        NameTextbox.Text = "";
+        EmailTextbox.Text = "";
+        StrasseTextbox.Text = "";
+        HausnrTextbox.Text = "";
+        StadtTextbox.Text = "";
+        PlzTextbox.Text = "";
+        TelefonTextbox.Text = "";
+        PasswortTextbox.Text = "";
+
+        ViewManager.TransitionTo(nameof(MainPage));
     }
+
 }

@@ -104,11 +104,19 @@
 				   Height="250"/>
 		</Button>
 
+		<TextBlock x:Name="ErrorTextBlock"
+				   Foreground="Red"
+				   FontSize="20"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Bottom"
+				   Margin="0,0,0,220"
+				   TextAlignment="Center"/>
+
 		<TextBox Name="VornameTextbox" Width="550" Height="50"  Margin="-600,0,0,0" HorizontalAlignment="Center" Watermark="Vorname" />
 		<TextBox Name="NameTextbox" Width="550" Height="50" Margin="-600,150,0,0" HorizontalAlignment="Center" Watermark="Name" />
 		<TextBox Name="EmailTextbox" Width="550" Height="50" Margin="-600,300,0,0" HorizontalAlignment="Center" Watermark="Emailadresse" />
 		<TextBox Name="TelefonTextbox" Width="550" Height="50" Margin="-600,450,0,0" HorizontalAlignment="Center" Watermark="Telefonnummer" />
-		<TextBox Name="StrasseTextbox" Width="550" Height="50" Margin="600,0,0,0" HorizontalAlignment="Center" Watermark="Straße" />
+		<TextBox Name="StrasseTextbox" Width="550" Height="50" Margin="600,0,0,0" HorizontalAlignment="Center" Watermark="Strasse" />
 		<TextBox Name="HausnrTextbox" Width="550" Height="50" Margin="600,150,0,0" HorizontalAlignment="Center" Watermark="Hausnummer" />
 		<TextBox Name="PlzTextbox" Width="550" Height="50" Margin="600,300,0,0" HorizontalAlignment="Center" Watermark="PLZ" />
 		<TextBox Name="StadtTextbox" Width="550" Height="50" Margin="600,450,0,0" HorizontalAlignment="Center" Watermark="Stadt" />

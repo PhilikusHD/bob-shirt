@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Bob.Core.Domain;
 using Bob.Core.Repositories;
+using System;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Services
@@ -13,7 +14,7 @@ namespace Bob.Core.Services
             return await AddressRepository.GetByIdAsync(addressId);
         }
 
-        public static async Task<int> AddressExists(Address address)
+        public static async Task<Tuple<bool, int>> AddressExists(Address address)
         {
             return await AddressRepository.AddressExists(address);
         }
