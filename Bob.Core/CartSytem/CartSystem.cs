@@ -7,7 +7,7 @@ namespace Bob.Core.CartSytem
 {
     public struct CartState
     {
-        public List<ProductVariant> ProductVariants;
+        public IReadOnlyList<ProductVariant> ProductVariants;
         public decimal TotalPrice;
     }
 
@@ -19,7 +19,7 @@ namespace Bob.Core.CartSytem
 
         private List<ProductVariant> m_ProductVariants = new List<ProductVariant>();
 
-        private decimal m_TotalPrice { get; set; }
+        private decimal m_TotalPrice;
 
         public CartSystem(ProductService productService, OrderItemService itemService)
         {
@@ -30,17 +30,13 @@ namespace Bob.Core.CartSytem
         public async Task AddToCart(ProductVariant productVariant)
         {
             m_ProductVariants.Add(productVariant);
-            var product = await m_ProductService.GetProductByIdAsync(productVariant.ProductId);
-
-            m_TotalPrice += await m_ProductService.GetPriceAdjustedForSize(productVariant.SizeId, product.Price);
+            await CalculateTotalPrice();
         }
 
         public async Task RemoveFromCart(ProductVariant productVariant)
         {
             m_ProductVariants.Remove(productVariant);
-
-            var product = await m_ProductService.GetProductByIdAsync(productVariant.ProductId);
-            m_TotalPrice -= await m_ProductService.GetPriceAdjustedForSize(productVariant.SizeId, product.Price);
+            await CalculateTotalPrice();
         }
 
         public void Clear()
@@ -53,45 +49,48 @@ namespace Bob.Core.CartSytem
         {
             return new CartState
             {
-                ProductVariants = m_ProductVariants,
+                ProductVariants = m_ProductVariants.AsReadOnly(),
                 TotalPrice = m_TotalPrice
             };
         }
 
-        public async Task<decimal> CalculateTotalPrice()
+        public async Task CalculateTotalPrice()
         {
-            foreach (var variant in m_ProductVariants)
-            {
-                var product = await m_ProductService.GetProductByIdAsync(variant.ProductId);
-                m_TotalPrice += await m_ProductService.GetPriceAdjustedForSize(variant.SizeId, product.Price);
-            }
+            m_TotalPrice = 0.0M;
+            IReadOnlyList<Product> products = await m_ProductService.GetAllProductsAsync();
+            IReadOnlyList<Size> allSizes = await m_ProductService.GetAllSizesAsync();
 
-            return m_TotalPrice;
+            Dictionary<int, decimal> sizeMultipliers = new();
+            Dictionary<int, decimal> productPrices = new();
+
+            foreach (Size size in allSizes)
+                sizeMultipliers.TryAdd(size.SizeId, size.PriceMultiplier);
+
+            foreach (Product product in products)
+                productPrices.TryAdd(product.ProductId, product.Price);
+
+            foreach (var variant in m_ProductVariants)
+                m_TotalPrice += productPrices[variant.ProductId] * sizeMultipliers[variant.SizeId];
         }
 
         public async Task CreateOrderDraft(Order order)
         {
 
-            List<KeyValuePair<ProductVariant, int>> variantCounts = new List<KeyValuePair<ProductVariant, int>>();
+            Dictionary<int, int> variantQuantityMap = new();
             for (int i = 0; i < m_ProductVariants.Count; i++)
             {
-                var variant = m_ProductVariants[i];
-                var existingEntry = variantCounts.FindIndex(v => v.Key.VariantId == variant.VariantId);
-                if (existingEntry >= 0)
-                {
-                    variantCounts[existingEntry] = new KeyValuePair<ProductVariant, int>(variant, variantCounts[existingEntry].Value + 1);
-                }
+                int id = m_ProductVariants[i].VariantId;
+                if (variantQuantityMap.ContainsKey(id))
+                    variantQuantityMap[id] += 1;
                 else
-                {
-                    variantCounts.Add(new KeyValuePair<ProductVariant, int>(variant, 1));
-                }
+                    variantQuantityMap.Add(id, 1);
             }
 
-            foreach (var variant in variantCounts)
+            foreach (var variant in variantQuantityMap)
             {
                 OrderItemLine orderItemLine = new OrderItemLine
                 {
-                    VariantId = variant.Key.VariantId,
+                    VariantId = variant.Key,
                     Amount = variant.Value,
                     OrderId = order.Id
                 };
