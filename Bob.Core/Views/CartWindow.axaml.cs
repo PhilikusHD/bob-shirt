@@ -7,9 +7,9 @@ using Bob.Core.Utils;
 namespace Bob.Core;
 
 #nullable enable
-public partial class TShirtWindow : UserControl
+public partial class CartWindow : UserControl
 {
-    public TShirtWindow()
+    public CartWindow()
     {
         InitializeComponent();
     }
