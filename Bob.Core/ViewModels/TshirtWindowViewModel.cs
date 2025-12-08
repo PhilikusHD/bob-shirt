@@ -37,6 +37,7 @@ public partial class TShirtWindowViewModel : ViewModelBase
         catch (Exception ex)
         {
             Logger.Error("Failed to load T-shirts", ex);
+            Console.WriteLine($"Exception caught: {ex.Message}");
         }
     }
 }
