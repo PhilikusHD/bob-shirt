@@ -1,7 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
+using Bob.Core.Services;
+using Bob.Core.ViewModels;
 using Bob.Core.Utils;
 
 namespace Bob.Core;
@@ -9,6 +9,13 @@ namespace Bob.Core;
 #nullable enable
 public partial class TShirtWindow : UserControl
 {
+    public TShirtWindow(ProductService productService)
+    {
+        InitializeComponent();
+
+        // Set DataContext to the ViewModel
+        DataContext = new TshirtWindowViewModel(productService);
+    }
     public TShirtWindow()
     {
         InitializeComponent();
