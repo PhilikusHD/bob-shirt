@@ -15,10 +15,10 @@ namespace Bob.Core.ViewModels
     {
 
         [ObservableProperty]
-        private Product currentProduct;
+        private Product m_CurrentProduct;
 
         [ObservableProperty]
-        private ObservableCollection<ProductVariantDisplay> variants = new();
+        private ObservableCollection<ProductVariantDisplay> m_Variants = new();
         public ProductDetailWindowViewModel(Product product)
         {
 
@@ -37,6 +37,12 @@ namespace Bob.Core.ViewModels
 
                 foreach (var v in variantEntities)
                 {
+                    // Please do not make database calls inside a loop. 
+                    // Prefetch all sizes and colors, and the prices outside the loop and simply perform a lookup.
+                    // Check CalculateTotalPrice in System/CartSytem.cs for an example of this pattern.
+                    // k thx byeeeeeeeeeeeeeeeeeeeeeee.
+                    // Also... how the heck do you intend to wire this up to Caps, Hoodies and Tshirts? I'm very confused.
+                    // But I trust you have a plan here :D
                     var size = await ProductService.GetSizeAsync(v.SizeId);
                     var color = await ProductService.GetColorAsync(v.ColorId);
                     var finalPrice = await ProductService.GetPriceAdjustedForSize(v.SizeId, CurrentProduct.Price);

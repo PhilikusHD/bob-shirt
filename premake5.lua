@@ -8,6 +8,7 @@ workspace "BobSolution"
 
     filter "configurations:Release"
         defines { "NDEBUG" }
+        symbols "Off"
         optimize "Full"
         warnings "High"
 
