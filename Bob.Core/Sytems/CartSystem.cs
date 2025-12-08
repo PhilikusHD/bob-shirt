@@ -11,7 +11,6 @@ namespace Bob.Core.Systems
         public decimal TotalPrice;
     }
 
-
     public sealed class CartSystem
     {
         private readonly List<ProductVariant> m_ProductVariants = [];

@@ -18,6 +18,11 @@ namespace Bob.Core.Services
             return await CustomerRepository.GetAllAsync();
         }
 
+        public static async Task<int> GetHighestId()
+        {
+            return await CustomerRepository.GetHighestId();
+        }
+
         public static async Task AddCustomerAsync(Customer customer)
         {
             await CustomerRepository.AddAsync(customer);

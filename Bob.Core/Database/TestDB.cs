@@ -98,10 +98,11 @@ namespace Bob.Core.Database
                 Logger.Debug($"Customer 1 address: {addr?.Street ?? "NULL"}");
             }
 
-            var newCust = new Customer(999, "Test", "Dude", "test@local", 1, "0000", DateTime.UtcNow, "123", false);
+            var highestId = await CustomerService.GetHighestId();
+            var newCust = new Customer(highestId + 1, "Test", "Dude", "test@local", 1, "0000", DateTime.UtcNow, "123", false);
             await CustomerService.AddCustomerAsync(newCust);
             var check = await CustomerService.GetCustomerByIdAsync(newCust.Id);
-            Logger.Debug(check != null ? "Customer insert OK" : "Customer insert failed");
+            Logger.Debug(check != null ? $"Customer insert OK -- ID {newCust.Id}" : "Customer insert failed");
 
             await CustomerService.DeleteCustomerAsync(newCust.Id);
         }

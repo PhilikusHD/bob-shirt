@@ -31,15 +31,16 @@ namespace Bob.Core.Sytems
 
         public static async Task<bool> RegisterCustomerAsync(string name, string surname, string email, int addressId, string phoneNumber, string password, bool isAdmin = false)
         {
-            var allCustomers = await CustomerRepository.GetAllAsync();
-            var existingCustomer = allCustomers.FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            var existingCustomer = await CustomerRepository.GetByEmailAsync(email);
             if (existingCustomer != null)
                 return false;
 
             var passWordHash = HashPassword(password);
 
+            int highestId = await CustomerRepository.GetHighestId();
+
             var customer = new Customer(
-                id: allCustomers.Count > 0 ? allCustomers.Max(c => c.Id) + 1 : 1,
+                id: highestId > 0 ? highestId + 1 : 1,
                 name: name,
                 surname: surname,
                 email: email,
