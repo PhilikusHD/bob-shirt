@@ -55,5 +55,10 @@ namespace Bob.Core
             TestDB testDatabase = new TestDB();
             testDatabase.RunAsync();
         }
+
+        private void OnCartClick(object? sender, RoutedEventArgs e)
+        {
+            ViewManager.TransitionTo(nameof(CartWindow));
+        }
     }
 }
