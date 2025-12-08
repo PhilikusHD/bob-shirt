@@ -7,9 +7,9 @@ using Bob.Core.Utils;
 namespace Bob.Core;
 
 #nullable enable
-public partial class CartWindow : UserControl
+public partial class SignUpWindow : UserControl
 {
-    public CartWindow()
+    public SignUpWindow()
     {
         InitializeComponent();
     }
@@ -18,5 +18,4 @@ public partial class CartWindow : UserControl
     {
         ViewManager.TransitionTo(nameof(MainPage));
     }
-
 }

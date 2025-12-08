@@ -3,13 +3,14 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Bob.Core.Utils;
+using Bob.Core.Views;
 
 namespace Bob.Core;
 
 #nullable enable
-public partial class CartWindow : UserControl
+public partial class SignInWindow : UserControl
 {
-    public CartWindow()
+    public SignInWindow()
     {
         InitializeComponent();
     }

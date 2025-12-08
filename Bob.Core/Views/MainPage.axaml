@@ -52,16 +52,6 @@
 			Height="800"/>
 		</Grid>
 
-		<Grid>
-			<Image
-			Source="/assets/cart.png"
-			Stretch="Uniform"
-			HorizontalAlignment="Right"
-			VerticalAlignment="Top"
-			Margin= "0,-8,-450,0"
-			Width="650"
-			Height="700"/>
-		</Grid>
 
 		<Button x:Name="TestDatabase" Width="100" Height="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="TestDatabase_Click">
 			<Image Source="/assets/default_icon.png"
@@ -136,13 +126,34 @@
 				   Height="6500"/>
 		</Button>
 
-		<Button x:Name="CartButton" Width="500" Height="500" Margin="43,250,30,0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0" Click="OnCartClick">
+		<Button x:Name="CartButton" Width="120" Height="120" Margin="50,41,300,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnCartClick">
 			<Image Source="/assets/cart.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center"
+				   Margin="219,160,0,0"
+				   Width="550"
+				   Height="650"/>
+		</Button>
+
+
+		<Button x:Name="SignInButton" Width="250" Height="120" Margin="80,50,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnSignInClick">
+			<Image Source="/assets/sign_in.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="0,-12,0,0"
+				   Width="250"
+				   Height="550"/>
+		</Button>
+
+		<Button x:Name="SignUpButton" Width="250" Height="120" Margin="80,165,30,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Click="OnSignUpClick">
+			<Image Source="/assets/sign_up.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
 				   Margin="5,7,0,0"
-				   Width="450"
+				   Width="250"
 				   Height="550"/>
 		</Button>
 	</Grid>

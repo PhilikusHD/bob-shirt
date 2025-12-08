@@ -3,7 +3,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920"
-			 x:Class="Bob.Core.CartWindow">
+			 x:Class="Bob.Core.SignInWindow">
 
 	<Grid>
 		<!-- Frosted Glass Background -->
@@ -33,13 +33,13 @@
 
 		<Grid>
 			<Image
-			Source="/assets/cart.png"
+			Source="/assets/sign_in.png"
 			Stretch="Uniform"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,250,110,0"
-			Width="650"
-			Height="700"/>
+			Margin="0,250,450,0"
+			Width="250"
+			Height="550"/>
 		</Grid>
 
 		<Grid>

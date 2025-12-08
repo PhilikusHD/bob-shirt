@@ -63,5 +63,14 @@ namespace Bob.Core
         {
             ViewManager.TransitionTo(nameof(CartWindow));
         }
+
+        private void OnSignInClick(object? sender, RoutedEventArgs e)
+        {
+            ViewManager.TransitionTo(nameof(SignInWindow));
+        }
+        private void OnSignUpClick(object? sender, RoutedEventArgs e)
+        {
+            ViewManager.TransitionTo(nameof(SignUpWindow));
+        }
     }
 }
