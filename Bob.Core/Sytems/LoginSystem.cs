@@ -58,7 +58,13 @@ namespace Bob.Core.Sytems
         {
             var bytes = Encoding.UTF8.GetBytes(password);
             var hash = SHA256.HashData(bytes);
-            return Convert.ToBase64String(hash);
+
+            var builder = new StringBuilder();
+            foreach (byte b in hash)
+            {
+                builder.Append(b.ToString("x2"));
+            }
+            return builder.ToString();
         }
 
         public static bool VerifyPassword(string password, string hash) => HashPassword(password) == hash;
