@@ -73,7 +73,7 @@ namespace Bob.Core.Database
             {
                 Street = "Test Lane",
                 HouseNumber = "42A",
-                PostalCode = 12345,
+                PostalCode = "12345",
                 City = "Nowhere"
             };
             await AddressService.AddAddressAsync(newAddr);

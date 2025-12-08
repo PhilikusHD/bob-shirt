@@ -19,12 +19,12 @@ namespace Bob.Core.Domain
         public string HouseNumber { get; set; }
 
         [Column("POSTALCODE")]
-        public int PostalCode { get; set; } // matches SQL INTEGER
+        public string PostalCode { get; set; } // matches SQL INTEGER
 
         [Column("CITY")]
         public string City { get; set; }
 
-        public Address(int id, string street, string houseNumber, int postalCode, string city)
+        public Address(int id, string street, string houseNumber, string postalCode, string city)
         {
             Id = id;
             Street = street;

@@ -24,9 +24,9 @@ INSERT INTO [SIZE] (SIZEID, SIZENAME, PRICEMULTIPLIER) VALUES
 
 -- ADDRESS -----------------------------------------------------------
 INSERT INTO ADDRESS (ADDRESSID, STREET, HOUSENUMBER, POSTALCODE, CITY) VALUES
-(1, 'Main Street', '123', 12345, 'New York'),
-(2, 'Oak Avenue', '456', 67890, 'Los Angeles'),
-(3, 'Pine Road', '789', 11223, 'Chicago');
+(1, 'Main Street', '123', '12345', 'New York'),
+(2, 'Oak Avenue', '456', '67890', 'Los Angeles'),
+(3, 'Pine Road', '789', '11223', 'Chicago');
 
 -- CUSTOMER ----------------------------------------------------------
 INSERT INTO CUSTOMER (CUSTOMERID, [NAME], SURNAME, EMAIL, ADDRESSID, PHONENR, SIGNUPDATE, PASSWORDHASH, ISADMIN) VALUES
