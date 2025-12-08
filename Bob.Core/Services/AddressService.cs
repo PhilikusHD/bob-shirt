@@ -13,7 +13,7 @@ namespace Bob.Core.Services
             return await AddressRepository.GetByIdAsync(addressId);
         }
 
-        public static async Task<bool> AddressExists(Address address)
+        public static async Task<int> AddressExists(Address address)
         {
             return await AddressRepository.AddressExists(address);
         }
