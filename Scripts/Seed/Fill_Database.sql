@@ -29,11 +29,11 @@ INSERT INTO ADDRESS (ADDRESSID, STREET, HOUSENUMBER, POSTALCODE, CITY) VALUES
 (3, 'Pine Road', '789', 11223, 'Chicago');
 
 -- CUSTOMER ----------------------------------------------------------
-INSERT INTO CUSTOMER (CUSTOMERID, [NAME], SURNAME, EMAIL, ADDRESSID, PHONENR, SIGNUPDATE) VALUES
-(1, 'John', 'Smith', 'john.smith@email.com', 1, '555-0101', '2024-01-15'),
-(2, 'Emma', 'Johnson', 'emma.j@email.com', 2, '555-0102', '2024-02-20'),
-(3, 'Michael', 'Brown', 'michael.b@email.com', 3, '555-0103', '2024-03-10'),
-(4, 'Michael', 'Hund', 'michael.h@email.com', 3, '555-2312312', '2024-03-11');
+INSERT INTO CUSTOMER (CUSTOMERID, [NAME], SURNAME, EMAIL, ADDRESSID, PHONENR, SIGNUPDATE, PASSWORDHASH, ISADMIN) VALUES
+(1, 'John', 'Smith', 'john.smith@email.com', 1, '555-0101', '2024-01-15', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1),
+(2, 'Emma', 'Johnson', 'emma.j@email.com', 2, '555-0102', '2024-02-20', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 0),
+(3, 'Michael', 'Brown', 'michael.b@email.com', 3, '555-0103', '2024-03-10', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 0),
+(4, 'Michael', 'Hund', 'michael.h@email.com', 3, '555-2312312', '2024-03-11', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 0);
 
 -- PAYMENTPROCESSOR --------------------------------------------------
 INSERT INTO PAYMENTPROCESSOR (PROCESSORID, METHOD) VALUES

@@ -3,7 +3,7 @@ using Bob.Core.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Bob.Core.CartSytem
+namespace Bob.Core.Systems
 {
     public struct CartState
     {

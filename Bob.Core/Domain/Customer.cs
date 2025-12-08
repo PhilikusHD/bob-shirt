@@ -29,13 +29,19 @@ namespace Bob.Core.Domain
         [Column("SIGNUPDATE")]
         public DateTime SignupDate { get; set; }
 
+        [Column("PASSWORDHASH")]
+        public string PasswordHash { get; set; }
+
+        [Column("ISADMIN")]
+        public bool IsAdmin { get; set; }
+
         public Customer(
             int id,
             string name,
             string surname,
             string email,
             int addressId,
-            string phoneNumber, DateTime signupDate)
+            string phoneNumber, DateTime signupDate, string password, bool isAdmin)
         {
             Id = id;
             Name = name;
@@ -44,6 +50,8 @@ namespace Bob.Core.Domain
             AddressId = addressId;
             PhoneNumber = phoneNumber;
             SignupDate = signupDate;
+            PasswordHash = password;
+            IsAdmin = isAdmin;
         }
     }
 }
