@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using LinqToDB.Data;
+using System.Net.NetworkInformation;
+using Avalonia.Data.Converters;
 
 namespace Bob.Core.Repositories
 {
@@ -17,6 +19,16 @@ namespace Bob.Core.Repositories
         {
             await using var db = new AppDataConnection();
             return await db.GetTable<Address>().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+        }
+
+        public static async Task<bool> AddressExists(Address address)
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<Address>()
+                .AnyAsync(a => a.Street == address.Street &&
+                               a.HouseNumber == address.HouseNumber &&
+                               a.PostalCode == address.PostalCode &&
+                               a.City == address.City);
         }
 
         public static async Task<Address?> GetByCustomerIdAsync(uint customerId, CancellationToken cancellationToken = default)
