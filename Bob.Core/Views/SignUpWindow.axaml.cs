@@ -5,7 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Bob.Core.Domain;
 using Bob.Core.Services;
-using Bob.Core.Sytems;
+using Bob.Core.Systems;
 using Bob.Core.Utils;
 
 namespace Bob.Core;

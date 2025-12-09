@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bob.Core.Sytems
+namespace Bob.Core.Systems
 {
     public static class LoginSystem
     {

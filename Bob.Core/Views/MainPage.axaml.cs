@@ -8,7 +8,7 @@ using Avalonia.Media.Imaging;
 using Bob.Core.Database;
 using Bob.Core.Repositories;
 using Bob.Core.Services;
-using Bob.Core.Sytems;
+using Bob.Core.Systems;
 using Bob.Core.Utils;
 using System;
 using System.Threading.Tasks;

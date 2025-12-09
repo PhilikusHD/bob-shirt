@@ -18,7 +18,7 @@ namespace Bob.Core.ViewModels
         private Product m_CurrentProduct;
 
         [ObservableProperty]
-        private ObservableCollection<ProductVariantDisplay> m_Variants = new();
+        private ObservableCollection<ProductVariantDisplay> m_Variants = [];
         public ProductDetailWindowViewModel(Product product)
         {
 

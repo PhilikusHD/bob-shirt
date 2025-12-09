@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Bob.Core.Sytems;
+using Bob.Core.Systems;
 using Bob.Core.Utils;
 using Bob.Core.Views;
 using System.Threading.Tasks;
