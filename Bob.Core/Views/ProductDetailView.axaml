@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 x:Class="Bob.Core.ProductDetailView">
+	<Border Background="#44000000" Padding="20" CornerRadius="8">
+		<Grid ColumnDefinitions="250,*" RowDefinitions="Auto,*">
+			<!-- Column 0 = Image -->
+			<Border Grid.Column="0" Width="250" Height="250" Background="#22000000" CornerRadius="4">
+				<TextBlock Text="Product Image" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+
+			<!-- Column 1 = Product info -->
+			<StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="10">
+				<TextBlock Text="{Binding Name}" FontSize="28" Foreground="White" FontWeight="Bold"/>
+				<ItemsControl ItemsSource="{Binding Variants}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border Background="#33000000" Padding="10" Margin="0,5,0,5" CornerRadius="6">
+								<Grid ColumnDefinitions="*,120" RowDefinitions="Auto">
+									<!-- Left: Info -->
+									<StackPanel Spacing="4">
+										<TextBlock Text="{Binding Color}" Foreground="White" FontWeight="Bold"/>
+										<TextBlock Text="{Binding Size}" Foreground="White"/>
+										<TextBlock Text="{Binding FinalPrice, StringFormat=C}" Foreground="White"/>
+										<TextBlock Text="Stock: {Binding Stock}" Foreground="White"/>
+									</StackPanel>
+
+									<!-- Right: Dropdowns -->
+									<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+										<ComboBox Width="100"
+												  ItemsSource="{Binding AvailableColors}"
+												  SelectedItem="{Binding Color, Mode=TwoWay}"/>
+										<ComboBox Width="100"
+												  ItemsSource="{Binding AvailableSizes}"
+												  SelectedItem="{Binding Size, Mode=TwoWay}"/>
+									</StackPanel>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</Grid>
+	</Border>
+
+</UserControl>

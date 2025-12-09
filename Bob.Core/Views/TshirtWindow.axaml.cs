@@ -1,3 +1,4 @@
+#nullable enable
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Bob.Core.Services;
@@ -6,7 +7,6 @@ using Bob.Core.Utils;
 
 namespace Bob.Core;
 
-#nullable enable
 public partial class TShirtWindow : UserControl
 {
     public TShirtWindow()
@@ -18,5 +18,10 @@ public partial class TShirtWindow : UserControl
     private void OnShopClick(object? sender, RoutedEventArgs e)
     {
         ViewManager.TransitionTo(nameof(MainPage));
+    }
+
+    private void OnItemSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+
     }
 }

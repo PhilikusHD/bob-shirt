@@ -208,5 +208,11 @@ namespace Bob.Core.Repositories
                 .Where(v => v.VariantId == variant.VariantId && v.ProductId == variant.ProductId && v.ColorId == variant.ColorId && v.SizeId == variant.SizeId)
                 .DeleteAsync(cancellationToken);
         }
+
+        internal static async Task<IReadOnlyList<ProductVariant>> GetAllVariantsAsync()
+        {
+            await using var db = new AppDataConnection();
+            return await db.GetTable<ProductVariant>().ToListAsync();
+        }
     }
 }

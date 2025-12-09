@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,17 +12,20 @@ using Bob.Core.Models;
 
 namespace Bob.Core.ViewModels
 {
-    public partial class ProductDetailWindowViewModel : ViewModelBase
+    public partial class ProductDetailViewViewModel : ViewModelBase
     {
+        public string Color { get; }
+        public string Size { get; }
+        public string FinalPrice { get; }
+
         [ObservableProperty]
         private Product m_CurrentProduct;
 
         [ObservableProperty]
         private ObservableCollection<ProductVariantDisplay> m_Variants = new();
 
-        public ProductDetailWindowViewModel(Product product)
+        public ProductDetailViewViewModel()
         {
-            CurrentProduct = product;
             _ = LoadProductDetailAsync();
         }
 
@@ -93,3 +97,4 @@ namespace Bob.Core.ViewModels
         }
     }
 }
+*/

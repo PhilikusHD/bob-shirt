@@ -47,7 +47,6 @@ project "Bob.Core"
         "Avalonia:11.3.9",
         "Avalonia.Themes.Fluent:11.3.9",
         "Avalonia.Fonts.Inter:11.3.9",
-        "Avalonia.Controls.DataGrid:11.3.9",
         "DotNetEnv:3.1.1",
         "CommunityToolkit.Mvvm:8.2.0",
         "linq2db:5.4.1.9",

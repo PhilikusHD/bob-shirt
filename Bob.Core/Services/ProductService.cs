@@ -1,4 +1,5 @@
-﻿using Bob.Core.Domain;
+﻿#nullable enable
+using Bob.Core.Domain;
 using Bob.Core.Repositories;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Bob.Core.Services
 {
-#nullable enable
     public static class ProductService
     {
 
@@ -74,6 +74,11 @@ namespace Bob.Core.Services
         public static async Task<ProductVariant?> GetVariantAsync(int variantId)
         {
             return await ProductRepository.GetVariantByIdAsync(variantId);
+        }
+
+        public static async Task<IReadOnlyList<ProductVariant>> GetAllVariantsAsync()
+        {
+            return await ProductRepository.GetAllVariantsAsync();
         }
 
         public static async Task<IReadOnlyList<ProductVariant>> GetVariantsForProductAsync(int productId)
