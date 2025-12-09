@@ -37,13 +37,19 @@ namespace Bob.Core.Utils
 
         public static ProductDisplay MapToDisplay(Product product)
         {
+            var filePath = $"assets/{FileUtils.GetProductFolder(product.TypeId)}/white/{FileUtils.GetMotiveFromName(product.Name)}.png";
+            if (!System.IO.File.Exists(filePath))
+            {
+                filePath = "assets/default_icon.png";
+            }
+
             var display = new ProductDisplay
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
                 TypeId = product.TypeId,
                 Motive = FileUtils.GetMotiveFromName(product.Name), // a simple mapping function
-                Img = new Bitmap($"assets/{FileUtils.GetProductFolder(product.TypeId)}/white/{FileUtils.GetMotiveFromName(product.Name)}.png")
+                Img = new Bitmap(filePath)
             };
 
             display.Variants = m_AllVariants
