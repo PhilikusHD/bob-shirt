@@ -1,9 +1,5 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Bob.Core.Utils;
-using Bob.Core.Views;
-using System;
 
 namespace Bob.Core
 {

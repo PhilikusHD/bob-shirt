@@ -131,5 +131,44 @@
 				   VerticalAlignment="Bottom"
 				   Margin="0,0,0,240"
 				   TextAlignment="Center"/>
+
+
+		<TextBox
+		Width="400"
+		Height="40"
+		Margin="50,440,0,0"
+		HorizontalAlignment="Left"
+		VerticalAlignment="Top"
+		Watermark="Search Cart..."
+		Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+		Background="#66000000"
+		Foreground="White"
+		BorderThickness="0"
+		Padding="6"/>
+
+		<!-- ListBox for Cap product names -->
+		<ListBox ItemsSource="{Binding CartItemNames}"
+				 HorizontalAlignment="Left"
+				 VerticalAlignment="Top"
+				 Margin="50,490,0,0"
+				 Width="400"
+				 Height="400"
+				 Background="#66000000"
+				 BorderThickness="0">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding}" FontSize="18" Foreground="White"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button x:Name="Test" Width="100" Height="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnTestClick">
+			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="DarkBlue">
+				<TextBlock.Text>
+					Reload
+				</TextBlock.Text>
+			</TextBlock>
+
+		</Button>
 	</Grid>
 </UserControl>

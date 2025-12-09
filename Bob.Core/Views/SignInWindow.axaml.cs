@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Bob.Core.Domain;
+using Bob.Core.Services;
 using Bob.Core.Systems;
 using Bob.Core.Utils;
 using Bob.Core.Views;
@@ -41,6 +43,10 @@ public partial class SignInWindow : UserControl
             ErrorTextBlock.Text = "Ungültige E-Mail oder Passwort.";
             return;
         }
+
+        var productVariant = await ProductService.GetVariantAsync(1);
+        if (productVariant != null)
+            await CartSystem.AddToCart(productVariant);
 
         ViewManager.TransitionTo(nameof(MainPage));
     }
