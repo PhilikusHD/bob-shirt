@@ -94,14 +94,34 @@
 				   Height="500"/>
 		</Button>
 
-		<Button x:Name="KontaktButton" Width="130" Height="50" Margin="153,130,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name="BestellenButton" Width="150" Height="100" Margin="990,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
 			<Image Source="/assets/bestellen.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center"
-				   Margin="45.5,-35,0,0"
-				   Width="650"
-				   Height="500"/>
+				   Margin="5,-1,0,0"
+				   Width="170"
+				   Height="250"/>
+		</Button>
+
+		<Button x:Name="WarenkorbLeerenButton" Width="200" Height="100" Margin="0,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
+			<Image Source="/assets/warenkorb_leeren.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="5,-1,0,0"
+				   Width="200"
+				   Height="250"/>
+		</Button>
+
+		<Button x:Name="EntfernenButton" Width="200" Height="100" Margin="390,90,0,70" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
+			<Image Source="/assets/entfernen.png"
+				   Stretch="Uniform"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+				   Margin="5,-1,0,0"
+				   Width="200"
+				   Height="250"/>
 		</Button>
 
 	</Grid>
