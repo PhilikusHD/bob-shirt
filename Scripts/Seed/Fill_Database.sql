@@ -6,20 +6,15 @@ INSERT INTO PRODUCT_TYPE (TYPEID, TYPENAME) VALUES
 
 -- COLOR -------------------------------------------------------------
 INSERT INTO COLOR (COLORID, COLORNAME) VALUES
-(1, 'Blue'),
-(2, 'White'),
-(3, 'Black'),
-(4, 'Gray'),
-(5, 'Red'),
-(6, 'Green'),
-(7, 'Navy');
+(1, 'White'),
+(2, 'Black');
 
 -- SIZE --------------------------------------------------------------
 INSERT INTO [SIZE] (SIZEID, SIZENAME, PRICEMULTIPLIER) VALUES
-(1, 'S', 0.9),
+(1, 'S', 0.99),
 (2, 'M', 1.0),
-(3, 'L', 1.1),
-(4, 'XL', 1.2),
+(3, 'L', 1.01),
+(4, 'XL', 1.02),
 (5, 'One Size', 1.0);
 
 -- ADDRESS -----------------------------------------------------------
@@ -43,11 +38,6 @@ INSERT INTO PAYMENTPROCESSOR (PROCESSORID, METHOD) VALUES
 
 -- PRODUCT -----------------------------------------------------------
 INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
--- Basic items
-(1, 'Shirt - ITECH', 19.99, 1),
-(2, 'Cap - ITECH', 29.99, 3),
-(3, 'Hoodie - ITECH', 14.99, 2),
-
 -- Shirts with meme prints
 (10, 'Shirt - Gus', 24.99, 1),
 (11, 'Shirt - Sad Hampta', 24.99, 1),
@@ -73,35 +63,32 @@ INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
 (35, 'Cap - Hampta Stare', 14.99, 3);
 
 -- PRODUCT_VARIANT ---------------------------------------------------
--- ITECH products
-INSERT INTO PRODUCT_VARIANT (VARIANTID, PRODUCTID, COLORID, SIZEID, STOCK) VALUES
-(1, 1, 1, 2, 50),   -- Shirt - ITECH, Blue, M
-(2, 2, 2, 3, 30),   -- Cap - ITECH, White, L
-(3, 3, 3, 1, 40),   -- Hoodie - ITECH, Black, S
-
 -- Shirt variants
-(10, 10, 3, 2, 25),  -- Shirt - Gus, Black, M
-(11, 11, 2, 3, 25),  -- Shirt - Sad Hampta, White, L
-(12, 12, 4, 4, 25),  -- Shirt - Rat Stare, Gray, XL
-(13, 13, 5, 2, 25),  -- Shirt - Buggy, Red, M
-(14, 14, 3, 1, 25),  -- Shirt - Rati, Black, S
-(15, 15, 1, 3, 25),  -- Shirt - Hampta Stare, Blue, L
+-- PRODUCT_VARIANT ---------------------------------------------------
+-- Shirt variants
+INSERT INTO PRODUCT_VARIANT (VARIANTID, PRODUCTID, COLORID, SIZEID, STOCK) VALUES
+(10, 10, 2, 2, 25),  -- Shirt - Gus, Black, M
+(11, 11, 1, 3, 25),  -- Shirt - Sad Hampta, White, L
+(12, 12, 2, 4, 25),  -- Shirt - Rat Stare, Black, XL
+(13, 13, 1, 2, 25),  -- Shirt - Buggy, White, M
+(14, 14, 2, 1, 25),  -- Shirt - Rati, Black, S
+(15, 15, 1, 3, 25),  -- Shirt - Hampta Stare, White, L
 
 -- Hoodie variants
-(20, 20, 3, 3, 20),  -- Hoodie - Gus, Black, L
-(21, 21, 4, 4, 20),  -- Hoodie - Sad Hampta, Gray, XL
-(22, 22, 2, 2, 20),  -- Hoodie - Rat Stare, White, M
-(23, 23, 6, 3, 20),  -- Hoodie - Buggy, Green, L
-(24, 24, 3, 2, 20),  -- Hoodie - Rati, Black, M
-(25, 25, 7, 1, 20),  -- Hoodie - Hampta Stare, Navy, S
+(20, 20, 2, 3, 20),  -- Hoodie - Gus, Black, L
+(21, 21, 1, 4, 20),  -- Hoodie - Sad Hampta, White, XL
+(22, 22, 2, 2, 20),  -- Hoodie - Rat Stare, Black, M
+(23, 23, 1, 3, 20),  -- Hoodie - Buggy, White, L
+(24, 24, 2, 2, 20),  -- Hoodie - Rati, Black, M
+(25, 25, 1, 1, 20),  -- Hoodie - Hampta Stare, White, S
 
 -- Cap variants
-(30, 30, 3, 5, 40),  -- Cap - Gus, Black, One Size
-(31, 31, 2, 5, 40),  -- Cap - Sad Hampta, White, One Size
-(32, 32, 1, 5, 40),  -- Cap - Rat Stare, Blue, One Size
-(33, 33, 5, 5, 40),  -- Cap - Buggy, Red, One Size
-(34, 34, 4, 5, 40),  -- Cap - Rati, Gray, One Size
-(35, 35, 3, 5, 40);  -- Cap - Hampta Stare, Black, One Size
+(30, 30, 2, 5, 40),  -- Cap - Gus, Black, One Size
+(31, 31, 1, 5, 40),  -- Cap - Sad Hampta, White, One Size
+(32, 32, 2, 5, 40),  -- Cap - Rat Stare, Black, One Size
+(33, 33, 1, 5, 40),  -- Cap - Buggy, White, One Size
+(34, 34, 2, 5, 40),  -- Cap - Rati, Black, One Size
+(35, 35, 1, 5, 40);  -- Cap - Hampta Stare, White, One Size
 
 -- [ORDER] -----------------------------------------------------------
 INSERT INTO [ORDER] (ORDERID, CUSTOMERID, ORDERDATE, TOTALAMOUNT) VALUES
@@ -115,8 +102,7 @@ INSERT INTO ORDER_ITEM (ORDERID, VARIANTID, AMOUNT) VALUES
 (1, 30, 1),  -- Order 1: 1x Cap - Gus
 (2, 20, 1),  -- Order 2: 1x Hoodie - Gus
 (2, 11, 1),  -- Order 2: 1x Shirt - Sad Hampta
-(3, 1, 2),   -- Order 3: 2x Shirt - ITECH
-(3, 3, 1);   -- Order 3: 1x Hoodie - ITECH
+(3, 25, 1);  -- Order 3: 1x Hoodie - Hampta Stare
 
 -- PAYMENT -----------------------------------------------------------
 INSERT INTO PAYMENT (PAYMENTID, ORDERID, PAYMENTDATE, PROCESSORID) VALUES

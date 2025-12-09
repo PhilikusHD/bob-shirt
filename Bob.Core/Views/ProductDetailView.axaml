@@ -10,35 +10,36 @@
 
 			<!-- Column 1 = Product info -->
 			<StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="10">
+				<!-- Product Name -->
 				<TextBlock Text="{Binding Name}" FontSize="28" Foreground="White" FontWeight="Bold"/>
+
+				<!-- Selected Variant Info -->
+				<StackPanel Spacing="4" Background="#22000000">
+					<TextBlock Text="{Binding SelectedVariant.Color}" FontSize="20"/>
+					<TextBlock Text="{Binding SelectedVariant.Size}" FontSize="16"/>
+					<TextBlock Text="{Binding SelectedVariant.FinalPrice, StringFormat=C}" FontSize="16"/>
+					<TextBlock Text="{Binding SelectedVariant.Stock}" FontSize="16"/>
+				</StackPanel>
+
+				<!-- Variant selectors -->
 				<ItemsControl ItemsSource="{Binding Variants}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
 							<Border Background="#33000000" Padding="10" Margin="0,5,0,5" CornerRadius="6">
-								<Grid ColumnDefinitions="*,120" RowDefinitions="Auto">
-									<!-- Left: Info -->
-									<StackPanel Spacing="4">
-										<TextBlock Text="{Binding Color}" Foreground="White" FontWeight="Bold"/>
-										<TextBlock Text="{Binding Size}" Foreground="White"/>
-										<TextBlock Text="{Binding FinalPrice, StringFormat=C}" Foreground="White"/>
-										<TextBlock Text="Stock: {Binding Stock}" Foreground="White"/>
-									</StackPanel>
-
-									<!-- Right: Dropdowns -->
-									<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-										<ComboBox Width="100"
-												  ItemsSource="{Binding AvailableColors}"
-												  SelectedItem="{Binding Color, Mode=TwoWay}"/>
-										<ComboBox Width="100"
-												  ItemsSource="{Binding AvailableSizes}"
-												  SelectedItem="{Binding Size, Mode=TwoWay}"/>
-									</StackPanel>
-								</Grid>
+								<StackPanel Orientation="Horizontal" Spacing="10">
+									<ComboBox Width="100"
+											  ItemsSource="{Binding AvailableColors}"
+											  SelectedItem="{Binding Color, Mode=TwoWay}"/>
+									<ComboBox Width="100"
+											  ItemsSource="{Binding AvailableSizes}"
+											  SelectedItem="{Binding Size, Mode=TwoWay}"/>
+								</StackPanel>
 							</Border>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 			</StackPanel>
+
 		</Grid>
 	</Border>
 
