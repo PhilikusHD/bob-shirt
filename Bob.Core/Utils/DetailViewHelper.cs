@@ -1,4 +1,5 @@
-﻿using Bob.Core.Domain;
+﻿using Avalonia.Media.Imaging;
+using Bob.Core.Domain;
 using Bob.Core.Models;
 using Bob.Core.Services;
 using System;
@@ -40,7 +41,9 @@ namespace Bob.Core.Utils
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
-                ImagePath = "", // placeholder for now
+                TypeId = product.TypeId,
+                Motive = FileUtils.GetMotiveFromName(product.Name), // a simple mapping function
+                Img = new Bitmap($"assets/{FileUtils.GetProductFolder(product.TypeId)}/white/{FileUtils.GetMotiveFromName(product.Name)}.png")
             };
 
             display.Variants = m_AllVariants

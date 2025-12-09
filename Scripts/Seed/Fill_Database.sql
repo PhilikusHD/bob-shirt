@@ -40,7 +40,7 @@ INSERT INTO PAYMENTPROCESSOR (PROCESSORID, METHOD) VALUES
 INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
 -- Shirts with meme prints
 (10, 'Shirt - Gus', 24.99, 1),
-(11, 'Shirt - Sad Hampta', 24.99, 1),
+(11, 'Shirt - Hampta', 24.99, 1),
 (12, 'Shirt - Rat Stare', 24.99, 1),
 (13, 'Shirt - Buggy', 24.99, 1),
 (14, 'Shirt - Rati', 24.99, 1),
@@ -48,7 +48,7 @@ INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
 
 -- Hoodies with meme prints
 (20, 'Hoodie - Gus', 39.99, 2),
-(21, 'Hoodie - Sad Hampta', 39.99, 2),
+(21, 'Hoodie - Hampta', 39.99, 2),
 (22, 'Hoodie - Rat Stare', 39.99, 2),
 (23, 'Hoodie - Buggy', 39.99, 2),
 (24, 'Hoodie - Rati', 39.99, 2),
@@ -56,7 +56,7 @@ INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
 
 -- Caps with meme prints
 (30, 'Cap - Gus', 14.99, 3),
-(31, 'Cap - Sad Hampta', 14.99, 3),
+(31, 'Cap - Hampta', 14.99, 3),
 (32, 'Cap - Rat Stare', 14.99, 3),
 (33, 'Cap - Buggy', 14.99, 3),
 (34, 'Cap - Rati', 14.99, 3),

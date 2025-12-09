@@ -5,7 +5,7 @@
 		<Grid ColumnDefinitions="250,*" RowDefinitions="Auto,*">
 			<!-- Column 0 = Image -->
 			<Border Grid.Column="0" Width="250" Height="250" Background="#22000000" CornerRadius="4">
-				<TextBlock Text="Product Image" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<Image Source="{Binding Img}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="250"/>
 			</Border>
 
 			<!-- Column 1 = Product info -->

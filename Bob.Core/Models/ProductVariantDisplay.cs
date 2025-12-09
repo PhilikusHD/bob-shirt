@@ -1,9 +1,12 @@
-﻿using Bob.Core.Domain;
+﻿using Avalonia.Media.Imaging;
+using Bob.Core.Domain;
 using Bob.Core.Systems;
+using Bob.Core.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using static LinqToDB.Sql;
 
 namespace Bob.Core.Models
 {
@@ -60,7 +63,8 @@ namespace Bob.Core.Models
     {
         public int ProductId { get; set; }
         public string Name { get; set; } = "";
-        public string ImagePath { get; set; } = "";
+        public int TypeId { get; set; }
+        public string Motive { get; set; }
 
         public List<ProductVariantDisplay> Variants { get; set; } = new();
 
@@ -68,7 +72,31 @@ namespace Bob.Core.Models
         public ProductVariantDisplay SelectedVariant
         {
             get => _selectedVariant;
-            set => SetProperty(ref _selectedVariant, value);
+            set
+            {
+                if (_selectedVariant != value)
+                {
+                    _selectedVariant = value;
+                    OnPropertyChanged(nameof(SelectedVariant));
+
+                    if (_selectedVariant != null)
+                    {
+                        var colorFolder = _selectedVariant.Color.ToLower(); // make sure folder names match
+                        Img = new Bitmap($"assets/{FileUtils.GetProductFolder(TypeId)}/{colorFolder}/{Motive}.png");
+                    }
+                }
+            }
+        }
+
+        private Bitmap _img;
+        public Bitmap Img
+        {
+            get => _img;
+            set
+            {
+                _img = value;
+                OnPropertyChanged(nameof(Img));
+            }
         }
 
 
