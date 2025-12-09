@@ -1,0 +1,140 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Bob.Core.ViewModels;assembly=Bob.Core"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600"
+             x:Class="Bob.Core.ProductDetailWindow">
+
+	<Design.DataContext>
+		<vm:ProductDetailWindowViewModel />
+	</Design.DataContext>
+
+	<Grid Background="#889db4">
+		<!-- Header with Product Name -->
+		<Border Background="#55000000"
+                CornerRadius="10"
+                Margin="20,20,20,0"
+                Height="60"
+                VerticalAlignment="Top">
+			<TextBlock Text="{Binding CurrentProduct.ProductName}"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+		</Border>
+		<!-- Variants Table -->
+		<Border Background="#55000000"
+                CornerRadius="10"
+                Margin="20,100,20,20">
+			<DataGrid ItemsSource="{Binding Variants}"
+                      AutoGenerateColumns="False"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      HeadersVisibility="Column"
+                      RowHeight="40"
+                      IsReadOnly="True">
+
+				<DataGrid.Columns>
+					<!-- Color Column -->
+					<DataGridTextColumn Header="Color"
+                                        Binding="{Binding Color}"
+                                        Width="*">
+						<DataGridTextColumn.HeaderStyle>
+							<Style Selector="DataGridColumnHeader">
+								<Setter Property="Background" Value="#66000000"/>
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="16"/>
+								<Setter Property="FontWeight" Value="Bold"/>
+							</Style>
+						</DataGridTextColumn.HeaderStyle>
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="14"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+								<Setter Property="Padding" Value="10,0"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+
+					<!-- Size Column -->
+					<DataGridTextColumn Header="Size"
+                                        Binding="{Binding Size}"
+                                        Width="*">
+						<DataGridTextColumn.HeaderStyle>
+							<Style Selector="DataGridColumnHeader">
+								<Setter Property="Background" Value="#66000000"/>
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="16"/>
+								<Setter Property="FontWeight" Value="Bold"/>
+							</Style>
+						</DataGridTextColumn.HeaderStyle>
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="14"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+								<Setter Property="Padding" Value="10,0"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+
+					<!-- Stock Column -->
+					<DataGridTextColumn Header="Stock"
+                                        Binding="{Binding Stock}"
+                                        Width="*">
+						<DataGridTextColumn.HeaderStyle>
+							<Style Selector="DataGridColumnHeader">
+								<Setter Property="Background" Value="#66000000"/>
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="16"/>
+								<Setter Property="FontWeight" Value="Bold"/>
+							</Style>
+						</DataGridTextColumn.HeaderStyle>
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="14"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+								<Setter Property="HorizontalAlignment" Value="Center"/>
+								<Setter Property="Padding" Value="10,0"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+
+					<!-- Price Column -->
+					<DataGridTextColumn Header="Price"
+                                        Binding="{Binding FinalPrice, StringFormat='{}{0:C}'}"
+                                        Width="*">
+						<DataGridTextColumn.HeaderStyle>
+							<Style Selector="DataGridColumnHeader">
+								<Setter Property="Background" Value="#66000000"/>
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="16"/>
+								<Setter Property="FontWeight" Value="Bold"/>
+							</Style>
+						</DataGridTextColumn.HeaderStyle>
+						<DataGridTextColumn.ElementStyle>
+							<Style Selector="TextBlock">
+								<Setter Property="Foreground" Value="White"/>
+								<Setter Property="FontSize" Value="14"/>
+								<Setter Property="VerticalAlignment" Value="Center"/>
+								<Setter Property="Padding" Value="10,0"/>
+							</Style>
+						</DataGridTextColumn.ElementStyle>
+					</DataGridTextColumn>
+				</DataGrid.Columns>
+
+				<DataGrid.RowStyle>
+					<Style Selector="DataGridRow">
+						<Setter Property="Background" Value="#22000000"/>
+						<Setter Property="BorderBrush" Value="#44FFFFFF"/>
+						<Setter Property="BorderThickness" Value="0,0,0,1"/>
+					</Style>
+				</DataGrid.RowStyle>
+			</DataGrid>
+		</Border>
+	</Grid>
+</UserControl>
