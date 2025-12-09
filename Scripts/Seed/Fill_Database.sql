@@ -63,8 +63,6 @@ INSERT INTO PRODUCT (PRODUCTID, PRODUCTNAME, PRICE, TYPEID) VALUES
 
 -- PRODUCT_VARIANT ---------------------------------------------------
 -- Shirt variants
--- PRODUCT_VARIANT ---------------------------------------------------
--- Shirt variants
 INSERT INTO PRODUCT_VARIANT (VARIANTID, PRODUCTID, COLORID, SIZEID, STOCK) VALUES
 (10, 10, 2, 2, 25),  -- Shirt - Gus, Black, M
 (11, 11, 1, 3, 25),  -- Shirt - Sad Hampta, White, L

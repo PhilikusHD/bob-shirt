@@ -107,6 +107,20 @@ namespace Bob.Core.Models
             }
         }
 
+        private Avalonia.Media.IBrush _infoColor = Avalonia.Media.Brushes.Red;
+        public Avalonia.Media.IBrush InfoColor
+        {
+            get => _infoColor;
+            set => SetProperty(ref _infoColor, value);
+        }
+
+        private string _infoMessage;
+        public string InfoMessage
+        {
+            get => _infoMessage;
+            set => SetProperty(ref _infoMessage, value);
+        }
+
 
         public IRelayCommand AddToCartCommand => new RelayCommand(AddToCart);
 
@@ -117,10 +131,15 @@ namespace Bob.Core.Models
 
             if (SelectedVariant.Stock <= 0)
             {
+                InfoColor = Avalonia.Media.Brushes.Red;
+                InfoMessage = "Produkt nicht verfügbar!";
                 return;
             }
 
             await CartSystem.AddToCart(SelectedVariant.VariantId);
+
+            InfoColor = Avalonia.Media.Brushes.LightGreen;
+            InfoMessage = "Produkt wurde zum Warenkorb hinzugefügt!";
         }
     }
 }

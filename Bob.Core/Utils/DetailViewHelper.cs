@@ -72,6 +72,8 @@ namespace Bob.Core.Utils
                     // Callback when user changes color or size
                     variant.OnVariantChanged = (changedVariant) =>
                     {
+                        display.InfoMessage = string.Empty;
+
                         // Lookup the size object for multiplier
                         var sizeObj = m_AllSizes.FirstOrDefault(s => s.SizeName == changedVariant.Size);
 
