@@ -79,7 +79,7 @@ echo Checking installed packages in %CSPROJ_FILE%...
 dotnet list "%CSPROJ_FILE%" package > packages.txt
 
 REM List of expected packages
-set "expectedPackagesCore=Avalonia Avalonia.Themes.Fluent Avalonia.Fonts.Inter DotNetEnv CommunityToolkit.Mvvm linq2db Microsoft.Data.SqlClient"
+set "expectedPackagesCore=Avalonia Avalonia.Themes.Fluent Avalonia.Fonts.Inter DotNetEnv CommunityToolkit.Mvvm linq2db Microsoft.Data.SqlClient Avalonia.Controls.DataGrid"
 for %%p in (%expectedPackagesCore%) do (
     REM Look for the package name in the packages.txt file
     findstr /C:"%%p" packages.txt >nul
