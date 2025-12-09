@@ -18,6 +18,13 @@ namespace Bob.Core.Repositories
             return await db.GetTable<Order>().FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
         }
 
+        public static async Task<int> GetHighestId()
+        {
+            await using var db = new AppDataConnection();
+            var highestId = await db.GetTable<Order>().MaxAsync(o => (int?)o.Id);
+            return highestId ?? 0;
+        }
+
         public static async Task<IReadOnlyList<Order>> GetByCustomerAsync(int customerId, CancellationToken cancellationToken = default)
         {
             await using var db = new AppDataConnection();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Bob.Core.Services
 {
@@ -21,10 +22,12 @@ namespace Bob.Core.Services
             return await OrderRepository.GetByCustomerAsync(customerId);
         }
 
+        public static async Task<int> GetHighestId() => await OrderRepository.GetHighestId();
+
         public static async Task<int> CreateOrderAsync(Order order)
         {
             var lines = await OrderItemService.GetOrderItemLinesAsync(order.Id);
-            if (lines == null)
+            if (lines == null || lines.Count == 0)
                 return -1;
 
             decimal totalAmount = 0;

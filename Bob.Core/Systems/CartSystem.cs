@@ -11,36 +11,31 @@ namespace Bob.Core.Systems
         public decimal TotalPrice;
     }
 
-    public sealed class CartSystem
+    public static class CartSystem
     {
-        private readonly List<ProductVariant> m_ProductVariants = [];
+        private static readonly List<ProductVariant> m_ProductVariants = [];
 
-        private decimal m_TotalPrice;
+        private static decimal m_TotalPrice;
 
-        public CartSystem()
-        {
-
-        }
-
-        public async Task AddToCart(ProductVariant productVariant)
+        public static async Task AddToCart(ProductVariant productVariant)
         {
             m_ProductVariants.Add(productVariant);
             await CalculateTotalPrice();
         }
 
-        public async Task RemoveFromCart(ProductVariant productVariant)
+        public static async Task RemoveFromCart(ProductVariant productVariant)
         {
             m_ProductVariants.Remove(productVariant);
             await CalculateTotalPrice();
         }
 
-        public void Clear()
+        public static void Clear()
         {
             m_ProductVariants.Clear();
             m_TotalPrice = 0.0M;
         }
 
-        public CartState GetCartState()
+        public static CartState GetCartState()
         {
             return new CartState
             {
@@ -49,12 +44,12 @@ namespace Bob.Core.Systems
             };
         }
 
-        public int GetItemCount()
+        public static int GetItemCount()
         {
             return m_ProductVariants.Count;
         }
 
-        public async Task CalculateTotalPrice()
+        public static async Task CalculateTotalPrice()
         {
             m_TotalPrice = 0.0M;
             IReadOnlyList<Product> products = await ProductService.GetAllProductsAsync();
@@ -73,7 +68,7 @@ namespace Bob.Core.Systems
                 m_TotalPrice += productPrices[variant.ProductId] * sizeMultipliers[variant.SizeId];
         }
 
-        public async Task CreateOrderDraft(Order order)
+        public static async Task<Order> CreateOrderDraft(int customerId)
         {
 
             Dictionary<int, int> variantQuantityMap = [];
@@ -83,6 +78,11 @@ namespace Bob.Core.Systems
                 if (!variantQuantityMap.TryAdd(id, 1))
                     variantQuantityMap[id] += 1;
             }
+
+            Order order = new Order();
+            int orderId = await OrderService.GetHighestId() + 1;
+            order.Id = orderId;
+            order.CustomerId = customerId;
 
             foreach (var variant in variantQuantityMap)
             {
@@ -95,6 +95,8 @@ namespace Bob.Core.Systems
 
                 await OrderItemService.AddLineAsync(orderItemLine);
             }
+
+            return order;
         }
     }
 }

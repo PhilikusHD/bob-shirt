@@ -94,7 +94,7 @@
 				   Height="500"/>
 		</Button>
 
-		<Button x:Name="BestellenButton" Width="150" Height="100" Margin="990,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name="BestellenButton" Width="150" Height="100" Margin="990,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0" Click="OnBestellenClick" ClickMode="Release">
 			<Image Source="/assets/bestellen.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -104,7 +104,7 @@
 				   Height="250"/>
 		</Button>
 
-		<Button x:Name="WarenkorbLeerenButton" Width="200" Height="100" Margin="0,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name="WarenkorbLeerenButton" Width="200" Height="100" Margin="0,90,0,70" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0" Click="OnWarenkorbLeerenClick" ClickMode="Release">
 			<Image Source="/assets/warenkorb_leeren.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -114,7 +114,7 @@
 				   Height="250"/>
 		</Button>
 
-		<Button x:Name="EntfernenButton" Width="200" Height="100" Margin="390,90,0,70" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0">
+		<Button x:Name="EntfernenButton" Width="200" Height="100" Margin="390,90,0,70" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="0" Padding="0" Click="OnEntfernenClick" ClickMode="Release">
 			<Image Source="/assets/entfernen.png"
 				   Stretch="Uniform"
 				   HorizontalAlignment="Center"
@@ -124,5 +124,12 @@
 				   Height="250"/>
 		</Button>
 
+		<TextBlock x:Name="ErrorTextBlock"
+				   Foreground="Red"
+				   FontSize="20"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Bottom"
+				   Margin="0,0,0,240"
+				   TextAlignment="Center"/>
 	</Grid>
 </UserControl>
