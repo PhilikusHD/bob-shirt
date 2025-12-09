@@ -14,8 +14,7 @@ INSERT INTO [SIZE] (SIZEID, SIZENAME, PRICEMULTIPLIER) VALUES
 (1, 'S', 0.99),
 (2, 'M', 1.0),
 (3, 'L', 1.01),
-(4, 'XL', 1.02),
-(5, 'One Size', 1.0);
+(4, 'XL', 1.02);
 
 -- ADDRESS -----------------------------------------------------------
 INSERT INTO ADDRESS (ADDRESSID, STREET, HOUSENUMBER, POSTALCODE, CITY) VALUES
@@ -83,12 +82,12 @@ INSERT INTO PRODUCT_VARIANT (VARIANTID, PRODUCTID, COLORID, SIZEID, STOCK) VALUE
 (25, 25, 1, 1, 20),  -- Hoodie - Hampta Stare, White, S
 
 -- Cap variants
-(30, 30, 2, 5, 40),  -- Cap - Gus, Black, One Size
-(31, 31, 1, 5, 40),  -- Cap - Sad Hampta, White, One Size
-(32, 32, 2, 5, 40),  -- Cap - Rat Stare, Black, One Size
-(33, 33, 1, 5, 40),  -- Cap - Buggy, White, One Size
-(34, 34, 2, 5, 40),  -- Cap - Rati, Black, One Size
-(35, 35, 1, 5, 40);  -- Cap - Hampta Stare, White, One Size
+(30, 30, 2, 2, 40),  -- Cap - Gus, Black, One Size
+(31, 31, 1, 2, 40),  -- Cap - Sad Hampta, White, One Size
+(32, 32, 2, 2, 40),  -- Cap - Rat Stare, Black, One Size
+(33, 33, 1, 2, 40),  -- Cap - Buggy, White, One Size
+(34, 34, 2, 2, 40),  -- Cap - Rati, Black, One Size
+(35, 35, 1, 2, 40);  -- Cap - Hampta Stare, White, One Size
 
 -- [ORDER] -----------------------------------------------------------
 INSERT INTO [ORDER] (ORDERID, CUSTOMERID, ORDERDATE, TOTALAMOUNT) VALUES

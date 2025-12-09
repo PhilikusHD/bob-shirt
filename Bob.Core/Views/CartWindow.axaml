@@ -3,6 +3,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 mc:Ignorable="d" d:DesignHeight="1080" d:DesignWidth="1920"
+			 xmlns:local="using:Bob.Core"
 			 x:Class="Bob.Core.CartWindow">
 
 	<Grid>
@@ -132,33 +133,42 @@
 				   Margin="0,0,0,240"
 				   TextAlignment="Center"/>
 
+		<Grid Margin="50,450,50,50" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="400"/>
+				<ColumnDefinition Width="20"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
 
-		<TextBox
-		Width="400"
-		Height="40"
-		Margin="50,440,0,0"
-		HorizontalAlignment="Left"
-		VerticalAlignment="Top"
-		Watermark="Search Cart..."
-		Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-		Background="#66000000"
-		Foreground="White"
-		BorderThickness="0"
-		Padding="6"/>
+			<StackPanel Grid.Column="0">
+				<TextBox Width="400"
+						 Height="40"
+						 Watermark="Search Cart..."
+						 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+						 Background="#66000000"
+						 Foreground="White"
+						 BorderThickness="0"
+						 Padding="6"
+						 Margin="0,0,0,10"/>
 
-		<ListBox ItemsSource="{Binding CartItemNames}"
-				 HorizontalAlignment="Left"
-				 VerticalAlignment="Top"
-				 Margin="50,490,0,0"
-				 Width="400"
-				 Height="400"
-				 Background="#66000000"
-				 BorderThickness="0">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding}" FontSize="18" Foreground="White"/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+				<ListBox ItemsSource="{Binding CartItems}"
+						 SelectedItem="{Binding SelectedProduct}"
+						 Width="400"
+						 Height="400"
+						 Background="#66000000"
+						 BorderThickness="0">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}" FontSize="18" Foreground="White"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+
+			</StackPanel>
+
+			<local:ProductDetailView Grid.Column="2"
+									 DataContext="{Binding SelectedProduct}" />
+		</Grid>
+
 	</Grid>
 </UserControl>

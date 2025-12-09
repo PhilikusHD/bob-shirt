@@ -1,4 +1,6 @@
-﻿using Bob.Core.Logging;
+﻿using Bob.Core.Domain;
+using Bob.Core.Logging;
+using Bob.Core.Models;
 using Bob.Core.Services;
 using Bob.Core.Systems;
 using Bob.Core.Utils;
@@ -14,13 +16,16 @@ namespace Bob.Core.ViewModels
 {
     public partial class CartWindowViewModel : ViewModelBase
     {
-        private List<string> m_AllItems = new();
+        private List<Product> m_AllItems = new();
 
         [ObservableProperty]
-        private ObservableCollection<string> m_CartItemNames = [];
+        private ObservableCollection<ProductDisplay> m_CartItems = [];
 
         [ObservableProperty]
         private string m_SearchText = "";
+
+        [ObservableProperty]
+        private ProductDisplay m_SelectedProduct;
 
         public CartWindowViewModel()
         {
@@ -31,26 +36,19 @@ namespace Bob.Core.ViewModels
         {
             await DetailViewHelper.InitDetailHelper();
 
-            try
-            {
-                var allProducts = await ProductService.GetAllProductsAsync();
-                var cartItems = CartSystem.GetCartState();
+            var allProducts = await ProductService.GetAllProductsAsync();
+            var cartItems = CartSystem.GetCartState();
 
-                foreach (var variant in cartItems.ProductVariants)
+            foreach (var variant in cartItems.ProductVariants)
+            {
+                var product = allProducts.FirstOrDefault(p => p.ProductId == variant.ProductId);
+                if (product != null)
                 {
-                    var product = allProducts.FirstOrDefault(p => p.ProductId == variant.ProductId);
-                    if (product != null)
-                    {
-                        m_AllItems.Add(product.Name);
-                    }
+                    m_AllItems.Add(product);
                 }
+            }
 
-                UpdateFilteredCartItems();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"Failed to load CartItems {ex.Message}");
-            }
+            UpdateFilteredCartItems();
         }
 
         partial void OnSearchTextChanged(string value)
@@ -65,9 +63,11 @@ namespace Bob.Core.ViewModels
 
             var filtered = string.IsNullOrWhiteSpace(SearchText)
                 ? m_AllItems
-                : m_AllItems.Where(c => c.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+                : m_AllItems.Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
 
-            CartItemNames = new ObservableCollection<string>(filtered);
+            CartItems = new ObservableCollection<ProductDisplay>(
+                filtered.Select(p => DetailViewHelper.MapToDisplay(p))
+            );
         }
     }
 }

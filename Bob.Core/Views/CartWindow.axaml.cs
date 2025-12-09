@@ -1,3 +1,4 @@
+#nullable enable
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Bob.Core.Domain;
@@ -8,7 +9,6 @@ using Bob.Core.ViewModels;
 
 namespace Bob.Core;
 
-#nullable enable
 public partial class CartWindow : UserControl
 {
     public CartWindow()

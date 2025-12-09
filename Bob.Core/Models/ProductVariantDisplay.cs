@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Bob.Core.Logging;
+using Avalonia.Media.Imaging;
 using Bob.Core.Domain;
 using Bob.Core.Systems;
 using Bob.Core.Utils;
@@ -81,8 +82,15 @@ namespace Bob.Core.Models
 
                     if (_selectedVariant != null)
                     {
-                        var colorFolder = _selectedVariant.Color.ToLower(); // make sure folder names match
-                        Img = new Bitmap($"assets/{FileUtils.GetProductFolder(TypeId)}/{colorFolder}/{Motive}.png");
+                        var colorFolder = _selectedVariant.Color.ToLower();
+                        var filePath = $"assets/{FileUtils.GetProductFolder(TypeId)}/{colorFolder}/{Motive}.png";
+                        if (!System.IO.File.Exists(filePath))
+                        {
+                            Logger.Error($"Image file not found: {filePath}, using default icon.");
+                            filePath = "assets/default_icon.png";
+                        }
+
+                        Img = new Bitmap(filePath);
                     }
                 }
             }

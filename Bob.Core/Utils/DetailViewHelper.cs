@@ -1,5 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using Bob.Core.Domain;
+using Bob.Core.Logging;
 using Bob.Core.Models;
 using Bob.Core.Services;
 using System;
@@ -40,6 +41,7 @@ namespace Bob.Core.Utils
             var filePath = $"assets/{FileUtils.GetProductFolder(product.TypeId)}/white/{FileUtils.GetMotiveFromName(product.Name)}.png";
             if (!System.IO.File.Exists(filePath))
             {
+                Logger.Error($"Image file not found: {filePath}, using default icon.");
                 filePath = "assets/default_icon.png";
             }
 

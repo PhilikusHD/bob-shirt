@@ -26,15 +26,11 @@ namespace Bob.Core.ViewModels
 
         public CapWindowViewModel()
         {
-
-            // Load Caps asynchronously
             _ = LoadCapsAsync();
         }
 
         private async Task LoadCapsAsync()
         {
-            await DetailViewHelper.InitDetailHelper();
-
             await DetailViewHelper.InitDetailHelper();
 
             var allProducts = await ProductService.GetAllProductsAsync();
