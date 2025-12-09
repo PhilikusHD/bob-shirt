@@ -27,6 +27,9 @@ namespace Bob.Core
         public void NavigateTo(UserControl newView)
         {
             CurrentContent.Content = newView;
+
+            if (newView is CartWindow cw)
+                cw.Refresh();
         }
     }
 }

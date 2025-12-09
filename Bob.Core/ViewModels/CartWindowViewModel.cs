@@ -51,6 +51,14 @@ namespace Bob.Core.ViewModels
             UpdateFilteredCartItems();
         }
 
+        public async void RemoveSelected()
+        {
+            if (SelectedProduct == null)
+                return;
+
+            await CartSystem.RemoveFromCart(SelectedProduct.SelectedVariant.VariantId);
+        }
+
         partial void OnSearchTextChanged(string value)
         {
             UpdateFilteredCartItems();

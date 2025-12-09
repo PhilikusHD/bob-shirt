@@ -128,7 +128,7 @@
 			</StackPanel>
 
 			<local:ProductDetailView Grid.Column="2"
-									 DataContext="{Binding SelectedProduct}" />
+									 DataContext="{Binding SelectedProduct}"/>
 		</Grid>
 	</Grid>
 </UserControl>

@@ -30,8 +30,11 @@ public partial class CartWindow : UserControl
 
     private void OnEntfernenClick(object? sender, RoutedEventArgs e)
     {
-        // CartSystem.RemoveFromCart();
-        DataContext = new CartWindowViewModel();
+        if (DataContext is CartWindowViewModel vm)
+        {
+            vm.RemoveSelected();
+            Refresh();
+        }
     }
 
     private async void OnBestellenClick(object? sender, RoutedEventArgs e)
@@ -51,5 +54,10 @@ public partial class CartWindow : UserControl
         {
             ErrorTextBlock.Text = "Es ist ein Fehler bei der Bestellung aufgetreten.";
         }
+    }
+
+    public void Refresh()
+    {
+        DataContext = new CartWindowViewModel();
     }
 }

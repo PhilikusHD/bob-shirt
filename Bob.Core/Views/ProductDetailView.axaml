@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="using:Bob.Core"
 			 x:Class="Bob.Core.ProductDetailView">
 	<Border Background="#44000000" Padding="20" CornerRadius="8">
 		<Grid ColumnDefinitions="250,*" RowDefinitions="Auto,*">
@@ -57,6 +58,13 @@
 				</ItemsControl>
 
 				<Button x:Name="AddToCartButton" Width="140" Height="100" Margin="80,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Padding="0" Command="{Binding AddToCartCommand}">
+					<Button.Styles>
+						<Style Selector="Button">
+							<Setter Property="IsVisible"
+									Value="{Binding ShowCart, RelativeSource={RelativeSource AncestorType=local:ProductDetailView}}" />
+						</Style>
+					</Button.Styles>
+
 					<Image Source="/assets/cart.png"
 						   Stretch="Uniform"
 						   HorizontalAlignment="Center"
