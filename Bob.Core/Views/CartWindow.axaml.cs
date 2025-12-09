@@ -1,13 +1,10 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Bob.Core.Domain;
 using Bob.Core.Services;
 using Bob.Core.Systems;
 using Bob.Core.Utils;
 using Bob.Core.ViewModels;
-using System;
 
 namespace Bob.Core;
 
@@ -28,11 +25,13 @@ public partial class CartWindow : UserControl
     private void OnWarenkorbLeerenClick(object? sender, RoutedEventArgs e)
     {
         CartSystem.Clear();
+        DataContext = new CartWindowViewModel();
     }
 
     private void OnEntfernenClick(object? sender, RoutedEventArgs e)
     {
         // CartSystem.RemoveFromCart();
+        DataContext = new CartWindowViewModel();
     }
 
     private async void OnBestellenClick(object? sender, RoutedEventArgs e)
@@ -52,10 +51,5 @@ public partial class CartWindow : UserControl
         {
             ErrorTextBlock.Text = "Es ist ein Fehler bei der Bestellung aufgetreten.";
         }
-    }
-
-    private void OnTestClick(object? sender, RoutedEventArgs e)
-    {
-        DataContext = new CartWindowViewModel();
     }
 }

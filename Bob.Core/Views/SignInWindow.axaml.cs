@@ -44,10 +44,6 @@ public partial class SignInWindow : UserControl
             return;
         }
 
-        var productVariant = await ProductService.GetVariantAsync(1);
-        if (productVariant != null)
-            await CartSystem.AddToCart(productVariant);
-
         ViewManager.TransitionTo(nameof(MainPage));
     }
 }

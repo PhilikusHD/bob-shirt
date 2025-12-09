@@ -1,6 +1,7 @@
 ﻿using Bob.Core.Logging;
 using Bob.Core.Services;
 using Bob.Core.Systems;
+using Bob.Core.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,8 @@ namespace Bob.Core.ViewModels
 
         private async Task LoadCartAsync()
         {
+            await DetailViewHelper.InitDetailHelper();
+
             try
             {
                 var allProducts = await ProductService.GetAllProductsAsync();

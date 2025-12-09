@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Bob.Core.Utils;
+using Bob.Core.ViewModels;
 
 namespace Bob.Core
 {

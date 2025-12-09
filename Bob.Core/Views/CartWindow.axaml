@@ -146,7 +146,6 @@
 		BorderThickness="0"
 		Padding="6"/>
 
-		<!-- ListBox for Cap product names -->
 		<ListBox ItemsSource="{Binding CartItemNames}"
 				 HorizontalAlignment="Left"
 				 VerticalAlignment="Top"
@@ -161,14 +160,5 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
-
-		<Button x:Name="Test" Width="100" Height="50" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OnTestClick">
-			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="DarkBlue">
-				<TextBlock.Text>
-					Reload
-				</TextBlock.Text>
-			</TextBlock>
-
-		</Button>
 	</Grid>
 </UserControl>

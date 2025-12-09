@@ -1,6 +1,7 @@
 ﻿using Bob.Core.Domain;
 using Bob.Core.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bob.Core.Systems
@@ -17,15 +18,21 @@ namespace Bob.Core.Systems
 
         private static decimal m_TotalPrice;
 
-        public static async Task AddToCart(ProductVariant productVariant)
+        public static async Task AddToCart(int variantId)
         {
+            var productVariant = await ProductService.GetVariantAsync(variantId);
+            if (productVariant == null)
+                return;
             m_ProductVariants.Add(productVariant);
             await CalculateTotalPrice();
         }
 
-        public static async Task RemoveFromCart(ProductVariant productVariant)
+        public static async Task RemoveFromCart(int variantId)
         {
-            m_ProductVariants.Remove(productVariant);
+            var variant = m_ProductVariants.FirstOrDefault(v => v.VariantId == variantId);
+            if (variant == null)
+                return;
+            m_ProductVariants.Remove(variant);
             await CalculateTotalPrice();
         }
 

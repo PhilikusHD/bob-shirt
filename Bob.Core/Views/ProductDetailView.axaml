@@ -38,9 +38,13 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
-			</StackPanel>
 
+				<Button Content="Add to Cart"
+						Width="150"
+						Height="40"
+						Margin="0,20,0,0"
+						Command="{Binding AddToCartCommand}"/>
+			</StackPanel>
 		</Grid>
 	</Border>
-
 </UserControl>

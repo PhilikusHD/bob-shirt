@@ -1,24 +1,28 @@
-﻿using System;
+﻿using Bob.Core.Domain;
+using Bob.Core.Models;
+using Bob.Core.Services;
+using Bob.Core.Utils;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Bob.Core.Services;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Bob.Core.Logging;
+
 namespace Bob.Core.ViewModels
 {
     public partial class CapWindowViewModel : ViewModelBase
     {
 
-        private List<string> m_AllCaps = new();
+        private List<Product> m_AllCaps = new();
 
         [ObservableProperty]
-        private ObservableCollection<string> m_CapNames = new();
+        private ObservableCollection<ProductDisplay> m_CapProducts = new();
 
         [ObservableProperty]
         private string m_SearchText = "";
+
+        [ObservableProperty]
+        private ProductDisplay m_SelectedProduct;
 
         public CapWindowViewModel()
         {
@@ -29,22 +33,13 @@ namespace Bob.Core.ViewModels
 
         private async Task LoadCapsAsync()
         {
-            try
-            {
-                var allProducts = await ProductService.GetAllProductsAsync();
+            await DetailViewHelper.InitDetailHelper();
 
-                m_AllCaps = allProducts
-                    .Where(p => p.TypeId == 3) // Filter Caps
-                    .Select(p => p.Name)
-                    .ToList();
+            await DetailViewHelper.InitDetailHelper();
 
-                UpdateFilteredCaps();
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Failed to load Caps", ex);
-                Console.WriteLine($"Exception caught: {ex.Message}");
-            }
+            var allProducts = await ProductService.GetAllProductsAsync();
+            m_AllCaps = allProducts.Where(p => p.TypeId == 3).ToList();
+            UpdateFilteredCaps();
         }
 
         partial void OnSearchTextChanged(string value)
@@ -54,14 +49,13 @@ namespace Bob.Core.ViewModels
 
         private void UpdateFilteredCaps()
         {
-            if (m_AllCaps == null || m_AllCaps.Count == 0)
-                return;
-
             var filtered = string.IsNullOrWhiteSpace(SearchText)
                 ? m_AllCaps
-                : m_AllCaps.Where(c => c.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+                : m_AllCaps.Where(p => p.Name.Contains(SearchText, System.StringComparison.OrdinalIgnoreCase));
 
-            CapNames = new ObservableCollection<string>(filtered);
+            CapProducts = new ObservableCollection<ProductDisplay>(
+                filtered.Select(p => DetailViewHelper.MapToDisplay(p))
+            );
         }
     }
 }

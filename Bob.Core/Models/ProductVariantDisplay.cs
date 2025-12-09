@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Bob.Core.Domain;
+using Bob.Core.Systems;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 
@@ -37,8 +40,8 @@ namespace Bob.Core.Models
             set => SetProperty(ref _finalPrice, value);
         }
 
-        private string _stock;
-        public string Stock
+        private int _stock;
+        public int Stock
         {
             get => _stock;
             set => SetProperty(ref _stock, value);
@@ -67,6 +70,21 @@ namespace Bob.Core.Models
             get => _selectedVariant;
             set => SetProperty(ref _selectedVariant, value);
         }
-    }
 
+
+        public IRelayCommand AddToCartCommand => new RelayCommand(AddToCart);
+
+        private async void AddToCart()
+        {
+            if (SelectedVariant == null)
+                return;
+
+            if (SelectedVariant.Stock <= 0)
+            {
+                return;
+            }
+
+            await CartSystem.AddToCart(SelectedVariant.VariantId);
+        }
+    }
 }
