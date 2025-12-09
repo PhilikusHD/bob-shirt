@@ -21,6 +21,7 @@ public partial class SignInWindow : UserControl
 
     private void OnShopClick(object? sender, RoutedEventArgs e)
     {
+        ErrorTextBlock.Text = string.Empty;
         ViewManager.TransitionTo(nameof(MainPage));
     }
 

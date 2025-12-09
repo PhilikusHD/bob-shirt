@@ -125,7 +125,7 @@
 				   Height="250"/>
 		</Button>
 
-		<TextBlock x:Name="ErrorTextBlock"
+		<TextBlock x:Name="InfoText"
 				   Foreground="Red"
 				   FontSize="20"
 				   HorizontalAlignment="Center"

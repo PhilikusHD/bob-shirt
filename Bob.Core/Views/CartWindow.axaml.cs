@@ -19,6 +19,7 @@ public partial class CartWindow : UserControl
 
     private void OnShopClick(object? sender, RoutedEventArgs e)
     {
+        InfoText.Text = string.Empty;
         ViewManager.TransitionTo(nameof(MainPage));
     }
 
@@ -50,9 +51,17 @@ public partial class CartWindow : UserControl
         Order order = await CartSystem.CreateOrderDraft(customer.Id);
         int rc = await OrderService.CreateOrderAsync(order);
 
-        if (rc == -1)
+        if (rc > 0)
         {
-            ErrorTextBlock.Text = "Es ist ein Fehler bei der Bestellung aufgetreten.";
+            InfoText.Foreground = Avalonia.Media.Brushes.Green;
+            InfoText.Text = "Die Bestellung wurde erfolgreich aufgegeben.";
+            CartSystem.Clear();
+            Refresh();
+        }
+        else
+        {
+            InfoText.Text = "Es ist ein Fehler bei der Bestellung aufgetreten.";
+
         }
     }
 

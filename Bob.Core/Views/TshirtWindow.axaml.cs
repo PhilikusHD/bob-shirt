@@ -1,7 +1,6 @@
 #nullable enable
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Bob.Core.Services;
 using Bob.Core.ViewModels;
 using Bob.Core.Utils;
 

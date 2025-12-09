@@ -1,8 +1,6 @@
-using System.Threading.Tasks;
-using Avalonia;
+#nullable enable
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Bob.Core.Domain;
 using Bob.Core.Services;
 using Bob.Core.Systems;
@@ -10,7 +8,6 @@ using Bob.Core.Utils;
 
 namespace Bob.Core;
 
-#nullable enable
 public partial class SignUpWindow : UserControl
 {
     public SignUpWindow()
@@ -20,6 +17,7 @@ public partial class SignUpWindow : UserControl
 
     private void OnShopClick(object? sender, RoutedEventArgs e)
     {
+        ErrorTextBlock.Text = string.Empty;
         ViewManager.TransitionTo(nameof(MainPage));
     }
 
